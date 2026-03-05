@@ -646,12 +646,12 @@
   };
   let selectedRollWindow = 10;
 
-  function setRollWindow(w) {
+  window.setRollWindow = function(w) {
     selectedRollWindow = w;
     document.querySelectorAll('#window-toggle button').forEach(b => {
       b.classList.toggle('active', parseInt(b.dataset.window) === w);
     });
-  }
+  };
 
   // ============================================================
   // YAHOO FINANCE DATA FETCHING
