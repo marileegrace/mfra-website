@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MFRA Scanner</title>
+<style>
+  :root {
+    --bg: #1a1a2e;
+    --bg-alt: #232337;
+    --bg-best: #1a3a1a;
+    --header-bg: #222;
+    --purple: #e040fb;
+    --cyan: #00bcd4;
+    --orange: #ff7f0e;
+    --green: #4caf50;
+    --r2-blue: #5dade2;
+    --text: #e0e0e0;
+    --text-dim: #888;
+    --white: #fff;
+    --border: #333;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Menlo, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 20px;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .header { margin-bottom: 16px; }
+  .header h1 { color: var(--purple); font-size: 22px; margin-bottom: 4px; }
+  .header .meta { color: var(--text-dim); font-size: 12px; }
+  .header .meta span { margin-right: 16px; }
+  .header .meta .count { color: var(--green); }
+  .header .meta .nm-count { color: var(--orange); }
+
+  /* Separator */
+  hr { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
+
+  /* Legend toggle */
+  .legend-toggle {
+    background: none; border: 1px solid var(--border); color: var(--text-dim);
+    font-family: inherit; font-size: 11px; padding: 4px 10px; cursor: pointer;
+    margin-bottom: 8px;
+  }
+  .legend-toggle:hover { color: var(--text); border-color: var(--text-dim); }
+  .legend {
+    display: none; background: var(--bg-alt); border: 1px solid var(--border);
+    padding: 12px 16px; margin-bottom: 12px; font-size: 11px;
+  }
+  .legend.open { display: block; }
+  .legend h3 { color: var(--text-dim); font-size: 11px; margin-bottom: 6px; text-transform: uppercase; }
+  .legend-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 32px; margin-bottom: 10px; }
+  .legend-item .lbl { font-weight: bold; margin-right: 6px; }
+  .legend-item .desc { color: var(--text-dim); }
+  .c-purple { color: var(--purple); }
+  .c-cyan { color: var(--cyan); }
+  .c-orange { color: var(--orange); }
+  .c-green { color: var(--green); }
+  .c-r2 { color: var(--r2-blue); }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 0; margin-bottom: 12px; }
+  .tab {
+    background: none; border: 1px solid var(--border); border-right: none;
+    color: var(--text-dim); font-family: inherit; font-size: 12px;
+    padding: 6px 16px; cursor: pointer;
+  }
+  .tab:last-child { border-right: 1px solid var(--border); }
+  .tab.active { background: var(--bg-alt); color: var(--white); border-bottom-color: var(--bg-alt); }
+  .tab:hover:not(.active) { color: var(--text); }
+
+  /* Tables */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { border-collapse: collapse; width: 100%; min-width: 900px; }
+  th {
+    background: var(--header-bg); color: var(--text-dim); font-size: 11px;
+    font-weight: bold; padding: 6px 8px; text-align: center;
+    cursor: pointer; user-select: none; white-space: nowrap;
+    position: sticky; top: 0; z-index: 1;
+  }
+  th:hover { color: var(--white); }
+  th .sort-arrow { font-size: 9px; margin-left: 2px; opacity: 0.5; }
+  th.sorted .sort-arrow { opacity: 1; color: var(--purple); }
+  td { padding: 5px 8px; text-align: center; white-space: nowrap; border-bottom: 1px solid #1f1f35; }
+
+  .row-even { background: var(--bg); }
+  .row-odd { background: var(--bg-alt); }
+  .row-best { background: var(--bg-best); }
+
+  /* Section headers */
+  .section-title { font-size: 16px; font-weight: bold; margin: 16px 0 8px; }
+  .section-title.opp { color: var(--green); }
+  .section-title.nm { color: var(--orange); }
+
+  /* Value colors */
+  .v-purple { color: var(--purple); }
+  .v-cyan { color: var(--cyan); }
+  .v-orange { color: var(--orange); }
+  .v-green { color: var(--green); }
+  .v-r2 { color: var(--r2-blue); }
+  .v-white { color: var(--white); }
+  .v-dim { color: var(--text-dim); }
+  .v-best { color: var(--green); font-weight: bold; }
+  .v-warn { color: var(--orange); }
+
+  td.left { text-align: left; }
+
+  /* States */
+  .loading, .error-msg {
+    text-align: center; padding: 40px; font-size: 14px;
+  }
+  .loading { color: var(--text-dim); }
+  .error-msg { color: var(--orange); }
+  .empty { color: var(--text-dim); padding: 20px; text-align: center; font-size: 12px; }
+
+  .footnote { color: var(--text-dim); font-size: 10px; margin-top: 8px; }
+  .footer { color: #555; font-size: 10px; margin-top: 16px; border-top: 1px solid var(--border); padding-top: 8px; }
+
+  /* Near miss table doesn't need min-width as wide */
+  #nm-table { min-width: 600px; }
+
+  @media (max-width: 768px) {
+    body { padding: 10px; font-size: 12px; }
+    .header h1 { font-size: 18px; }
+    .legend-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>MFRA Scanner</h1>
+  <div class="meta" id="meta">Loading...</div>
+</div>
+
+<hr>
+
+<button class="legend-toggle" onclick="document.getElementById('legend').classList.toggle('open')">Legend</button>
+
+<div class="legend" id="legend">
+  <h3>Column Key</h3>
+  <div class="legend-grid">
+    <div class="legend-item"><span class="lbl c-orange">Sector/SubSec</span><span class="desc">ETFs used as benchmarks (mkt = SPY)</span></div>
+    <div class="legend-item"><span class="lbl c-cyan">Cyan 10d</span><span class="desc">Market contribution (10d sum)</span></div>
+    <div class="legend-item"><span class="lbl c-r2">R&sup2;</span><span class="desc">Model fit (0.4&ndash;0.7 sweet spot)</span></div>
+    <div class="legend-item"><span class="lbl c-orange">Orange 10d</span><span class="desc">Sector contribution (10d sum, net of mkt)</span></div>
+    <div class="legend-item"><span class="lbl">B Mkt/Sec/Sub</span><span class="desc">Betas: sensitivity to each factor</span></div>
+    <div class="legend-item"><span class="lbl c-green">Green 10d</span><span class="desc">Sub-sector contribution (10d, net of sec)</span></div>
+    <div class="legend-item"><span class="lbl c-purple">Purple 10d</span><span class="desc">Idiosyncratic momentum (10d sum)</span></div>
+    <div class="legend-item"><span class="lbl">Prp+/Spike/etc</span><span class="desc">Entry criteria scores</span></div>
+  </div>
+  <h3>Entry Criteria (all 5 must pass)</h3>
+  <div class="legend-grid">
+    <div class="legend-item"><span class="lbl">1. R&sup2; Range</span><span class="desc">Between 0.40 and 0.70</span></div>
+    <div class="legend-item"><span class="lbl">4. Sector Wind</span><span class="desc">Orange or green &ge; 0</span></div>
+    <div class="legend-item"><span class="lbl">2. Prp Sustained</span><span class="desc">Positive 5+ of last 10 bars</span></div>
+    <div class="legend-item"><span class="lbl">5. Cyan &lt; 70%</span><span class="desc">Mkt &lt; 70% of positive contribs</span></div>
+    <div class="legend-item"><span class="lbl">3. No Prp Spike</span><span class="desc">No single bar &gt; 60% of total</span></div>
+    <div class="legend-item"></div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" data-tab="all" id="tab-all">ALL</button>
+  <button class="tab" data-tab="pass" id="tab-pass">PASS (0)</button>
+  <button class="tab" data-tab="nm" id="tab-nm">NEAR MISS (0)</button>
+</div>
+
+<div id="content">
+  <div class="loading" id="loading">Loading scan results...</div>
+  <div class="error-msg" id="error" style="display:none"></div>
+
+  <div id="opp-section" style="display:none">
+    <div class="section-title opp">Opportunities</div>
+    <div class="table-wrap">
+      <table id="opp-table">
+        <thead><tr id="opp-head"></tr></thead>
+        <tbody id="opp-body"></tbody>
+      </table>
+    </div>
+    <div class="footnote">Prp+ = purple positive bars out of 10 &nbsp;|&nbsp; Spike = max single bar % of total purple &nbsp;|&nbsp; Wind = sector tailwind &nbsp;|&nbsp; Cyn% = cyan share of positive</div>
+  </div>
+
+  <div id="nm-section" style="display:none">
+    <div class="section-title nm">Near Misses <span style="font-size:12px; font-weight:normal">(failed 1 rule)</span></div>
+    <div class="table-wrap">
+      <table id="nm-table">
+        <thead><tr id="nm-head"></tr></thead>
+        <tbody id="nm-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="footer" id="footer"></div>
+
+<script>
+(function() {
+  // State
+  let data = null;
+  let currentTab = 'all';
+  let oppSort = { col: null, asc: true };
+  let nmSort = { col: null, asc: true };
+
+  // Column definitions
+  const oppCols = [
+    { key: 'ticker',    label: 'Ticker',  get: r => r.ticker,                       fmt: v => v, cls: 'v-white' },
+    { key: 'sector',    label: 'Sector',  get: r => r.sector_etf,                   fmt: v => v, cls: 'v-orange' },
+    { key: 'subsec',    label: 'SubSec',  get: r => r.sub_sector_etf,               fmt: v => v, cls: 'v-green' },
+    { key: 'quality',   label: 'Quality', get: r => r.quality,                       fmt: v => v, cls: r => r.quality === 'Best' ? 'v-best' : 'v-dim' },
+    { key: 'r2',        label: 'R\u00B2', get: r => r.r_squared,                    fmt: v => v.toFixed(3), cls: 'v-r2' },
+    { key: 'b_mkt',     label: 'B Mkt',   get: r => r.betas.mkt,                    fmt: sign,  cls: '' },
+    { key: 'b_sec',     label: 'B Sec',   get: r => r.betas.sec,                    fmt: sign,  cls: '' },
+    { key: 'b_sub',     label: 'B Sub',   get: r => r.betas.sub,                    fmt: sign,  cls: '' },
+    { key: 'purple',    label: 'Purple',  get: r => r.contributions_10d.resid,       fmt: sign,  cls: 'v-purple' },
+    { key: 'cyan',      label: 'Cyan',    get: r => r.contributions_10d.mkt,         fmt: sign,  cls: 'v-cyan' },
+    { key: 'orange',    label: 'Orange',  get: r => r.contributions_10d.sec,         fmt: sign,  cls: 'v-orange' },
+    { key: 'green',     label: 'Green',   get: r => r.contributions_10d.sub,         fmt: sign,  cls: 'v-green' },
+    { key: 'prp_pos',   label: 'Prp+',    get: r => r.criteria.purple_positive_count, fmt: v => v + '/10', cls: 'v-purple' },
+    { key: 'spike',     label: 'Spike%',  get: r => r.criteria.purple_dominance,     fmt: v => (v * 100).toFixed(0) + '%', cls: r => r.criteria.purple_dominance > 0.6 ? 'v-warn' : '' },
+    { key: 'wind',      label: 'Wind',    get: r => r.criteria.has_tailwind,         fmt: v => v ? 'Yes' : 'No', cls: r => r.criteria.has_tailwind ? 'v-green' : 'v-warn', sort: v => v ? 1 : 0 },
+    { key: 'cyn_pct',   label: 'Cyn%',    get: r => r.criteria.cyan_share,           fmt: v => (v * 100).toFixed(0) + '%', cls: r => r.criteria.cyan_share > 0.7 ? 'v-warn' : '' },
+  ];
+
+  const nmCols = [
+    { key: 'ticker',  label: 'Ticker', get: r => r.ticker,            fmt: v => v, cls: 'v-white' },
+    { key: 'failed',  label: 'Failed', get: r => r.failed_rules[0] || '?', fmt: v => v, cls: 'v-orange' },
+    { key: 'r2',      label: 'R\u00B2', get: r => r.r_squared,        fmt: v => v.toFixed(3), cls: 'v-r2' },
+    { key: 'purple',  label: 'Purple', get: r => r.contributions_10d.resid, fmt: sign, cls: 'v-purple' },
+    { key: 'note',    label: 'Note',   get: r => getNote(r),          fmt: v => v, cls: 'v-dim', align: 'left' },
+  ];
+
+  function sign(v) { return (v >= 0 ? '+' : '') + v.toFixed(2); }
+
+  function getNote(r) {
+    const d = r.criteria;
+    const rule = r.failed_rules[0];
+    if (rule === 'r_squared') return `R\u00B2=${r.r_squared.toFixed(3)} outside [0.4, 0.7]`;
+    if (rule === 'purple_sustained') return `Purple positive ${d.purple_positive_count}/10 (need 5)`;
+    if (rule === 'purple_spike') return `Single bar dominance ${(d.purple_dominance * 100).toFixed(0)}% > 60%`;
+    if (rule === 'sector_tailwind') return `Orange=${sign(r.contributions_10d.sec)}, Green=${sign(r.contributions_10d.sub)} -- both negative`;
+    if (rule === 'cyan_dominated') return `Cyan share ${(d.cyan_share * 100).toFixed(0)}% > 70%`;
+    return '';
+  }
+
+  function getCls(col, row) {
+    return typeof col.cls === 'function' ? col.cls(row) : col.cls;
+  }
+
+  function buildHead(cols, headId, sortState, renderFn) {
+    const tr = document.getElementById(headId);
+    tr.innerHTML = '';
+    cols.forEach(col => {
+      const th = document.createElement('th');
+      const isSorted = sortState.col === col.key;
+      th.className = isSorted ? 'sorted' : '';
+      th.innerHTML = col.label + ' <span class="sort-arrow">' + (isSorted ? (sortState.asc ? '\u25B2' : '\u25BC') : '\u25B4') + '</span>';
+      th.onclick = () => {
+        if (sortState.col === col.key) sortState.asc = !sortState.asc;
+        else { sortState.col = col.key; sortState.asc = true; }
+        renderFn();
+      };
+      tr.appendChild(th);
+    });
+  }
+
+  function sortRows(rows, cols, sortState) {
+    if (!sortState.col) return rows;
+    const col = cols.find(c => c.key === sortState.col);
+    if (!col) return rows;
+    const sorted = [...rows];
+    sorted.sort((a, b) => {
+      let va = col.sort ? col.sort(col.get(a)) : col.get(a);
+      let vb = col.sort ? col.sort(col.get(b)) : col.get(b);
+      if (typeof va === 'string') va = va.toLowerCase();
+      if (typeof vb === 'string') vb = vb.toLowerCase();
+      if (va < vb) return sortState.asc ? -1 : 1;
+      if (va > vb) return sortState.asc ? 1 : -1;
+      return 0;
+    });
+    return sorted;
+  }
+
+  function renderOpp() {
+    if (!data) return;
+    const rows = sortRows(data.opportunities, oppCols, oppSort);
+    buildHead(oppCols, 'opp-head', oppSort, renderOpp);
+    const tbody = document.getElementById('opp-body');
+    tbody.innerHTML = '';
+    if (rows.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="' + oppCols.length + '" class="empty">No stocks passed all 5 criteria today.</td></tr>';
+      return;
+    }
+    rows.forEach((r, i) => {
+      const tr = document.createElement('tr');
+      tr.className = r.quality === 'Best' ? 'row-best' : (i % 2 === 0 ? 'row-even' : 'row-odd');
+      oppCols.forEach(col => {
+        const td = document.createElement('td');
+        td.className = getCls(col, r);
+        td.textContent = col.fmt(col.get(r));
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+  function renderNM() {
+    if (!data) return;
+    const rows = sortRows(data.near_misses, nmCols, nmSort);
+    buildHead(nmCols, 'nm-head', nmSort, renderNM);
+    const tbody = document.getElementById('nm-body');
+    tbody.innerHTML = '';
+    if (rows.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="' + nmCols.length + '" class="empty">No near misses today.</td></tr>';
+      return;
+    }
+    rows.forEach((r, i) => {
+      const tr = document.createElement('tr');
+      tr.className = i % 2 === 0 ? 'row-even' : 'row-odd';
+      nmCols.forEach(col => {
+        const td = document.createElement('td');
+        td.className = getCls(col, r);
+        if (col.align === 'left') td.classList.add('left');
+        td.textContent = col.fmt(col.get(r));
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+  function setTab(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+    const oppS = document.getElementById('opp-section');
+    const nmS = document.getElementById('nm-section');
+    oppS.style.display = (tab === 'all' || tab === 'pass') ? '' : 'none';
+    nmS.style.display = (tab === 'all' || tab === 'nm') ? '' : 'none';
+  }
+
+  document.querySelectorAll('.tab').forEach(t => {
+    t.addEventListener('click', () => setTab(t.dataset.tab));
+  });
+
+  function render() {
+    document.getElementById('loading').style.display = 'none';
+    const m = data.meta;
+    document.getElementById('meta').innerHTML =
+      '<span>' + m.scan_date + '</span>' +
+      '<span>' + m.total_scanned + ' scanned</span>' +
+      '<span class="count">' + m.opportunity_count + ' opportunities</span>' +
+      '<span class="nm-count">' + m.near_miss_count + ' near misses</span>' +
+      '<span>' + m.skipped_count + ' skipped</span>';
+
+    document.getElementById('tab-pass').textContent = 'PASS (' + m.opportunity_count + ')';
+    document.getElementById('tab-nm').textContent = 'NEAR MISS (' + m.near_miss_count + ')';
+
+    document.getElementById('opp-section').style.display = '';
+    document.getElementById('nm-section').style.display = '';
+
+    renderOpp();
+    renderNM();
+    setTab(currentTab);
+
+    document.getElementById('footer').textContent =
+      'Generated ' + m.generated_at + '  |  OLS window: 42d  |  Roll window: 10d';
+  }
+
+  // Fetch data
+  fetch('data/scan_results.json?v=' + Date.now())
+    .then(r => {
+      if (!r.ok) throw new Error('No scan data yet. Run the scanner or trigger the GitHub Action.');
+      return r.json();
+    })
+    .then(d => { data = d; render(); })
+    .catch(e => {
+      document.getElementById('loading').style.display = 'none';
+      const el = document.getElementById('error');
+      el.style.display = '';
+      el.textContent = e.message;
+    });
+})();
+</script>
+</body>
+</html>

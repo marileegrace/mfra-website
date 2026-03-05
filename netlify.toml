@@ -1,0 +1,8 @@
+[build]
+  publish = "."
+  command = ""
+
+[[headers]]
+  for = "/data/scan_results.json"
+  [headers.values]
+    Cache-Control = "public, max-age=300"
