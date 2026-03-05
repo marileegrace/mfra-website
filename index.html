@@ -164,6 +164,16 @@
   }
   .scan-btn:hover { opacity: 0.85; }
   .scan-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .window-toggle { display: flex; gap: 0; align-self: flex-end; }
+  .window-toggle button {
+    background: var(--bg-alt); border: 1px solid var(--border); color: var(--text-dim);
+    font-family: inherit; font-size: 12px; padding: 6px 10px; cursor: pointer;
+  }
+  .window-toggle button:first-child { border-radius: 3px 0 0 3px; }
+  .window-toggle button:last-child { border-radius: 0 3px 3px 0; }
+  .window-toggle button:not(:first-child) { border-left: none; }
+  .window-toggle button.active { background: var(--purple); color: var(--white); border-color: var(--purple); }
+  .window-toggle button:hover:not(.active) { color: var(--text); border-color: var(--text-dim); }
   .scan-status { color: var(--text-dim); font-size: 12px; margin-bottom: 12px; min-height: 18px; }
   .scan-spinner {
     display: inline-block; width: 14px; height: 14px;
@@ -324,6 +334,14 @@
           <select id="scan-subsector">
             <option value="">-- select sector first --</option>
           </select>
+        </div>
+        <div class="scan-field">
+          <label>Window</label>
+          <div class="window-toggle" id="window-toggle">
+            <button data-window="5" onclick="setRollWindow(5)">5d</button>
+            <button data-window="10" class="active" onclick="setRollWindow(10)">10d</button>
+            <button data-window="15" onclick="setRollWindow(15)">15d</button>
+          </div>
         </div>
         <button class="scan-btn" id="scan-btn" onclick="liveScan()">Scan</button>
       </div>
@@ -620,6 +638,21 @@
   const BEST_R2_MAX = 0.65;
   const BEST_PURPLE_MIN_DAYS = 7;
 
+  // Window-scaled thresholds for live scan
+  const WINDOW_THRESHOLDS = {
+    5:  { purpleMin: 3, bestPurpleMin: 4 },
+    10: { purpleMin: 5, bestPurpleMin: 7 },
+    15: { purpleMin: 8, bestPurpleMin: 11 },
+  };
+  let selectedRollWindow = 10;
+
+  function setRollWindow(w) {
+    selectedRollWindow = w;
+    document.querySelectorAll('#window-toggle button').forEach(b => {
+      b.classList.toggle('active', parseInt(b.dataset.window) === w);
+    });
+  }
+
   // ============================================================
   // YAHOO FINANCE DATA FETCHING
   // ============================================================
@@ -815,7 +848,8 @@
     return result;
   }
 
-  function runMFRA(stockPrices, mktPrices, secPrices, subPrices) {
+  function runMFRA(stockPrices, mktPrices, secPrices, subPrices, rollWindow) {
+    rollWindow = rollWindow || ROLLING_SUM_WINDOW;
     const stockRet = computeReturns(stockPrices);
     const mktRet = computeReturns(mktPrices);
     const secRet = computeReturns(secPrices);
@@ -824,8 +858,8 @@
     const aligned = alignReturns(stockRet, mktRet, secRet, subRet);
     const n = aligned.stock.length;
 
-    if (n < OLS_WINDOW + ROLLING_SUM_WINDOW) {
-      return { success: false, error: 'Insufficient data: ' + n + ' days (need ' + (OLS_WINDOW + ROLLING_SUM_WINDOW) + ')' };
+    if (n < OLS_WINDOW + rollWindow) {
+      return { success: false, error: 'Insufficient data: ' + n + ' days (need ' + (OLS_WINDOW + rollWindow) + ')' };
     }
 
     const { fMkt, fSec, fSub } = orthogonalize(aligned.mkt, aligned.sec, aligned.sub);
@@ -860,10 +894,10 @@
     }
 
     // Rolling sums
-    const mktRoll = rollingSum(mktContrib, ROLLING_SUM_WINDOW);
-    const secRoll = rollingSum(secContrib, ROLLING_SUM_WINDOW);
-    const subRoll = rollingSum(subContrib, ROLLING_SUM_WINDOW);
-    const residRoll = rollingSum(residContrib, ROLLING_SUM_WINDOW);
+    const mktRoll = rollingSum(mktContrib, rollWindow);
+    const secRoll = rollingSum(secContrib, rollWindow);
+    const subRoll = rollingSum(subContrib, rollWindow);
+    const residRoll = rollingSum(residContrib, rollWindow);
 
     // Find last valid index
     let lastValid = -1;
@@ -873,10 +907,10 @@
     if (lastValid < 0) return { success: false, error: 'No valid OLS results' };
 
     const b = olsResult.betas[lastValid];
-    const dailyResiduals10d = [];
-    const startI = Math.max(0, lastValid - ROLLING_SUM_WINDOW + 1);
+    const dailyResiduals = [];
+    const startI = Math.max(0, lastValid - rollWindow + 1);
     for (let i = startI; i <= lastValid; i++) {
-      dailyResiduals10d.push(residContrib[i]);
+      dailyResiduals.push(residContrib[i]);
     }
 
     return {
@@ -887,13 +921,14 @@
         sec: b[2],
         sub: subIsDegenerate ? 0 : b[3],
       },
+      rollWindow: rollWindow,
       contributions_10d: {
         mkt:   isNaN(mktRoll[lastValid]) ? 0 : mktRoll[lastValid],
         sec:   isNaN(secRoll[lastValid]) ? 0 : secRoll[lastValid],
         sub:   isNaN(subRoll[lastValid]) ? 0 : subRoll[lastValid],
         resid: isNaN(residRoll[lastValid]) ? 0 : residRoll[lastValid],
       },
-      daily_residuals_10d: dailyResiduals10d,
+      daily_residuals_10d: dailyResiduals,
     };
   }
 
@@ -901,7 +936,9 @@
   // ENTRY CRITERIA EVALUATION
   // ============================================================
 
-  function evaluateCriteria(mfra) {
+  function evaluateCriteria(mfra, rollWindow) {
+    rollWindow = rollWindow || ROLLING_SUM_WINDOW;
+    const thresholds = WINDOW_THRESHOLDS[rollWindow] || WINDOW_THRESHOLDS[10];
     const failedRules = [];
     const details = {};
     const contribs = mfra.contributions_10d;
@@ -912,15 +949,17 @@
       failedRules.push('r_squared');
     }
 
-    // Rule 2: Sustained purple
+    // Rule 2: Sustained purple (scales with window)
     let purplePosCount = 0;
     for (const r of residuals) if (r > 0) purplePosCount++;
     details.purple_positive_count = purplePosCount;
-    if (purplePosCount < PURPLE_POSITIVE_MIN_DAYS) {
+    details.purple_positive_threshold = thresholds.purpleMin;
+    details.roll_window = rollWindow;
+    if (purplePosCount < thresholds.purpleMin) {
       failedRules.push('purple_sustained');
     }
 
-    // Rule 3: No purple spike
+    // Rule 3: No purple spike (same 60% rule, applied to N-bar window)
     const positiveResiduals = residuals.filter(r => r > 0);
     if (positiveResiduals.length > 0) {
       const totalPosPurple = positiveResiduals.reduce((a, b) => a + b, 0);
@@ -952,12 +991,12 @@
       failedRules.push('cyan_dominated');
     }
 
-    // Quality
+    // Quality (best purple threshold scales with window)
     const passed = failedRules.length === 0;
     let quality = '';
     if (passed) {
       const isBest = BEST_R2_MIN <= mfra.r_squared && mfra.r_squared <= BEST_R2_MAX
-                     && purplePosCount >= BEST_PURPLE_MIN_DAYS
+                     && purplePosCount >= thresholds.bestPurpleMin
                      && (orange10d > 0 || green10d > 0);
       quality = isBest ? 'Best' : 'Acceptable';
     }
@@ -1084,7 +1123,8 @@
       statusEl.innerHTML = '<span class="scan-spinner"></span>Running MFRA analysis...';
 
       // Run MFRA
-      const mfra = runMFRA(priceMap[ticker], priceMap['SPY'], priceMap[sectorEtf], priceMap[subEtf]);
+      const rollWin = selectedRollWindow;
+      const mfra = runMFRA(priceMap[ticker], priceMap['SPY'], priceMap[sectorEtf], priceMap[subEtf], rollWin);
       if (!mfra.success) {
         statusEl.textContent = '';
         resultBox.innerHTML = '<div class="scan-verdict fail">Error: ' + escapeHtml(mfra.error) + '</div>';
@@ -1093,7 +1133,7 @@
       }
 
       // Evaluate criteria
-      const eval_ = evaluateCriteria(mfra);
+      const eval_ = evaluateCriteria(mfra, rollWin);
 
       statusEl.textContent = 'Scan complete.';
 
@@ -1133,11 +1173,13 @@
     let html = '<div class="scan-verdict ' + verdictClass + '">' + ticker + ': ' + verdictText + '</div>';
 
     // Results table (single row, same columns as opp table)
+    const rw = mfra.rollWindow || ROLLING_SUM_WINDOW;
+    const rwLabel = rw + 'd';
     html += '<div class="table-wrap"><table style="min-width:900px"><thead><tr>';
     html += '<th>Ticker</th><th>Sector</th><th>SubSec</th>';
     if (eval_.passed) html += '<th>Quality</th>';
     html += '<th>R\u00B2</th><th>B Mkt</th><th>B Sec</th><th>B Sub</th>';
-    html += '<th>Purple</th><th>Cyan</th><th>Orange</th><th>Green</th>';
+    html += '<th>Purple ' + rwLabel + '</th><th>Cyan ' + rwLabel + '</th><th>Orange ' + rwLabel + '</th><th>Green ' + rwLabel + '</th>';
     html += '<th>Prp+</th><th>Spike%</th><th>Wind</th><th>Cyn%</th>';
     html += '</tr></thead><tbody><tr class="' + (eval_.passed && eval_.quality === 'Best' ? 'row-best' : 'row-even') + '">';
     html += '<td class="v-white">' + ticker + '</td>';
@@ -1152,7 +1194,7 @@
     html += '<td class="v-cyan">' + s(c.mkt) + '</td>';
     html += '<td class="v-orange">' + s(c.sec) + '</td>';
     html += '<td class="v-green">' + s(c.sub) + '</td>';
-    html += '<td class="v-purple">' + cr.purple_positive_count + '/10</td>';
+    html += '<td class="v-purple">' + cr.purple_positive_count + '/' + rw + '</td>';
     html += '<td class="' + (cr.purple_dominance > 0.6 ? 'v-warn' : '') + '">' + (cr.purple_dominance * 100).toFixed(0) + '%</td>';
     html += '<td class="' + (cr.has_tailwind ? 'v-green' : 'v-warn') + '">' + (cr.has_tailwind ? 'Yes' : 'No') + '</td>';
     html += '<td class="' + (cr.cyan_share > 0.7 ? 'v-warn' : '') + '">' + (cr.cyan_share * 100).toFixed(0) + '%</td>';
@@ -1172,9 +1214,11 @@
 
   function getRuleDetail(rule, mfra, cr) {
     const c = mfra.contributions_10d;
+    const rw = cr.roll_window || ROLLING_SUM_WINDOW;
+    const thresh = cr.purple_positive_threshold || PURPLE_POSITIVE_MIN_DAYS;
     switch (rule) {
       case 'r_squared': return '<strong>R\u00B2 Range:</strong> R\u00B2=' + mfra.r_squared.toFixed(3) + ' outside [0.40, 0.70]';
-      case 'purple_sustained': return '<strong>Purple Sustained:</strong> ' + cr.purple_positive_count + '/10 positive bars (need 5+)';
+      case 'purple_sustained': return '<strong>Purple Sustained:</strong> ' + cr.purple_positive_count + '/' + rw + ' positive bars (need ' + thresh + '+)';
       case 'purple_spike': return '<strong>Purple Spike:</strong> Single bar dominance ' + (cr.purple_dominance * 100).toFixed(0) + '% > 60%';
       case 'sector_tailwind': return '<strong>Sector Tailwind:</strong> Orange=' + sign(c.sec) + ', Green=' + sign(c.sub) + ' — both negative';
       case 'cyan_dominated': return '<strong>Cyan Dominance:</strong> Cyan share ' + (cr.cyan_share * 100).toFixed(0) + '% > 70%';
