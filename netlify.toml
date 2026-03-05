@@ -6,3 +6,11 @@
   for = "/data/scan_results.json"
   [headers.values]
     Cache-Control = "public, max-age=300"
+
+[[edge_functions]]
+  function = "yahoo-proxy"
+  path = "/api/chart/*"
+
+[[edge_functions]]
+  function = "yahoo-proxy"
+  path = "/api/quote/*"

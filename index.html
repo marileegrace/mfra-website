@@ -65,8 +65,17 @@
   .c-green { color: var(--green); }
   .c-r2 { color: var(--r2-blue); }
 
+  /* Scan standalone button (above tabs) */
+  .scan-tab-btn {
+    background: none; border: 1px solid var(--purple); color: var(--purple);
+    font-family: inherit; font-size: 14px; font-weight: bold;
+    padding: 8px 24px; cursor: pointer; margin-bottom: 12px;
+  }
+  .scan-tab-btn:hover { background: var(--purple); color: var(--white); }
+  .scan-tab-btn.active { background: var(--purple); color: var(--white); }
+
   /* Tabs */
-  .tabs { display: flex; gap: 0; margin-bottom: 12px; }
+  .tabs { display: flex; gap: 0; margin-bottom: 8px; flex-wrap: wrap; }
   .tab {
     background: none; border: 1px solid var(--border); border-right: none;
     color: var(--text-dim); font-family: inherit; font-size: 12px;
@@ -75,6 +84,15 @@
   .tab:last-child { border-right: 1px solid var(--border); }
   .tab.active { background: var(--bg-alt); color: var(--white); border-bottom-color: var(--bg-alt); }
   .tab:hover:not(.active) { color: var(--text); }
+
+  /* FAQ standalone button (below tabs) */
+  .faq-tab-btn {
+    background: none; border: 1px solid var(--border); color: var(--text-dim);
+    font-family: inherit; font-size: 12px;
+    padding: 6px 16px; cursor: pointer; margin-top: 4px; margin-bottom: 12px;
+  }
+  .faq-tab-btn:hover { color: var(--text); border-color: var(--text-dim); }
+  .faq-tab-btn.active { background: var(--bg-alt); color: var(--white); }
 
   /* Tables */
   .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -126,10 +144,84 @@
   /* Near miss table doesn't need min-width as wide */
   #nm-table { min-width: 600px; }
 
+  /* Scan tab */
+  .scan-panel { padding: 16px 0; }
+  .scan-row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 16px; }
+  .scan-field { display: flex; flex-direction: column; gap: 4px; }
+  .scan-field label { color: var(--text-dim); font-size: 11px; text-transform: uppercase; }
+  .scan-field input, .scan-field select {
+    background: var(--bg-alt); border: 1px solid var(--border); color: var(--text);
+    font-family: inherit; font-size: 13px; padding: 6px 10px;
+    outline: none;
+  }
+  .scan-field input:focus, .scan-field select:focus { border-color: var(--purple); }
+  .scan-field input { width: 100px; text-transform: uppercase; }
+  .scan-field select { min-width: 160px; }
+  .scan-btn {
+    background: var(--purple); border: none; color: var(--white);
+    font-family: inherit; font-size: 13px; font-weight: bold;
+    padding: 7px 20px; cursor: pointer;
+  }
+  .scan-btn:hover { opacity: 0.85; }
+  .scan-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .scan-status { color: var(--text-dim); font-size: 12px; margin-bottom: 12px; min-height: 18px; }
+  .scan-spinner {
+    display: inline-block; width: 14px; height: 14px;
+    border: 2px solid var(--border); border-top-color: var(--purple);
+    border-radius: 50%; animation: spin 0.8s linear infinite;
+    vertical-align: middle; margin-right: 6px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .scan-result-box { margin-top: 8px; }
+  .scan-verdict {
+    font-size: 16px; font-weight: bold; margin-bottom: 8px; padding: 8px 12px;
+    border-left: 3px solid;
+  }
+  .scan-verdict.pass { color: var(--green); border-color: var(--green); background: rgba(76,175,80,0.08); }
+  .scan-verdict.near-miss { color: var(--orange); border-color: var(--orange); background: rgba(255,127,14,0.08); }
+  .scan-verdict.fail { color: #e74c3c; border-color: #e74c3c; background: rgba(231,76,60,0.08); }
+  .scan-fail-detail { color: var(--text-dim); font-size: 12px; margin-top: 4px; }
+  .scan-fail-detail li { margin-left: 16px; margin-top: 2px; }
+
+  /* FAQ tab */
+  .faq-panel { padding: 16px 0; max-width: 800px; }
+  .faq-section { margin-bottom: 20px; }
+  .faq-section h2 {
+    color: var(--purple); font-size: 16px; margin-bottom: 8px;
+    cursor: pointer; user-select: none;
+  }
+  .faq-section h2::before {
+    content: '\25B6'; display: inline-block; margin-right: 8px; font-size: 10px;
+    transition: transform 0.15s;
+  }
+  .faq-section.open h2::before { transform: rotate(90deg); }
+  .faq-body {
+    display: none; padding: 8px 0 8px 20px; font-size: 12px; line-height: 1.7;
+  }
+  .faq-section.open .faq-body { display: block; }
+  .faq-body p { margin-bottom: 8px; }
+  .faq-body ul { margin-left: 16px; margin-bottom: 8px; }
+  .faq-body li { margin-bottom: 4px; }
+  .faq-body .tag {
+    display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 11px;
+    font-weight: bold;
+  }
+  .faq-body .tag-purple { background: rgba(224,64,251,0.15); color: var(--purple); }
+  .faq-body .tag-cyan { background: rgba(0,188,212,0.15); color: var(--cyan); }
+  .faq-body .tag-orange { background: rgba(255,127,14,0.15); color: var(--orange); }
+  .faq-body .tag-green { background: rgba(76,175,80,0.15); color: var(--green); }
+  .faq-body .tag-r2 { background: rgba(93,173,226,0.15); color: var(--r2-blue); }
+  .faq-body code {
+    background: var(--bg-alt); padding: 1px 5px; border-radius: 3px; font-size: 11px;
+  }
+
   @media (max-width: 768px) {
     body { padding: 10px; font-size: 12px; }
     .header h1 { font-size: 18px; }
     .legend-grid { grid-template-columns: 1fr; }
+    .scan-row { flex-direction: column; align-items: stretch; }
+    .scan-field input { width: 100%; }
   }
 </style>
 </head>
@@ -167,34 +259,170 @@
   </div>
 </div>
 
+<button class="scan-tab-btn" data-tab="scan" id="tab-scan">SCAN A TICKER</button>
+
 <div class="tabs">
-  <button class="tab active" data-tab="all" id="tab-all">ALL</button>
+  <button class="tab active" data-tab="all" id="tab-all">DAILY SCAN</button>
   <button class="tab" data-tab="pass" id="tab-pass">PASS (0)</button>
   <button class="tab" data-tab="nm" id="tab-nm">NEAR MISS (0)</button>
 </div>
 
-<div id="content">
-  <div class="loading" id="loading">Loading scan results...</div>
-  <div class="error-msg" id="error" style="display:none"></div>
+<button class="faq-tab-btn" data-tab="faq" id="tab-faq">FAQ</button>
 
-  <div id="opp-section" style="display:none">
-    <div class="section-title opp">Opportunities</div>
-    <div class="table-wrap">
-      <table id="opp-table">
-        <thead><tr id="opp-head"></tr></thead>
-        <tbody id="opp-body"></tbody>
-      </table>
+<div id="content">
+  <!-- Daily Scan content (existing) -->
+  <div id="daily-content">
+    <div class="loading" id="loading">Loading scan results...</div>
+    <div class="error-msg" id="error" style="display:none"></div>
+
+    <div id="opp-section" style="display:none">
+      <div class="section-title opp">Opportunities</div>
+      <div class="table-wrap">
+        <table id="opp-table">
+          <thead><tr id="opp-head"></tr></thead>
+          <tbody id="opp-body"></tbody>
+        </table>
+      </div>
+      <div class="footnote">Prp+ = purple positive bars out of 10 &nbsp;|&nbsp; Spike = max single bar % of total purple &nbsp;|&nbsp; Wind = sector tailwind &nbsp;|&nbsp; Cyn% = cyan share of positive</div>
     </div>
-    <div class="footnote">Prp+ = purple positive bars out of 10 &nbsp;|&nbsp; Spike = max single bar % of total purple &nbsp;|&nbsp; Wind = sector tailwind &nbsp;|&nbsp; Cyn% = cyan share of positive</div>
+
+    <div id="nm-section" style="display:none">
+      <div class="section-title nm">Near Misses <span style="font-size:12px; font-weight:normal">(failed 1 rule)</span></div>
+      <div class="table-wrap">
+        <table id="nm-table">
+          <thead><tr id="nm-head"></tr></thead>
+          <tbody id="nm-body"></tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
-  <div id="nm-section" style="display:none">
-    <div class="section-title nm">Near Misses <span style="font-size:12px; font-weight:normal">(failed 1 rule)</span></div>
-    <div class="table-wrap">
-      <table id="nm-table">
-        <thead><tr id="nm-head"></tr></thead>
-        <tbody id="nm-body"></tbody>
-      </table>
+  <!-- Live Scan tab -->
+  <div id="scan-content" style="display:none">
+    <div class="scan-panel">
+      <div class="scan-row">
+        <div class="scan-field">
+          <label>Ticker</label>
+          <input type="text" id="scan-ticker" placeholder="AAPL" maxlength="10">
+        </div>
+        <div class="scan-field">
+          <label>Sector ETF</label>
+          <select id="scan-sector">
+            <option value="">-- select --</option>
+            <option value="XLK">XLK (Technology)</option>
+            <option value="XLY">XLY (Consumer Cyclical)</option>
+            <option value="XLF">XLF (Financials)</option>
+            <option value="XLI">XLI (Industrials)</option>
+            <option value="XLV">XLV (Healthcare)</option>
+            <option value="XLE">XLE (Energy)</option>
+            <option value="XLRE">XLRE (Real Estate)</option>
+            <option value="FXI">FXI (China)</option>
+          </select>
+        </div>
+        <div class="scan-field">
+          <label>Sub-sector ETF</label>
+          <select id="scan-subsector">
+            <option value="">-- select sector first --</option>
+          </select>
+        </div>
+        <button class="scan-btn" id="scan-btn" onclick="liveScan()">Scan</button>
+      </div>
+      <div class="scan-status" id="scan-status"></div>
+      <div class="scan-result-box" id="scan-result-box"></div>
+    </div>
+  </div>
+
+  <!-- FAQ tab -->
+  <div id="faq-content" style="display:none">
+    <div class="faq-panel">
+
+      <div class="faq-section open">
+        <h2 onclick="this.parentElement.classList.toggle('open')">What is MFRA?</h2>
+        <div class="faq-body">
+          <p><strong>Multi-Factor Return Attribution</strong> breaks a stock's daily return into four components to answer: <em>"Why is this stock moving?"</em></p>
+          <ul>
+            <li><span class="tag tag-cyan">Cyan</span> &mdash; How much of the move comes from the <strong>broad market</strong> (SPY)</li>
+            <li><span class="tag tag-orange">Orange</span> &mdash; How much comes from the <strong>sector</strong> (e.g., XLK), net of market</li>
+            <li><span class="tag tag-green">Green</span> &mdash; How much comes from the <strong>sub-sector</strong> (e.g., SOXX), net of sector</li>
+            <li><span class="tag tag-purple">Purple</span> &mdash; The <strong>residual</strong> &mdash; the stock's own idiosyncratic momentum that can't be explained by market, sector, or sub-sector</li>
+          </ul>
+          <p>We use a 42-day rolling regression (OLS) to estimate betas for each factor, then multiply beta &times; factor return to get each component's daily contribution. The last 10 days are summed for the "10d" values you see in the table.</p>
+        </div>
+      </div>
+
+      <div class="faq-section">
+        <h2 onclick="this.parentElement.classList.toggle('open')">How to Read the Columns</h2>
+        <div class="faq-body">
+          <ul>
+            <li><strong>Ticker</strong> &mdash; Stock symbol</li>
+            <li><strong class="c-orange">Sector / SubSec</strong> &mdash; The ETFs used as benchmarks. Market is always SPY.</li>
+            <li><strong>Quality</strong> &mdash; "Best" (green background) or "Acceptable". See quality section below.</li>
+            <li><span class="tag tag-r2">R&sup2;</span> &mdash; Model fit. How well the 3 factors explain the stock's moves. Sweet spot: 0.40&ndash;0.70. Too low = noisy model, too high = stock just tracks the index.</li>
+            <li><strong>B Mkt / B Sec / B Sub</strong> &mdash; Beta (sensitivity) to each factor. e.g., B Mkt = 1.5 means the stock moves 1.5% for every 1% SPY move.</li>
+            <li><span class="tag tag-purple">Purple 10d</span> &mdash; Sum of idiosyncratic daily contributions over the last 10 bars. This is the key signal &mdash; positive purple = the stock has its own momentum beyond what the market/sector explains.</li>
+            <li><span class="tag tag-cyan">Cyan 10d</span> &mdash; Market contribution (10d sum)</li>
+            <li><span class="tag tag-orange">Orange 10d</span> &mdash; Sector contribution (10d sum, net of market)</li>
+            <li><span class="tag tag-green">Green 10d</span> &mdash; Sub-sector contribution (10d sum, net of sector)</li>
+            <li><strong>Prp+</strong> &mdash; How many of the last 10 daily residual bars were positive (e.g., 7/10)</li>
+            <li><strong>Spike%</strong> &mdash; The largest single bar as a percentage of total positive purple. Flags one-off moves vs. sustained momentum.</li>
+            <li><strong>Wind</strong> &mdash; Sector tailwind. "Yes" if orange or green &ge; 0 (sector/sub-sector not dragging the stock down).</li>
+            <li><strong>Cyn%</strong> &mdash; Cyan's share of total positive contributions. If too high, the stock is just riding the market.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-section">
+        <h2 onclick="this.parentElement.classList.toggle('open')">The 5 Entry Criteria</h2>
+        <div class="faq-body">
+          <p>All 5 must pass for a stock to qualify as an opportunity:</p>
+          <ul>
+            <li><strong>1. R&sup2; in Range (0.40&ndash;0.70)</strong> &mdash; The model must explain 40&ndash;70% of variance. Below 0.40 = too much noise, the decomposition isn't reliable. Above 0.70 = the stock is just tracking its ETF &mdash; no alpha edge.</li>
+            <li><strong>2. Purple Sustained (5+/10)</strong> &mdash; At least 5 of the last 10 daily residual bars must be positive. This filters for <em>sustained</em> idiosyncratic momentum, not just a one-day pop.</li>
+            <li><strong>3. No Purple Spike (&le;60%)</strong> &mdash; No single daily bar can be more than 60% of total positive purple. Prevents a single gap-up day from looking like momentum.</li>
+            <li><strong>4. Sector Tailwind</strong> &mdash; Either orange (sector) or green (sub-sector) 10d sum must be &ge; 0. We want the sector or sub-sector at least not dragging the stock down.</li>
+            <li><strong>5. Cyan &lt; 70%</strong> &mdash; Market contribution can't be more than 70% of total positive contributions. If cyan dominates, the stock is just riding a broad market rally.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-section">
+        <h2 onclick="this.parentElement.classList.toggle('open')">Quality: Best vs. Acceptable</h2>
+        <div class="faq-body">
+          <p>Stocks that pass all 5 criteria are further classified:</p>
+          <ul>
+            <li><strong class="v-best">Best</strong> (green row) &mdash; R&sup2; between 0.50&ndash;0.65 (tighter sweet spot), 7+ purple positive bars (out of 10), AND positive sector tailwind (orange or green &gt; 0). These are the highest-conviction setups.</li>
+            <li><strong>Acceptable</strong> &mdash; Passes all 5 criteria but doesn't meet the stricter "Best" thresholds. Still a valid setup, just slightly less ideal.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-section">
+        <h2 onclick="this.parentElement.classList.toggle('open')">What Are Near Misses?</h2>
+        <div class="faq-body">
+          <p>A <span class="v-warn">near miss</span> is a stock that failed exactly <strong>one</strong> of the 5 entry criteria. These are worth watching because:</p>
+          <ul>
+            <li>They're close to qualifying and may pass tomorrow</li>
+            <li>The "Failed" column tells you which single rule they missed</li>
+            <li>The "Note" column gives the specific value that failed (e.g., "R&sup2;=0.38 outside [0.4, 0.7]")</li>
+          </ul>
+          <p>Stocks that fail 2+ criteria are not shown &mdash; they're too far from qualifying to be actionable.</p>
+        </div>
+      </div>
+
+      <div class="faq-section">
+        <h2 onclick="this.parentElement.classList.toggle('open')">Using the Live Scan Tab</h2>
+        <div class="faq-body">
+          <p>The <strong>SCAN</strong> tab lets you analyze any ticker on demand:</p>
+          <ul>
+            <li>Enter a ticker symbol (e.g., AAPL, NVDA, COIN)</li>
+            <li>The scanner auto-detects the stock's sector and suggests the appropriate sector ETF and sub-sector ETF</li>
+            <li>You can override either dropdown before scanning</li>
+            <li>Results show the same columns as the daily scan, plus a pass/fail verdict with details</li>
+            <li>The scan fetches ~6 months of price data from Yahoo Finance and runs the full MFRA analysis in your browser</li>
+          </ul>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -203,13 +431,766 @@
 
 <script>
 (function() {
-  // State
+  // ============================================================
+  // SECTOR / SUB-SECTOR MAPPING
+  // ============================================================
+
+  const SECTOR_MAP = {
+    "Technology":          "XLK",
+    "Consumer Cyclical":   "XLY",
+    "Consumer Defensive":  "XLY",
+    "Financial Services":  "XLF",
+    "Industrials":         "XLI",
+    "Healthcare":          "XLV",
+    "Energy":              "XLE",
+    "Real Estate":         "XLRE",
+    "Basic Materials":     "XLI",
+    "Utilities":           "XLE",
+    "Communication Services": "XLK",
+  };
+
+  const SUB_SECTOR_OPTIONS = {
+    "XLK": [
+      { etf: "SOXX", label: "Semiconductors" },
+      { etf: "IGV",  label: "Software" },
+      { etf: "CIBR", label: "Cybersecurity" },
+      { etf: "XLK",  label: "Tech (broad)" },
+    ],
+    "XLY": [
+      { etf: "IBUY", label: "E-Commerce" },
+      { etf: "BOTZ", label: "Robotics/AI" },
+      { etf: "XLY",  label: "Consumer (broad)" },
+    ],
+    "XLF": [
+      { etf: "IPAY", label: "Digital Payments" },
+      { etf: "WGMI", label: "Crypto/Mining" },
+      { etf: "XLF",  label: "Financials (broad)" },
+    ],
+    "XLI": [
+      { etf: "ITA",  label: "Aerospace & Defense" },
+      { etf: "UFO",  label: "Space" },
+      { etf: "ROBO", label: "Robotics & Automation" },
+      { etf: "XLI",  label: "Industrials (broad)" },
+    ],
+    "XLV": [
+      { etf: "XBI",  label: "Biotech" },
+      { etf: "ARKG", label: "Genomics" },
+      { etf: "IBB",  label: "Biotech (large cap)" },
+      { etf: "ROBO", label: "Surgical Robotics" },
+      { etf: "XLV",  label: "Healthcare (broad)" },
+    ],
+    "XLE": [
+      { etf: "URA",  label: "Uranium" },
+      { etf: "TAN",  label: "Solar" },
+      { etf: "XLE",  label: "Energy (broad)" },
+    ],
+    "XLRE": [
+      { etf: "XLRE", label: "Real Estate (broad)" },
+    ],
+    "FXI": [
+      { etf: "KWEB", label: "China Internet" },
+      { etf: "FXI",  label: "China (broad)" },
+    ],
+  };
+
+  const INDUSTRY_TO_SUBSECTOR = {
+    "Semiconductors":                "SOXX",
+    "Semiconductor Equipment & Materials": "SOXX",
+    "Software—Application":          "IGV",
+    "Software—Infrastructure":       "IGV",
+    "Information Technology Services":"CIBR",
+    "Internet Content & Information": "IGV",
+    "Electronic Components":         "SOXX",
+    "Computer Hardware":             "XLK",
+    "Consumer Electronics":          "XLK",
+    "Scientific & Technical Instruments": "ROBO",
+    "Communication Equipment":       "XLK",
+    "Internet Retail":               "IBUY",
+    "Specialty Retail":              "XLY",
+    "Auto Manufacturers":            "BOTZ",
+    "Restaurants":                   "XLY",
+    "Apparel Retail":                "XLY",
+    "Leisure":                       "XLY",
+    "Discount Stores":               "XLY",
+    "Resorts & Casinos":             "XLY",
+    "Entertainment":                 "XLY",
+    "Credit Services":               "IPAY",
+    "Financial Data & Stock Exchanges":"IPAY",
+    "Capital Markets":               "IPAY",
+    "Banks—Diversified":             "XLF",
+    "Insurance—Diversified":         "XLF",
+    "Biotechnology":                 "XBI",
+    "Drug Manufacturers—General":    "XBI",
+    "Drug Manufacturers—Specialty & Generic": "XBI",
+    "Medical Devices":               "XLV",
+    "Health Information Services":   "XLV",
+    "Diagnostics & Research":        "XBI",
+    "Aerospace & Defense":           "ITA",
+    "Specialty Industrial Machinery":"ROBO",
+    "Industrial Distribution":       "XLI",
+    "Railroads":                     "XLI",
+    "Integrated Freight & Logistics":"XLI",
+    "Uranium":                       "URA",
+    "Solar":                         "TAN",
+    "Oil & Gas E&P":                 "XLE",
+    "Oil & Gas Integrated":          "XLE",
+    "REIT—Residential":              "XLRE",
+    "REIT—Diversified":              "XLRE",
+    "Real Estate Services":          "XLRE",
+    "Real Estate—Development":       "XLRE",
+  };
+
+  // Known ticker -> {sector_etf, sub_sector_etf} from watchlist
+  const KNOWN_TICKERS = {
+    "AAPL":["XLK","IGV"],"AMZN":["XLY","IBUY"],"AVGO":["XLK","SOXX"],"AMD":["XLK","SOXX"],
+    "NVDA":["XLK","SOXX"],"PLTR":["XLK","IGV"],"MU":["XLK","SOXX"],"ZS":["XLK","CIBR"],
+    "TSLA":["XLY","BOTZ"],"META":["XLK","IGV"],"CRWD":["XLK","CIBR"],"GOOG":["XLK","IGV"],
+    "MSFT":["XLK","IGV"],"COIN":["XLF","WGMI"],"PYPL":["XLF","IPAY"],"UBER":["XLY","XLY"],
+    "INTC":["XLK","SOXX"],"RKLB":["XLI","UFO"],"MRVL":["XLK","SOXX"],"QCOM":["XLK","SOXX"],
+    "SHOP":["XLY","IBUY"],"DIS":["XLY","XLY"],"M":["XLY","XLY"],"NKE":["XLY","XLY"],
+    "TGT":["XLY","XLY"],"SPOT":["XLK","IGV"],"UPS":["XLI","XLI"],"IPHA":["XLV","XBI"],
+    "GILD":["XLV","XBI"],"BBIO":["XLV","XBI"],"LLY":["XLV","XBI"],"CLSK":["XLF","WGMI"],
+    "MARA":["XLF","WGMI"],"NFLX":["XLY","XLY"],"SNOW":["XLK","IGV"],"SOFI":["XLF","IPAY"],
+    "NU":["XLF","IPAY"],"HOOD":["XLF","IPAY"],"OKLO":["XLE","URA"],"ASTS":["XLI","UFO"],
+    "IONQ":["XLK","XLK"],"AMKR":["XLK","SOXX"],"SKYT":["XLK","SOXX"],"PLAB":["XLK","SOXX"],
+    "AVAV":["XLI","ITA"],"KTOS":["XLI","ITA"],"BA":["XLI","ITA"],"KRMN":["XLI","ITA"],
+    "ONDS":["XLI","ITA"],"RCAT":["XLI","ITA"],"MRCY":["XLI","ITA"],"ABCL":["XLV","XBI"],"PRME":["XLV","XBI"],
+    "TEM":["XLV","XBI"],"ADBE":["XLK","IGV"],"CRM":["XLK","IGV"],"PATH":["XLK","IGV"],
+    "DOCN":["XLK","IGV"],"BRZE":["XLK","IGV"],"GTLB":["XLK","IGV"],"FRSH":["XLK","IGV"],
+    "ZETA":["XLK","IGV"],"OSCR":["XLV","XLV"],"TER":["XLI","ROBO"],"ROK":["XLI","ROBO"],
+    "NOVT":["XLI","ROBO"],"ZBRA":["XLI","ROBO"],"OUST":["XLI","ROBO"],"ISRG":["XLV","ROBO"],
+    "CCJ":["XLE","URA"],"LEU":["XLE","URA"],"UUUU":["XLE","URA"],"FLY":["XLI","UFO"],
+    "SATS":["XLI","UFO"],"RDW":["XLI","UFO"],"LUNR":["XLI","UFO"],"FSLR":["XLE","TAN"],
+    "NXT":["XLE","TAN"],"TEL":["XLE","TAN"],"RUN":["XLE","TAN"],"RKT":["XLRE","XLRE"],
+    "OPEN":["XLRE","XLRE"],"Z":["XLRE","XLRE"],"BABA":["FXI","KWEB"],"BIDU":["FXI","KWEB"],
+    "XPEV":["FXI","KWEB"],"BE":["XLE","TAN"],"LMND":["XLF","IPAY"],
+    // Top traded — Tech
+    "ORCL":["XLK","IGV"],"NOW":["XLK","IGV"],"INTU":["XLK","IGV"],"WDAY":["XLK","IGV"],
+    "DDOG":["XLK","IGV"],"HUBS":["XLK","IGV"],"MDB":["XLK","IGV"],"ZM":["XLK","IGV"],
+    "TWLO":["XLK","IGV"],"NET":["XLK","CIBR"],"PANW":["XLK","CIBR"],"FTNT":["XLK","CIBR"],
+    "CYBR":["XLK","CIBR"],"S":["XLK","CIBR"],"TSM":["XLK","SOXX"],"ASML":["XLK","SOXX"],
+    "ARM":["XLK","SOXX"],"AMAT":["XLK","SOXX"],"LRCX":["XLK","SOXX"],"KLAC":["XLK","SOXX"],
+    "TXN":["XLK","SOXX"],"ADI":["XLK","SOXX"],"NXPI":["XLK","SOXX"],"ON":["XLK","SOXX"],
+    "SMCI":["XLK","XLK"],"DELL":["XLK","XLK"],"ANET":["XLK","XLK"],"CSCO":["XLK","XLK"],
+    "IBM":["XLK","XLK"],"SNPS":["XLK","SOXX"],"CDNS":["XLK","SOXX"],"SOUN":["XLK","IGV"],
+    "AI":["XLK","IGV"],"TEAM":["XLK","IGV"],"CFLT":["XLK","IGV"],
+    // Top traded — Consumer
+    "ETSY":["XLY","IBUY"],"W":["XLY","IBUY"],"CVNA":["XLY","IBUY"],"MELI":["XLY","IBUY"],
+    "DKNG":["XLY","XLY"],"RIVN":["XLY","XLY"],"LCID":["XLY","XLY"],"GME":["XLY","XLY"],
+    "AMC":["XLY","XLY"],"F":["XLY","XLY"],"GM":["XLY","XLY"],"HD":["XLY","XLY"],
+    "LOW":["XLY","XLY"],"COST":["XLY","XLY"],"WMT":["XLY","XLY"],"SBUX":["XLY","XLY"],
+    "CMG":["XLY","XLY"],"MCD":["XLY","XLY"],"LULU":["XLY","XLY"],"RBLX":["XLY","XLY"],
+    // Top traded — Financials
+    "JPM":["XLF","XLF"],"BAC":["XLF","XLF"],"GS":["XLF","XLF"],"MS":["XLF","XLF"],
+    "V":["XLF","IPAY"],"MA":["XLF","IPAY"],"SQ":["XLF","IPAY"],"AFRM":["XLF","IPAY"],
+    "UPST":["XLF","IPAY"],"COF":["XLF","IPAY"],"DFS":["XLF","IPAY"],"AXP":["XLF","IPAY"],
+    "MSTR":["XLF","WGMI"],"RIOT":["XLF","WGMI"],"HUT":["XLF","WGMI"],"IREN":["XLF","WGMI"],
+    "BX":["XLF","XLF"],"KKR":["XLF","XLF"],"SCHW":["XLF","XLF"],"C":["XLF","XLF"],
+    // Top traded — Industrials
+    "LMT":["XLI","ITA"],"RTX":["XLI","ITA"],"NOC":["XLI","ITA"],"GD":["XLI","ITA"],
+    "AXON":["XLI","ITA"],"CAT":["XLI","XLI"],"DE":["XLI","XLI"],"HON":["XLI","XLI"],
+    "GE":["XLI","XLI"],"DAL":["XLI","XLI"],"UAL":["XLI","XLI"],"AAL":["XLI","XLI"],
+    "FDX":["XLI","XLI"],"CSX":["XLI","XLI"],"UNP":["XLI","XLI"],
+    // Top traded — Healthcare
+    "JNJ":["XLV","XLV"],"PFE":["XLV","XLV"],"MRK":["XLV","XLV"],"ABBV":["XLV","XLV"],
+    "UNH":["XLV","XLV"],"MRNA":["XLV","IBB"],"REGN":["XLV","IBB"],"VRTX":["XLV","IBB"],
+    "CRSP":["XLV","ARKG"],"NTLA":["XLV","ARKG"],"ILMN":["XLV","ARKG"],
+    // Top traded — Energy
+    "XOM":["XLE","XLE"],"CVX":["XLE","XLE"],"COP":["XLE","XLE"],"OXY":["XLE","XLE"],
+    "DVN":["XLE","XLE"],"SLB":["XLE","XLE"],"HAL":["XLE","XLE"],
+    "ENPH":["XLE","TAN"],"SMR":["XLE","URA"],"DNN":["XLE","URA"],
+    // Top traded — Real Estate & China
+    "PLD":["XLRE","XLRE"],"AMT":["XLRE","XLRE"],"O":["XLRE","XLRE"],
+    "PDD":["FXI","KWEB"],"JD":["FXI","KWEB"],"NIO":["FXI","FXI"],"LI":["FXI","FXI"],
+  };
+
+  // ============================================================
+  // MFRA CONSTANTS (from config.py)
+  // ============================================================
+
+  const OLS_WINDOW = 42;
+  const ROLLING_SUM_WINDOW = 10;
+  const R2_MIN = 0.4;
+  const R2_MAX = 0.7;
+  const PURPLE_POSITIVE_MIN_DAYS = 5;
+  const PURPLE_DOMINANCE_MAX = 0.60;
+  const CYAN_DOMINANCE_MAX = 0.70;
+  const SECTOR_TAILWIND_TOLERANCE = -0.001;
+  const BEST_R2_MIN = 0.50;
+  const BEST_R2_MAX = 0.65;
+  const BEST_PURPLE_MIN_DAYS = 7;
+
+  // ============================================================
+  // YAHOO FINANCE DATA FETCHING
+  // ============================================================
+
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  async function fetchPrices(ticker) {
+    const url = '/api/chart/' + encodeURIComponent(ticker) + '?range=6mo&interval=1d';
+    for (let attempt = 0; attempt < 4; attempt++) {
+      if (attempt > 0) await sleep(2000 * attempt);
+      try {
+        const resp = await fetch(url);
+        if (resp.status === 429) {
+          if (attempt < 3) continue;
+          throw new Error('Rate limited fetching ' + ticker + '. Try again in ~30 seconds.');
+        }
+        if (!resp.ok) throw new Error('Failed to fetch ' + ticker + ' (HTTP ' + resp.status + ')');
+        const json = await resp.json();
+        const result = json.chart && json.chart.result && json.chart.result[0];
+        if (!result) throw new Error('No data returned for ' + ticker);
+        const timestamps = result.timestamp;
+        const closes = result.indicators.adjclose
+          ? result.indicators.adjclose[0].adjclose
+          : result.indicators.quote[0].close;
+        if (!timestamps || !closes) throw new Error('Missing price data for ' + ticker);
+        const prices = [];
+        for (let i = 0; i < timestamps.length; i++) {
+          if (closes[i] != null) {
+            prices.push({ date: timestamps[i], close: closes[i] });
+          }
+        }
+        return prices;
+      } catch (e) {
+        if (attempt < 3 && e.message.indexOf('Rate limited') === -1) throw e;
+        if (attempt >= 3) throw e;
+      }
+    }
+  }
+
+  async function fetchSectorInfo(ticker) {
+    try {
+      const url = '/api/quote/' + encodeURIComponent(ticker) + '?modules=assetProfile';
+      const resp = await fetch(url);
+      if (!resp.ok) return null;
+      const json = await resp.json();
+      const profile = json.quoteSummary && json.quoteSummary.result &&
+                      json.quoteSummary.result[0] && json.quoteSummary.result[0].assetProfile;
+      if (!profile) return null;
+      return { sector: profile.sector || '', industry: profile.industry || '' };
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // ============================================================
+  // MFRA JS ENGINE
+  // ============================================================
+
+  function computeReturns(prices) {
+    // prices = array of {date, close}
+    const returns = [];
+    for (let i = 1; i < prices.length; i++) {
+      returns.push({
+        date: prices[i].date,
+        ret: (prices[i].close - prices[i - 1].close) / prices[i - 1].close,
+      });
+    }
+    return returns;
+  }
+
+  function alignReturns(stockRet, mktRet, secRet, subRet) {
+    // Build date -> index maps
+    const mktMap = new Map(); mktRet.forEach((r, i) => mktMap.set(r.date, i));
+    const secMap = new Map(); secRet.forEach((r, i) => secMap.set(r.date, i));
+    const subMap = new Map(); subRet.forEach((r, i) => subMap.set(r.date, i));
+    const aligned = { stock: [], mkt: [], sec: [], sub: [] };
+    for (const sr of stockRet) {
+      if (mktMap.has(sr.date) && secMap.has(sr.date) && subMap.has(sr.date)) {
+        aligned.stock.push(sr.ret);
+        aligned.mkt.push(mktRet[mktMap.get(sr.date)].ret);
+        aligned.sec.push(secRet[secMap.get(sr.date)].ret);
+        aligned.sub.push(subRet[subMap.get(sr.date)].ret);
+      }
+    }
+    return aligned;
+  }
+
+  function orthogonalize(mkt, sec, sub) {
+    const n = mkt.length;
+    const fMkt = new Float64Array(n);
+    const fSec = new Float64Array(n);
+    const fSub = new Float64Array(n);
+    for (let i = 0; i < n; i++) {
+      fMkt[i] = mkt[i];
+      fSec[i] = sec[i] - mkt[i];
+      fSub[i] = sub[i] - sec[i];
+    }
+    return { fMkt, fSec, fSub };
+  }
+
+  function solveLinearSystem(A, b, size) {
+    // Gaussian elimination with partial pivoting, size x size
+    // A is row-major flat array, b is array of size
+    const a = new Float64Array(A);
+    const x = new Float64Array(b);
+    for (let col = 0; col < size; col++) {
+      // Partial pivot
+      let maxVal = Math.abs(a[col * size + col]);
+      let maxRow = col;
+      for (let row = col + 1; row < size; row++) {
+        const v = Math.abs(a[row * size + col]);
+        if (v > maxVal) { maxVal = v; maxRow = row; }
+      }
+      if (maxVal < 1e-20) return null; // singular
+      if (maxRow !== col) {
+        // Swap rows
+        for (let j = 0; j < size; j++) {
+          const tmp = a[col * size + j]; a[col * size + j] = a[maxRow * size + j]; a[maxRow * size + j] = tmp;
+        }
+        const tmp = x[col]; x[col] = x[maxRow]; x[maxRow] = tmp;
+      }
+      // Eliminate below
+      for (let row = col + 1; row < size; row++) {
+        const factor = a[row * size + col] / a[col * size + col];
+        for (let j = col; j < size; j++) {
+          a[row * size + j] -= factor * a[col * size + j];
+        }
+        x[row] -= factor * x[col];
+      }
+    }
+    // Back substitution
+    for (let row = size - 1; row >= 0; row--) {
+      for (let j = row + 1; j < size; j++) {
+        x[row] -= a[row * size + j] * x[j];
+      }
+      x[row] /= a[row * size + row];
+    }
+    return x;
+  }
+
+  function rollingOLS(y, X, nFactors, window) {
+    // X columns: [1, fMkt, fSec, fSub] or [1, fMkt, fSec]
+    const n = y.length;
+    const p = nFactors + 1; // +1 for intercept
+    const betas = new Array(n).fill(null);
+    const r2 = new Float64Array(n).fill(NaN);
+
+    for (let i = window - 1; i < n; i++) {
+      const start = i - window + 1;
+      // Build X'X and X'y
+      const XtX = new Float64Array(p * p);
+      const Xty = new Float64Array(p);
+      let ySum = 0;
+      for (let t = start; t <= i; t++) {
+        const row = [];
+        row.push(1); // intercept
+        for (let f = 0; f < nFactors; f++) row.push(X[f][t]);
+        for (let a = 0; a < p; a++) {
+          for (let b = 0; b < p; b++) {
+            XtX[a * p + b] += row[a] * row[b];
+          }
+          Xty[a] += row[a] * y[t];
+        }
+        ySum += y[t];
+      }
+
+      const b = solveLinearSystem(XtX, Xty, p);
+      if (!b) continue;
+      betas[i] = Array.from(b);
+
+      // Compute R²
+      const yMean = ySum / window;
+      let ssRes = 0, ssTot = 0;
+      for (let t = start; t <= i; t++) {
+        let yHat = b[0]; // intercept
+        for (let f = 0; f < nFactors; f++) yHat += b[f + 1] * X[f][t];
+        ssRes += (y[t] - yHat) ** 2;
+        ssTot += (y[t] - yMean) ** 2;
+      }
+      r2[i] = ssTot > 1e-20 ? 1.0 - ssRes / ssTot : 0;
+    }
+    return { betas, r2 };
+  }
+
+  function rollingSum(arr, window) {
+    const n = arr.length;
+    const result = new Float64Array(n).fill(NaN);
+    for (let i = window - 1; i < n; i++) {
+      let s = 0;
+      for (let j = i - window + 1; j <= i; j++) s += arr[j];
+      result[i] = s;
+    }
+    return result;
+  }
+
+  function runMFRA(stockPrices, mktPrices, secPrices, subPrices) {
+    const stockRet = computeReturns(stockPrices);
+    const mktRet = computeReturns(mktPrices);
+    const secRet = computeReturns(secPrices);
+    const subRet = computeReturns(subPrices);
+
+    const aligned = alignReturns(stockRet, mktRet, secRet, subRet);
+    const n = aligned.stock.length;
+
+    if (n < OLS_WINDOW + ROLLING_SUM_WINDOW) {
+      return { success: false, error: 'Insufficient data: ' + n + ' days (need ' + (OLS_WINDOW + ROLLING_SUM_WINDOW) + ')' };
+    }
+
+    const { fMkt, fSec, fSub } = orthogonalize(aligned.mkt, aligned.sec, aligned.sub);
+
+    // Check if sub-sector is degenerate
+    let subAbsSum = 0;
+    for (let i = 0; i < n; i++) subAbsSum += Math.abs(fSub[i]);
+    const subIsDegenerate = subAbsSum < 1e-12;
+
+    let olsResult, nFactors;
+    if (subIsDegenerate) {
+      nFactors = 2;
+      olsResult = rollingOLS(aligned.stock, [fMkt, fSec], nFactors, OLS_WINDOW);
+    } else {
+      nFactors = 3;
+      olsResult = rollingOLS(aligned.stock, [fMkt, fSec, fSub], nFactors, OLS_WINDOW);
+    }
+
+    // Compute contributions
+    const mktContrib = new Float64Array(n);
+    const secContrib = new Float64Array(n);
+    const subContrib = new Float64Array(n);
+    const residContrib = new Float64Array(n);
+
+    for (let i = 0; i < n; i++) {
+      const b = olsResult.betas[i];
+      if (!b) { mktContrib[i] = NaN; secContrib[i] = NaN; subContrib[i] = NaN; residContrib[i] = NaN; continue; }
+      mktContrib[i] = b[1] * fMkt[i] * 100;
+      secContrib[i] = b[2] * fSec[i] * 100;
+      subContrib[i] = subIsDegenerate ? 0 : b[3] * fSub[i] * 100;
+      residContrib[i] = aligned.stock[i] * 100 - mktContrib[i] - secContrib[i] - subContrib[i];
+    }
+
+    // Rolling sums
+    const mktRoll = rollingSum(mktContrib, ROLLING_SUM_WINDOW);
+    const secRoll = rollingSum(secContrib, ROLLING_SUM_WINDOW);
+    const subRoll = rollingSum(subContrib, ROLLING_SUM_WINDOW);
+    const residRoll = rollingSum(residContrib, ROLLING_SUM_WINDOW);
+
+    // Find last valid index
+    let lastValid = -1;
+    for (let i = n - 1; i >= 0; i--) {
+      if (!isNaN(olsResult.r2[i])) { lastValid = i; break; }
+    }
+    if (lastValid < 0) return { success: false, error: 'No valid OLS results' };
+
+    const b = olsResult.betas[lastValid];
+    const dailyResiduals10d = [];
+    const startI = Math.max(0, lastValid - ROLLING_SUM_WINDOW + 1);
+    for (let i = startI; i <= lastValid; i++) {
+      dailyResiduals10d.push(residContrib[i]);
+    }
+
+    return {
+      success: true,
+      r_squared: olsResult.r2[lastValid],
+      betas: {
+        mkt: b[1],
+        sec: b[2],
+        sub: subIsDegenerate ? 0 : b[3],
+      },
+      contributions_10d: {
+        mkt:   isNaN(mktRoll[lastValid]) ? 0 : mktRoll[lastValid],
+        sec:   isNaN(secRoll[lastValid]) ? 0 : secRoll[lastValid],
+        sub:   isNaN(subRoll[lastValid]) ? 0 : subRoll[lastValid],
+        resid: isNaN(residRoll[lastValid]) ? 0 : residRoll[lastValid],
+      },
+      daily_residuals_10d: dailyResiduals10d,
+    };
+  }
+
+  // ============================================================
+  // ENTRY CRITERIA EVALUATION
+  // ============================================================
+
+  function evaluateCriteria(mfra) {
+    const failedRules = [];
+    const details = {};
+    const contribs = mfra.contributions_10d;
+    const residuals = mfra.daily_residuals_10d;
+
+    // Rule 1: R² range
+    if (!(R2_MIN <= mfra.r_squared && mfra.r_squared <= R2_MAX)) {
+      failedRules.push('r_squared');
+    }
+
+    // Rule 2: Sustained purple
+    let purplePosCount = 0;
+    for (const r of residuals) if (r > 0) purplePosCount++;
+    details.purple_positive_count = purplePosCount;
+    if (purplePosCount < PURPLE_POSITIVE_MIN_DAYS) {
+      failedRules.push('purple_sustained');
+    }
+
+    // Rule 3: No purple spike
+    const positiveResiduals = residuals.filter(r => r > 0);
+    if (positiveResiduals.length > 0) {
+      const totalPosPurple = positiveResiduals.reduce((a, b) => a + b, 0);
+      const maxSingle = Math.max(...residuals.map(r => Math.abs(r)));
+      const dominance = totalPosPurple > 0 ? maxSingle / totalPosPurple : 0;
+      details.purple_dominance = dominance;
+      if (dominance > PURPLE_DOMINANCE_MAX) {
+        failedRules.push('purple_spike');
+      }
+    } else {
+      details.purple_dominance = 0;
+    }
+
+    // Rule 4: Sector tailwind
+    const orange10d = contribs.sec || 0;
+    const green10d = contribs.sub || 0;
+    details.has_tailwind = orange10d >= SECTOR_TAILWIND_TOLERANCE || green10d >= SECTOR_TAILWIND_TOLERANCE;
+    if (!details.has_tailwind) {
+      failedRules.push('sector_tailwind');
+    }
+
+    // Rule 5: Cyan dominance
+    const mkt10d = contribs.mkt || 0;
+    const allContribs = [contribs.mkt || 0, contribs.sec || 0, contribs.sub || 0, contribs.resid || 0];
+    const totalPositive = allContribs.filter(c => c > 0).reduce((a, b) => a + b, 0);
+    const cyanShare = (totalPositive > 0 && mkt10d > 0) ? mkt10d / totalPositive : 0;
+    details.cyan_share = cyanShare;
+    if (totalPositive > 0 && mkt10d > 0 && cyanShare > CYAN_DOMINANCE_MAX) {
+      failedRules.push('cyan_dominated');
+    }
+
+    // Quality
+    const passed = failedRules.length === 0;
+    let quality = '';
+    if (passed) {
+      const isBest = BEST_R2_MIN <= mfra.r_squared && mfra.r_squared <= BEST_R2_MAX
+                     && purplePosCount >= BEST_PURPLE_MIN_DAYS
+                     && (orange10d > 0 || green10d > 0);
+      quality = isBest ? 'Best' : 'Acceptable';
+    }
+
+    return {
+      passed,
+      quality,
+      failed_rules: failedRules,
+      criteria: details,
+    };
+  }
+
+  // ============================================================
+  // SCAN TAB LOGIC
+  // ============================================================
+
+  const sectorSelect = document.getElementById('scan-sector');
+  const subSelect = document.getElementById('scan-subsector');
+  const tickerInput = document.getElementById('scan-ticker');
+  const sectorInfoCache = {}; // ticker -> {sector, industry}
+  let lastDetectedTicker = '';
+
+  sectorSelect.addEventListener('change', function() {
+    populateSubSectors(this.value);
+  });
+
+  tickerInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') liveScan();
+  });
+
+  function populateSubSectors(sectorEtf, autoSelectSub) {
+    subSelect.innerHTML = '';
+    const options = SUB_SECTOR_OPTIONS[sectorEtf] || [];
+    if (options.length === 0) {
+      subSelect.innerHTML = '<option value="">-- select sector first --</option>';
+      return;
+    }
+    options.forEach(opt => {
+      const o = document.createElement('option');
+      o.value = opt.etf;
+      o.textContent = opt.etf + ' (' + opt.label + ')';
+      subSelect.appendChild(o);
+    });
+    if (autoSelectSub) subSelect.value = autoSelectSub;
+  }
+
+  async function autoDetectSector(ticker, statusEl) {
+    // 1. Check known watchlist tickers first (instant, no API call)
+    if (KNOWN_TICKERS[ticker]) {
+      const [sec, sub] = KNOWN_TICKERS[ticker];
+      sectorSelect.value = sec;
+      populateSubSectors(sec, sub);
+      statusEl.textContent = 'Matched: ' + ticker + ' \u2192 ' + sec + ' / ' + sub;
+      return true;
+    }
+
+    // 2. Check session cache
+    if (sectorInfoCache[ticker]) {
+      return applyDetectedSector(sectorInfoCache[ticker], statusEl);
+    }
+
+    // 3. Try Yahoo Finance API
+    statusEl.innerHTML = '<span class="scan-spinner"></span>Detecting sector for ' + ticker + '...';
+    const info = await fetchSectorInfo(ticker);
+    if (info && info.sector) {
+      sectorInfoCache[ticker] = info;
+      return applyDetectedSector(info, statusEl);
+    }
+
+    statusEl.textContent = 'Could not auto-detect sector for ' + ticker + '. Select manually.';
+    return false;
+  }
+
+  function applyDetectedSector(info, statusEl) {
+    const sectorEtf = SECTOR_MAP[info.sector] || '';
+    if (sectorEtf) {
+      sectorSelect.value = sectorEtf;
+      const suggestedSub = INDUSTRY_TO_SUBSECTOR[info.industry] || '';
+      populateSubSectors(sectorEtf, suggestedSub);
+      statusEl.textContent = 'Detected: ' + info.sector + ' / ' + info.industry + ' \u2192 ' + sectorEtf + (suggestedSub ? ' / ' + suggestedSub : '');
+      return true;
+    } else {
+      statusEl.textContent = 'Sector "' + info.sector + '" not mapped. Select manually.';
+      return false;
+    }
+  }
+
+  window.liveScan = async function() {
+    const ticker = tickerInput.value.trim().toUpperCase();
+    const statusEl = document.getElementById('scan-status');
+    const resultBox = document.getElementById('scan-result-box');
+    const btn = document.getElementById('scan-btn');
+
+    if (!ticker) { statusEl.textContent = 'Enter a ticker symbol.'; return; }
+
+    btn.disabled = true;
+    resultBox.innerHTML = '';
+
+    // Auto-detect sector/sub-sector if not already set for this ticker
+    if (!sectorSelect.value || !subSelect.value || lastDetectedTicker !== ticker) {
+      const detected = await autoDetectSector(ticker, statusEl);
+      if (!detected || !sectorSelect.value || !subSelect.value) {
+        statusEl.textContent = 'Could not auto-detect. Select sector and sub-sector, then scan again.';
+        btn.disabled = false;
+        return;
+      }
+      lastDetectedTicker = ticker;
+    }
+
+    const sectorEtf = sectorSelect.value;
+    const subEtf = subSelect.value;
+
+    try {
+      // Fetch price series sequentially to avoid Yahoo rate limits
+      const tickers = [ticker, 'SPY', sectorEtf, subEtf];
+      const uniqueTickers = [...new Set(tickers)];
+      const priceMap = {};
+      for (let i = 0; i < uniqueTickers.length; i++) {
+        if (i > 0) await sleep(1000);
+        statusEl.innerHTML = '<span class="scan-spinner"></span>Fetching ' + uniqueTickers[i] + ' (' + (i + 1) + '/' + uniqueTickers.length + ')...';
+        priceMap[uniqueTickers[i]] = await fetchPrices(uniqueTickers[i]);
+      }
+
+      statusEl.innerHTML = '<span class="scan-spinner"></span>Running MFRA analysis...';
+
+      // Run MFRA
+      const mfra = runMFRA(priceMap[ticker], priceMap['SPY'], priceMap[sectorEtf], priceMap[subEtf]);
+      if (!mfra.success) {
+        statusEl.textContent = '';
+        resultBox.innerHTML = '<div class="scan-verdict fail">Error: ' + escapeHtml(mfra.error) + '</div>';
+        btn.disabled = false;
+        return;
+      }
+
+      // Evaluate criteria
+      const eval_ = evaluateCriteria(mfra);
+
+      statusEl.textContent = 'Scan complete.';
+
+      // Build result display
+      renderScanResult(ticker, sectorEtf, subEtf, mfra, eval_);
+
+    } catch (err) {
+      statusEl.textContent = '';
+      resultBox.innerHTML = '<div class="scan-verdict fail">Error: ' + escapeHtml(err.message) + '</div>';
+    }
+    btn.disabled = false;
+  };
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function renderScanResult(ticker, sectorEtf, subEtf, mfra, eval_) {
+    const resultBox = document.getElementById('scan-result-box');
+    const s = sign;
+    const c = mfra.contributions_10d;
+    const cr = eval_.criteria;
+
+    // Verdict
+    let verdictClass, verdictText;
+    if (eval_.passed) {
+      verdictClass = 'pass';
+      verdictText = 'PASS — ' + eval_.quality;
+    } else if (eval_.failed_rules.length === 1) {
+      verdictClass = 'near-miss';
+      verdictText = 'NEAR MISS — failed 1 rule';
+    } else {
+      verdictClass = 'fail';
+      verdictText = 'FAIL — failed ' + eval_.failed_rules.length + ' rules';
+    }
+
+    let html = '<div class="scan-verdict ' + verdictClass + '">' + ticker + ': ' + verdictText + '</div>';
+
+    // Results table (single row, same columns as opp table)
+    html += '<div class="table-wrap"><table style="min-width:900px"><thead><tr>';
+    html += '<th>Ticker</th><th>Sector</th><th>SubSec</th>';
+    if (eval_.passed) html += '<th>Quality</th>';
+    html += '<th>R\u00B2</th><th>B Mkt</th><th>B Sec</th><th>B Sub</th>';
+    html += '<th>Purple</th><th>Cyan</th><th>Orange</th><th>Green</th>';
+    html += '<th>Prp+</th><th>Spike%</th><th>Wind</th><th>Cyn%</th>';
+    html += '</tr></thead><tbody><tr class="' + (eval_.passed && eval_.quality === 'Best' ? 'row-best' : 'row-even') + '">';
+    html += '<td class="v-white">' + ticker + '</td>';
+    html += '<td class="v-orange">' + sectorEtf + '</td>';
+    html += '<td class="v-green">' + subEtf + '</td>';
+    if (eval_.passed) html += '<td class="' + (eval_.quality === 'Best' ? 'v-best' : 'v-dim') + '">' + eval_.quality + '</td>';
+    html += '<td class="v-r2">' + mfra.r_squared.toFixed(3) + '</td>';
+    html += '<td>' + s(mfra.betas.mkt) + '</td>';
+    html += '<td>' + s(mfra.betas.sec) + '</td>';
+    html += '<td>' + s(mfra.betas.sub) + '</td>';
+    html += '<td class="v-purple">' + s(c.resid) + '</td>';
+    html += '<td class="v-cyan">' + s(c.mkt) + '</td>';
+    html += '<td class="v-orange">' + s(c.sec) + '</td>';
+    html += '<td class="v-green">' + s(c.sub) + '</td>';
+    html += '<td class="v-purple">' + cr.purple_positive_count + '/10</td>';
+    html += '<td class="' + (cr.purple_dominance > 0.6 ? 'v-warn' : '') + '">' + (cr.purple_dominance * 100).toFixed(0) + '%</td>';
+    html += '<td class="' + (cr.has_tailwind ? 'v-green' : 'v-warn') + '">' + (cr.has_tailwind ? 'Yes' : 'No') + '</td>';
+    html += '<td class="' + (cr.cyan_share > 0.7 ? 'v-warn' : '') + '">' + (cr.cyan_share * 100).toFixed(0) + '%</td>';
+    html += '</tr></tbody></table></div>';
+
+    // Show failed rules detail
+    if (!eval_.passed) {
+      html += '<div class="scan-fail-detail"><strong>Failed rules:</strong><ul>';
+      for (const rule of eval_.failed_rules) {
+        html += '<li>' + getRuleDetail(rule, mfra, cr) + '</li>';
+      }
+      html += '</ul></div>';
+    }
+
+    resultBox.innerHTML = html;
+  }
+
+  function getRuleDetail(rule, mfra, cr) {
+    const c = mfra.contributions_10d;
+    switch (rule) {
+      case 'r_squared': return '<strong>R\u00B2 Range:</strong> R\u00B2=' + mfra.r_squared.toFixed(3) + ' outside [0.40, 0.70]';
+      case 'purple_sustained': return '<strong>Purple Sustained:</strong> ' + cr.purple_positive_count + '/10 positive bars (need 5+)';
+      case 'purple_spike': return '<strong>Purple Spike:</strong> Single bar dominance ' + (cr.purple_dominance * 100).toFixed(0) + '% > 60%';
+      case 'sector_tailwind': return '<strong>Sector Tailwind:</strong> Orange=' + sign(c.sec) + ', Green=' + sign(c.sub) + ' — both negative';
+      case 'cyan_dominated': return '<strong>Cyan Dominance:</strong> Cyan share ' + (cr.cyan_share * 100).toFixed(0) + '% > 70%';
+      default: return rule;
+    }
+  }
+
+  // ============================================================
+  // DAILY SCAN TAB (existing logic)
+  // ============================================================
+
   let data = null;
   let currentTab = 'all';
   let oppSort = { col: null, asc: true };
   let nmSort = { col: null, asc: true };
 
-  // Column definitions
   const oppCols = [
     { key: 'ticker',    label: 'Ticker',  get: r => r.ticker,                       fmt: v => v, cls: 'v-white' },
     { key: 'sector',    label: 'Sector',  get: r => r.sector_etf,                   fmt: v => v, cls: 'v-orange' },
@@ -242,11 +1223,11 @@
   function getNote(r) {
     const d = r.criteria;
     const rule = r.failed_rules[0];
-    if (rule === 'r_squared') return `R\u00B2=${r.r_squared.toFixed(3)} outside [0.4, 0.7]`;
-    if (rule === 'purple_sustained') return `Purple positive ${d.purple_positive_count}/10 (need 5)`;
-    if (rule === 'purple_spike') return `Single bar dominance ${(d.purple_dominance * 100).toFixed(0)}% > 60%`;
-    if (rule === 'sector_tailwind') return `Orange=${sign(r.contributions_10d.sec)}, Green=${sign(r.contributions_10d.sub)} -- both negative`;
-    if (rule === 'cyan_dominated') return `Cyan share ${(d.cyan_share * 100).toFixed(0)}% > 70%`;
+    if (rule === 'r_squared') return 'R\u00B2=' + r.r_squared.toFixed(3) + ' outside [0.4, 0.7]';
+    if (rule === 'purple_sustained') return 'Purple positive ' + d.purple_positive_count + '/10 (need 5)';
+    if (rule === 'purple_spike') return 'Single bar dominance ' + (d.purple_dominance * 100).toFixed(0) + '% > 60%';
+    if (rule === 'sector_tailwind') return 'Orange=' + sign(r.contributions_10d.sec) + ', Green=' + sign(r.contributions_10d.sub) + ' -- both negative';
+    if (rule === 'cyan_dominated') return 'Cyan share ' + (d.cyan_share * 100).toFixed(0) + '% > 70%';
     return '';
   }
 
@@ -337,14 +1318,34 @@
 
   function setTab(tab) {
     currentTab = tab;
+    // Update all tab-like buttons
     document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+    document.getElementById('tab-scan').classList.toggle('active', tab === 'scan');
+    document.getElementById('tab-faq').classList.toggle('active', tab === 'faq');
+
+    const dailyContent = document.getElementById('daily-content');
+    const scanContent = document.getElementById('scan-content');
+    const faqContent = document.getElementById('faq-content');
     const oppS = document.getElementById('opp-section');
     const nmS = document.getElementById('nm-section');
-    oppS.style.display = (tab === 'all' || tab === 'pass') ? '' : 'none';
-    nmS.style.display = (tab === 'all' || tab === 'nm') ? '' : 'none';
+
+    // Hide everything first
+    dailyContent.style.display = 'none';
+    scanContent.style.display = 'none';
+    faqContent.style.display = 'none';
+
+    if (tab === 'scan') {
+      scanContent.style.display = '';
+    } else if (tab === 'faq') {
+      faqContent.style.display = '';
+    } else {
+      dailyContent.style.display = '';
+      oppS.style.display = (tab === 'all' || tab === 'pass') ? '' : 'none';
+      nmS.style.display = (tab === 'all' || tab === 'nm') ? '' : 'none';
+    }
   }
 
-  document.querySelectorAll('.tab').forEach(t => {
+  document.querySelectorAll('[data-tab]').forEach(t => {
     t.addEventListener('click', () => setTab(t.dataset.tab));
   });
 
@@ -372,7 +1373,7 @@
       'Generated ' + m.generated_at + '  |  OLS window: 42d  |  Roll window: 10d';
   }
 
-  // Fetch data
+  // Fetch daily scan data
   fetch('data/scan_results.json?v=' + Date.now())
     .then(r => {
       if (!r.ok) throw new Error('No scan data yet. Run the scanner or trigger the GitHub Action.');
