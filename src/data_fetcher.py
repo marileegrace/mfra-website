@@ -67,6 +67,8 @@ def fetch_prices(tickers: list[str], use_cache: bool = True) -> dict[str, pd.Ser
     Returns dict of ticker -> pd.Series of close prices.
     """
     today = datetime.now().strftime("%Y-%m-%d")
+    # yfinance `end` is exclusive, so add 1 day to include today's close
+    end_date = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
     start_date = (datetime.now() - timedelta(days=LOOKBACK_CALENDAR_DAYS)).strftime("%Y-%m-%d")
     results = {}
     to_fetch = []
@@ -98,7 +100,7 @@ def fetch_prices(tickers: list[str], use_cache: bool = True) -> dict[str, pd.Ser
                 df = yf.download(
                     batch,
                     start=start_date,
-                    end=today,
+                    end=end_date,
                     auto_adjust=True,
                     progress=False,
                     threads=True,
@@ -153,5 +155,5 @@ def check_market_open(prices: dict[str, pd.Series]) -> bool:
     if spy is None or len(spy) == 0:
         return False
     last_date = spy.index[-1]
-    # If last data point is more than 3 calendar days old, market likely closed
-    return (datetime.now() - last_date.to_pydatetime().replace(tzinfo=None)).days <= 3
+    # 5 days handles holiday+weekend combos (e.g. Thu trading → Mon)
+    return (datetime.now() - last_date.to_pydatetime().replace(tzinfo=None)).days <= 5
