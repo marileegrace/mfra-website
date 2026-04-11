@@ -4,27 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MFRA Scanner</title>
+<link href="https://fonts.googleapis.com/css2?family=Questrial&family=Quicksand:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #1a1a2e;
-    --bg-alt: #232337;
-    --bg-best: #1a3a1a;
-    --header-bg: #222;
-    --purple: #e040fb;
-    --cyan: #00bcd4;
-    --orange: #ff7f0e;
-    --green: #4caf50;
+    --bg: #111714;
+    --bg-alt: #1a2220;
+    --bg-best: #1a2e1a;
+    --header-bg: #161e1b;
+    --purple: #FCC55B;
+    --cyan: #4ade80;
+    --orange: #e8b84a;
+    --green: #1B6B2A;
     --r2-blue: #5dade2;
-    --text: #e0e0e0;
-    --text-dim: #888;
-    --white: #fff;
-    --border: #333;
+    --text: #d4d0c8;
+    --text-dim: #7a7a6e;
+    --white: #FAFAF8;
+    --border: #2a352e;
+    --gold: #FCC55B;
+    --green-primary: #1B6B2A;
+    --green-light: #4ade80;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Menlo, Consolas, monospace;
+    font-family: 'Quicksand', 'SF Mono', sans-serif;
+    font-weight: 500;
     font-size: 13px;
     line-height: 1.5;
     padding: 20px;
@@ -34,8 +39,8 @@
 
   /* Header */
   .header { margin-bottom: 16px; }
-  .header h1 { color: var(--purple); font-size: 22px; margin-bottom: 4px; }
-  .header .meta { color: var(--text-dim); font-size: 12px; }
+  .header h1 { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; color: var(--gold); font-size: 26px; margin-bottom: 4px; }
+  .header .meta { color: var(--text-dim); font-size: 12px; font-family: 'Quicksand', sans-serif; }
   .header .meta span { margin-right: 16px; }
   .header .meta .count { color: var(--green); }
   .header .meta .nm-count { color: var(--orange); }
@@ -59,20 +64,24 @@
   .legend-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 32px; margin-bottom: 10px; }
   .legend-item .lbl { font-weight: bold; margin-right: 6px; }
   .legend-item .desc { color: var(--text-dim); }
-  .c-purple { color: var(--purple); }
-  .c-cyan { color: var(--cyan); }
-  .c-orange { color: var(--orange); }
-  .c-green { color: var(--green); }
-  .c-r2 { color: var(--r2-blue); }
+  .c-purple { color: #e040fb; }
+  .c-cyan { color: #00bcd4; }
+  .c-orange { color: #ff7f0e; }
+  .c-green { color: #4caf50; }
+  .c-r2 { color: #5dade2; }
 
   /* Scan standalone button (above tabs) */
   .scan-tab-btn {
-    background: none; border: 1px solid var(--purple); color: var(--purple);
-    font-family: inherit; font-size: 14px; font-weight: bold;
-    padding: 8px 24px; cursor: pointer; margin-bottom: 12px;
+    background: none; border: 1px solid var(--gold); color: var(--gold);
+    font-family: 'Quicksand', sans-serif; font-size: 14px; font-weight: 700;
+    padding: 8px 24px; cursor: pointer; margin-bottom: 12px; border-radius: 4px;
+    letter-spacing: 0.5px;
   }
-  .scan-tab-btn:hover { background: var(--purple); color: var(--white); }
-  .scan-tab-btn.active { background: var(--purple); color: var(--white); }
+  .scan-tab-btn:hover { background: var(--gold); color: var(--bg); }
+  .scan-tab-btn.active { background: var(--gold); color: var(--bg); }
+  .scan-tab-btn.sector-btn { border-color: var(--green-primary); color: var(--green-light); margin-left: 8px; }
+  .scan-tab-btn.sector-btn:hover { background: var(--green-primary); color: var(--white); }
+  .scan-tab-btn.sector-btn.active { background: var(--green-primary); color: var(--white); border-color: var(--green-primary); }
 
   /* Tabs */
   .tabs { display: flex; gap: 0; margin-bottom: 8px; flex-wrap: wrap; }
@@ -82,7 +91,7 @@
     padding: 6px 16px; cursor: pointer;
   }
   .tab:last-child { border-right: 1px solid var(--border); }
-  .tab.active { background: var(--bg-alt); color: var(--white); border-bottom-color: var(--bg-alt); }
+  .tab.active { background: var(--bg-alt); color: var(--gold); border-bottom-color: var(--bg-alt); }
   .tab:hover:not(.active) { color: var(--text); }
 
   /* FAQ standalone button (below tabs) */
@@ -98,35 +107,39 @@
   .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   table { border-collapse: collapse; width: 100%; min-width: 900px; }
   th {
-    background: var(--header-bg); color: var(--text-dim); font-size: 11px;
-    font-weight: bold; padding: 6px 8px; text-align: center;
+    background: var(--header-bg); color: var(--text-dim); font-size: 10px;
+    font-weight: 700; padding: 6px 8px; text-align: center;
     cursor: pointer; user-select: none; white-space: nowrap;
     position: sticky; top: 0; z-index: 1;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    font-family: 'Quicksand', sans-serif;
   }
   th:hover { color: var(--white); }
   th .sort-arrow { font-size: 9px; margin-left: 2px; opacity: 0.5; }
-  th.sorted .sort-arrow { opacity: 1; color: var(--purple); }
-  td { padding: 5px 8px; text-align: center; white-space: nowrap; border-bottom: 1px solid #1f1f35; }
+  th.sorted .sort-arrow { opacity: 1; color: var(--gold); }
+  td { padding: 5px 8px; text-align: center; white-space: nowrap; border-bottom: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
 
   .row-even { background: var(--bg); }
   .row-odd { background: var(--bg-alt); }
   .row-best { background: var(--bg-best); }
+  tr[style*="cursor: pointer"]:hover td,
+  tr[style*="cursor: pointer"]:hover { background: rgba(252,197,91,0.06); }
 
   /* Section headers */
-  .section-title { font-size: 16px; font-weight: bold; margin: 16px 0 8px; }
-  .section-title.opp { color: var(--green); }
-  .section-title.nm { color: var(--orange); }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 20px; font-weight: 600; margin: 16px 0 8px; }
+  .section-title.opp { color: var(--green-light); }
+  .section-title.nm { color: var(--gold); }
 
-  /* Value colors */
-  .v-purple { color: var(--purple); }
-  .v-cyan { color: var(--cyan); }
-  .v-orange { color: var(--orange); }
-  .v-green { color: var(--green); }
-  .v-r2 { color: var(--r2-blue); }
+  /* Value colors — original attribution palette */
+  .v-purple { color: #e040fb; }
+  .v-cyan { color: #00bcd4; }
+  .v-orange { color: #ff7f0e; }
+  .v-green { color: #4caf50; }
+  .v-r2 { color: #5dade2; }
   .v-white { color: var(--white); }
   .v-dim { color: var(--text-dim); }
-  .v-best { color: var(--green); font-weight: bold; }
-  .v-warn { color: var(--orange); }
+  .v-best { color: #4caf50; font-weight: bold; }
+  .v-warn { color: #ff7f0e; }
 
   td.left { text-align: left; }
 
@@ -154,13 +167,13 @@
     font-family: inherit; font-size: 13px; padding: 6px 10px;
     outline: none;
   }
-  .scan-field input:focus, .scan-field select:focus { border-color: var(--purple); }
+  .scan-field input:focus, .scan-field select:focus { border-color: var(--gold); }
   .scan-field input { width: 100px; text-transform: uppercase; }
   .scan-field select { min-width: 160px; }
   .scan-btn {
-    background: var(--purple); border: none; color: var(--white);
-    font-family: inherit; font-size: 13px; font-weight: bold;
-    padding: 7px 20px; cursor: pointer;
+    background: var(--green-primary); border: none; color: var(--white);
+    font-family: 'Quicksand', sans-serif; font-size: 13px; font-weight: 700;
+    padding: 7px 20px; cursor: pointer; border-radius: 4px;
   }
   .scan-btn:hover { opacity: 0.85; }
   .scan-btn:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -172,12 +185,12 @@
   .window-toggle button:first-child { border-radius: 3px 0 0 3px; }
   .window-toggle button:last-child { border-radius: 0 3px 3px 0; }
   .window-toggle button:not(:first-child) { border-left: none; }
-  .window-toggle button.active { background: var(--purple); color: var(--white); border-color: var(--purple); }
+  .window-toggle button.active { background: var(--gold); color: var(--bg); border-color: var(--gold); font-weight: 700; }
   .window-toggle button:hover:not(.active) { color: var(--text); border-color: var(--text-dim); }
   .scan-status { color: var(--text-dim); font-size: 12px; margin-bottom: 12px; min-height: 18px; }
   .scan-spinner {
     display: inline-block; width: 14px; height: 14px;
-    border: 2px solid var(--border); border-top-color: var(--purple);
+    border: 2px solid var(--border); border-top-color: var(--gold);
     border-radius: 50%; animation: spin 0.8s linear infinite;
     vertical-align: middle; margin-right: 6px;
   }
@@ -188,9 +201,9 @@
     font-size: 16px; font-weight: bold; margin-bottom: 8px; padding: 8px 12px;
     border-left: 3px solid;
   }
-  .scan-verdict.pass { color: var(--green); border-color: var(--green); background: rgba(76,175,80,0.08); }
-  .scan-verdict.near-miss { color: var(--orange); border-color: var(--orange); background: rgba(255,127,14,0.08); }
-  .scan-verdict.fail { color: #e74c3c; border-color: #e74c3c; background: rgba(231,76,60,0.08); }
+  .scan-verdict.pass { color: var(--green-light); border-color: var(--green-primary); background: rgba(27,107,42,0.12); }
+  .scan-verdict.near-miss { color: var(--gold); border-color: var(--gold); background: rgba(252,197,91,0.08); }
+  .scan-verdict.fail { color: #f87171; border-color: #C0392B; background: rgba(192,57,43,0.08); }
   .scan-fail-detail { color: var(--text-dim); font-size: 12px; margin-top: 4px; }
   .scan-fail-detail li { margin-left: 16px; margin-top: 2px; }
 
@@ -198,7 +211,8 @@
   .faq-panel { padding: 16px 0; max-width: 800px; }
   .faq-section { margin-bottom: 20px; }
   .faq-section h2 {
-    color: var(--purple); font-size: 16px; margin-bottom: 8px;
+    color: var(--gold); font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 18px; font-weight: 600; margin-bottom: 8px;
     cursor: pointer; user-select: none;
   }
   .faq-section h2::before {
@@ -225,6 +239,99 @@
   .faq-body code {
     background: var(--bg-alt); padding: 1px 5px; border-radius: 3px; font-size: 11px;
   }
+
+  /* Decomposition Dashboard */
+  .decomp-panel { margin-top: 20px; display: none; }
+  .decomp-panel.visible { display: block; }
+
+  .decomp-stats {
+    display: flex; gap: 0; margin-bottom: 16px; flex-wrap: wrap;
+    border: 1px solid var(--border);
+  }
+  .decomp-stat {
+    flex: 1; min-width: 120px; padding: 10px 14px; text-align: center;
+    border-right: 1px solid var(--border); background: var(--bg-alt);
+  }
+  .decomp-stat:last-child { border-right: none; }
+  .decomp-stat .stat-value { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700; margin-bottom: 2px; }
+  .decomp-stat .stat-label { font-family: 'Quicksand', sans-serif; font-size: 9px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; }
+
+  .decomp-attr-bar {
+    display: flex; height: 8px; margin-bottom: 4px; border-radius: 2px; overflow: hidden;
+  }
+  .decomp-attr-segment { height: 100%; }
+  .decomp-attr-legend { display: flex; gap: 12px; justify-content: center; font-size: 10px; }
+  .decomp-attr-legend span { color: var(--text-dim); }
+
+  .decomp-controls {
+    display: flex; gap: 16px; align-items: center; margin-bottom: 10px; flex-wrap: wrap;
+  }
+  .decomp-controls .control-group { display: flex; gap: 0; }
+  .decomp-controls .control-label {
+    color: var(--text-dim); font-size: 11px; text-transform: uppercase;
+    margin-right: 8px; align-self: center;
+  }
+  .decomp-controls button {
+    background: var(--bg-alt); border: 1px solid var(--border); color: var(--text-dim);
+    font-family: inherit; font-size: 11px; padding: 4px 10px; cursor: pointer;
+  }
+  .decomp-controls button:not(:first-child) { border-left: none; }
+  .decomp-controls button.active { background: var(--gold); color: var(--bg); border-color: var(--gold); font-weight: 700; }
+  .decomp-controls button:hover:not(.active) { color: var(--text); border-color: var(--text-dim); }
+
+  .decomp-chart-title {
+    color: var(--text-dim); font-size: 10px; text-transform: uppercase;
+    margin-bottom: 6px; letter-spacing: 0.5px;
+  }
+  .decomp-chart-wrap {
+    position: relative; margin-bottom: 20px;
+    background: #0d1210; border: 1px solid var(--border); border-radius: 6px;
+    padding: 8px;
+  }
+  .decomp-chart-wrap canvas { display: block; width: 100%; }
+
+  .decomp-tooltip {
+    position: absolute; display: none; pointer-events: none;
+    background: rgba(30,30,50,0.95); border: 1px solid var(--border);
+    padding: 8px 12px; font-size: 11px; border-radius: 3px;
+    z-index: 10; white-space: nowrap;
+  }
+  .decomp-tooltip .tt-date { color: var(--text-dim); margin-bottom: 4px; }
+  .decomp-tooltip .tt-row { display: flex; justify-content: space-between; gap: 16px; }
+
+  .decomp-legend {
+    display: flex; gap: 16px; justify-content: center; font-size: 11px;
+    margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .decomp-legend span { display: flex; align-items: center; gap: 4px; }
+  .decomp-legend .swatch { width: 12px; height: 3px; display: inline-block; }
+
+  /* Sector picker buttons */
+  #sector-picker {
+    display: flex; gap: 0; flex-wrap: wrap;
+  }
+  #sector-picker button {
+    background: var(--bg-alt); border: 1px solid var(--border); color: var(--text-dim);
+    font-family: 'Quicksand', sans-serif; font-size: 12px; font-weight: 600;
+    padding: 6px 14px; cursor: pointer;
+  }
+  #sector-picker button:not(:first-child) { border-left: none; }
+  #sector-picker button.active {
+    background: var(--green-primary); color: var(--white); border-color: var(--green-primary);
+  }
+  #sector-picker button:hover:not(.active) { color: var(--text); border-color: var(--text-dim); }
+
+  #sector-lookback-toggle { display: flex; gap: 0; }
+  #sector-lookback-toggle button {
+    background: var(--bg-alt); border: 1px solid var(--border); color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+    padding: 6px 10px; cursor: pointer;
+  }
+  #sector-lookback-toggle button:not(:first-child) { border-left: none; }
+  #sector-lookback-toggle button.active {
+    background: var(--gold); color: var(--bg); border-color: var(--gold); font-weight: 700;
+  }
+  #sector-lookback-toggle button:hover:not(.active) { color: var(--text); border-color: var(--text-dim); }
 
   @media (max-width: 768px) {
     body { padding: 10px; font-size: 12px; }
@@ -270,6 +377,7 @@
 </div>
 
 <button class="scan-tab-btn" data-tab="scan" id="tab-scan">SCAN A TICKER</button>
+<button class="scan-tab-btn sector-btn" data-tab="sector" id="tab-sector">SECTOR ANALYSIS</button>
 
 <div class="tabs">
   <button class="tab active" data-tab="all" id="tab-all">DAILY SCAN</button>
@@ -347,6 +455,108 @@
       </div>
       <div class="scan-status" id="scan-status"></div>
       <div class="scan-result-box" id="scan-result-box"></div>
+
+      <!-- Decomposition Dashboard -->
+      <div class="decomp-panel" id="decomp-panel">
+        <hr>
+        <div class="decomp-stats" id="decomp-stats"></div>
+
+        <div class="decomp-controls">
+          <div>
+            <span class="control-label">Lookback:</span>
+            <div class="control-group" id="lookback-toggle">
+              <button data-lookback="3m">3M</button>
+              <button data-lookback="6m" class="active">6M</button>
+              <button data-lookback="1y">1Y</button>
+              <button data-lookback="2y">2Y</button>
+            </div>
+          </div>
+          <div>
+            <span class="control-label">View:</span>
+            <div class="control-group" id="view-toggle">
+              <button data-view="decomp" class="active">DECOMPOSITION</button>
+              <button data-view="relative">RELATIVE PERF</button>
+              <button data-view="betas">ROLLING BETAS</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="decomp-legend" id="decomp-legend">
+          <span><span class="swatch" style="background:#00bcd4"></span> Market (SPY)</span>
+          <span><span class="swatch" style="background:#ff7f0e"></span> Sector</span>
+          <span><span class="swatch" style="background:#4caf50"></span> Sub-Sector</span>
+          <span><span class="swatch" style="background:#e040fb"></span> Fundamental</span>
+          <span><span class="swatch" style="background:#FAFAF8"></span> Total Return</span>
+        </div>
+
+        <div class="decomp-chart-wrap" id="decomp-chart-wrap">
+          <canvas id="decomp-canvas" height="350"></canvas>
+          <div class="decomp-tooltip" id="decomp-tooltip"></div>
+        </div>
+
+        <div class="decomp-chart-wrap" id="relative-chart-wrap" style="display:none">
+          <canvas id="relative-canvas" height="380"></canvas>
+          <div class="decomp-tooltip" id="relative-tooltip"></div>
+        </div>
+
+        <div class="decomp-chart-wrap" id="betas-chart-wrap" style="display:none">
+          <canvas id="betas-canvas" height="220"></canvas>
+          <div class="decomp-tooltip" id="betas-tooltip"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sector Analysis tab -->
+  <div id="sector-content" style="display:none">
+    <div class="scan-panel">
+      <div style="margin-bottom:12px;display:flex;gap:24px;align-items:center;flex-wrap:wrap">
+        <div>
+          <span class="control-label" style="margin-right:8px">SECTOR:</span>
+          <div class="control-group" id="sector-picker">
+          <button data-sec="XLE" class="active">Energy</button>
+          <button data-sec="XLK">Tech</button>
+          <button data-sec="XLF">Financials</button>
+          <button data-sec="XLI">Industrials</button>
+          <button data-sec="XLV">Healthcare</button>
+          <button data-sec="XLY">Consumer</button>
+          <button data-sec="XLRE">Real Estate</button>
+          <button data-sec="FXI">China</button>
+          </div>
+        </div>
+        <div>
+          <span class="control-label" style="margin-right:8px">LOOKBACK:</span>
+          <div class="control-group" id="sector-lookback-toggle">
+            <button data-range="3m">3M</button>
+            <button data-range="6m" class="active">6M</button>
+            <button data-range="1y">1Y</button>
+            <button data-range="2y">2Y</button>
+          </div>
+        </div>
+      </div>
+      <div class="scan-status" id="sector-status"></div>
+
+      <div id="sector-attr-bar-wrap" style="display:none;margin-bottom:16px">
+        <div class="decomp-chart-title">SECTOR COMPOSITION &mdash; Weight-averaged factor exposure. Click any stock row to open full decomposition.</div>
+        <div class="decomp-attr-bar" id="sector-comp-bar" style="height:12px;margin-bottom:6px"></div>
+        <div class="decomp-attr-legend" id="sector-comp-legend"></div>
+      </div>
+
+      <div class="decomp-chart-title" id="sector-profile-title" style="display:none">FACTOR PROFILE &mdash; Each bar shows MKT/SEC/FUND split.</div>
+      <div class="decomp-chart-wrap" id="sector-profile-wrap" style="display:none">
+        <canvas id="sector-profile-canvas" height="400"></canvas>
+        <div class="decomp-tooltip" id="sector-profile-tooltip"></div>
+      </div>
+
+      <div id="sector-detail-wrap" style="display:none">
+        <div class="decomp-chart-title">STOCK DETAIL &mdash; Click headers to sort.</div>
+        <div class="table-wrap">
+          <table style="min-width:900px">
+            <thead><tr id="sector-detail-head"></tr></thead>
+            <tbody id="sector-detail-body"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -914,6 +1124,19 @@
       dailyResiduals.push(residContrib[i]);
     }
 
+    // Build date array from aligned stockRet (timestamps)
+    const alignedDates = [];
+    {
+      const mktMap2 = new Map(); mktRet.forEach(r => mktMap2.set(r.date, true));
+      const secMap2 = new Map(); secRet.forEach(r => secMap2.set(r.date, true));
+      const subMap2 = new Map(); subRet.forEach(r => subMap2.set(r.date, true));
+      for (const sr of stockRet) {
+        if (mktMap2.has(sr.date) && secMap2.has(sr.date) && subMap2.has(sr.date)) {
+          alignedDates.push(sr.date);
+        }
+      }
+    }
+
     return {
       success: true,
       r_squared: olsResult.r2[lastValid],
@@ -930,6 +1153,22 @@
         resid: isNaN(residRoll[lastValid]) ? 0 : residRoll[lastValid],
       },
       daily_residuals_10d: dailyResiduals,
+      // Full time series for decomposition chart
+      series: {
+        dates: alignedDates,
+        mktContrib: Array.from(mktContrib),
+        secContrib: Array.from(secContrib),
+        subContrib: Array.from(subContrib),
+        residContrib: Array.from(residContrib),
+        mktRoll: Array.from(mktRoll),
+        secRoll: Array.from(secRoll),
+        subRoll: Array.from(subRoll),
+        residRoll: Array.from(residRoll),
+        r2: Array.from(olsResult.r2),
+        betasMkt: olsResult.betas.map(b => b ? b[1] : NaN),
+        betasSec: olsResult.betas.map(b => b ? b[2] : NaN),
+        betasSub: olsResult.betas.map(b => b ? (subIsDegenerate ? 0 : b[3]) : NaN),
+      },
     };
   }
 
@@ -1141,6 +1380,11 @@
       // Build result display
       renderScanResult(ticker, sectorEtf, subEtf, mfra, eval_);
 
+      // Show decomposition dashboard
+      if (mfra.series) {
+        showDecomp(ticker, sectorEtf, subEtf, mfra, priceMap, '6mo');
+      }
+
     } catch (err) {
       statusEl.textContent = '';
       resultBox.innerHTML = '<div class="scan-verdict fail">Error: ' + escapeHtml(err.message) + '</div>';
@@ -1327,6 +1571,8 @@
     rows.forEach((r, i) => {
       const tr = document.createElement('tr');
       tr.className = r.quality === 'Best' ? 'row-best' : (i % 2 === 0 ? 'row-even' : 'row-odd');
+      tr.style.cursor = 'pointer';
+      tr.addEventListener('click', () => openTickerDecomp(r.ticker));
       oppCols.forEach(col => {
         const td = document.createElement('td');
         td.className = getCls(col, r);
@@ -1350,6 +1596,8 @@
     rows.forEach((r, i) => {
       const tr = document.createElement('tr');
       tr.className = i % 2 === 0 ? 'row-even' : 'row-odd';
+      tr.style.cursor = 'pointer';
+      tr.addEventListener('click', () => openTickerDecomp(r.ticker));
       nmCols.forEach(col => {
         const td = document.createElement('td');
         td.className = getCls(col, r);
@@ -1359,6 +1607,13 @@
       });
       tbody.appendChild(tr);
     });
+  }
+
+  // Click any ticker row to open its decomposition
+  function openTickerDecomp(ticker) {
+    document.getElementById('scan-ticker').value = ticker;
+    setTab('scan');
+    liveScan();
   }
 
   function setTab(tab) {
@@ -1374,13 +1629,25 @@
     const oppS = document.getElementById('opp-section');
     const nmS = document.getElementById('nm-section');
 
+    const sectorContent = document.getElementById('sector-content');
+
     // Hide everything first
     dailyContent.style.display = 'none';
     scanContent.style.display = 'none';
     faqContent.style.display = 'none';
+    sectorContent.style.display = 'none';
+
+    // Update sector tab btn styling
+    document.getElementById('tab-sector').classList.toggle('active', tab === 'sector');
 
     if (tab === 'scan') {
       scanContent.style.display = '';
+    } else if (tab === 'sector') {
+      sectorContent.style.display = '';
+      // Auto-run sector analysis on first open if no results yet
+      if (sectorState.results.length === 0 && !sectorState.running) {
+        runSectorAnalysis(sectorState.selectedSector);
+      }
     } else if (tab === 'faq') {
       faqContent.style.display = '';
     } else {
@@ -1417,6 +1684,1140 @@
     document.getElementById('footer').textContent =
       'Generated ' + m.generated_at + '  |  OLS window: 42d  |  Roll window: 10d';
   }
+
+  // ============================================================
+  // DECOMPOSITION DASHBOARD
+  // ============================================================
+
+  const COLORS = {
+    mkt: '#00bcd4',   // cyan (market)
+    sec: '#ff7f0e',   // orange (sector)
+    sub: '#4caf50',   // green (sub-sector)
+    resid: '#e040fb', // purple (fundamental)
+    total: '#FAFAF8',
+    grid: '#1e2e28',
+    axis: '#5a5a4e',
+    betaMkt: '#ff7f0e',  // orange for market beta
+    betaSec: '#00bcd4',  // cyan for sector beta
+  };
+
+  let decompState = {
+    mfra: null,
+    ticker: '',
+    sectorEtf: '',
+    subEtf: '',
+    lookback: '6m',
+    view: 'decomp',
+    priceCache: {},  // key: "TICKER:range" -> prices array
+  };
+
+  // Cache key helper
+  function cacheKey(ticker, range) { return ticker + ':' + range; }
+
+  // Map lookback to Yahoo range param (fetch enough data)
+  function lookbackToRange(lb) {
+    return { '3m': '6mo', '6m': '1y', '1y': '2y', '2y': '5y' }[lb] || '1y';
+  }
+
+  // Map lookback to approx trading days to display
+  function lookbackToDays(lb) {
+    return { '3m': 63, '6m': 126, '1y': 252, '2y': 504 }[lb] || 126;
+  }
+
+  // Populate stats header
+  function renderDecompStats(mfra) {
+    const el = document.getElementById('decomp-stats');
+    const b = mfra.betas;
+    const r2 = mfra.r_squared;
+
+    // Compute factor attribution percentages from cumulative absolute contributions
+    const s = mfra.series;
+    let cumMkt = 0, cumSec = 0, cumSub = 0, cumResid = 0;
+    for (let i = 0; i < s.mktRoll.length; i++) {
+      if (!isNaN(s.mktRoll[i])) {
+        cumMkt += Math.abs(s.mktRoll[i]);
+        cumSec += Math.abs(s.secRoll[i]);
+        cumSub += Math.abs(s.subRoll[i]);
+        cumResid += Math.abs(s.residRoll[i]);
+      }
+    }
+    const total = cumMkt + cumSec + cumSub + cumResid || 1;
+    const pctMkt = (cumMkt / total * 100).toFixed(0);
+    const pctSec = (cumSec / total * 100).toFixed(0);
+    const pctSub = (cumSub / total * 100).toFixed(0);
+    const pctResid = (100 - pctMkt - pctSec - pctSub);
+
+    el.innerHTML =
+      '<div class="decomp-stat"><div class="stat-value v-cyan">' + b.mkt.toFixed(2) + '</div><div class="stat-label">Beta MKT</div></div>' +
+      '<div class="decomp-stat"><div class="stat-value v-orange">' + b.sec.toFixed(2) + '</div><div class="stat-label">Beta SEC</div></div>' +
+      '<div class="decomp-stat"><div class="stat-value v-green">' + b.sub.toFixed(2) + '</div><div class="stat-label">Beta SUB</div></div>' +
+      '<div class="decomp-stat"><div class="stat-value v-r2">' + r2.toFixed(3) + '</div><div class="stat-label">R-Squared</div></div>' +
+      '<div class="decomp-stat" style="min-width:200px">' +
+        '<div class="decomp-attr-bar">' +
+          '<div class="decomp-attr-segment" style="width:' + pctMkt + '%;background:' + COLORS.mkt + '"></div>' +
+          '<div class="decomp-attr-segment" style="width:' + pctSec + '%;background:' + COLORS.sec + '"></div>' +
+          '<div class="decomp-attr-segment" style="width:' + pctSub + '%;background:' + COLORS.sub + '"></div>' +
+          '<div class="decomp-attr-segment" style="width:' + pctResid + '%;background:' + COLORS.resid + '"></div>' +
+        '</div>' +
+        '<div class="decomp-attr-legend">' +
+          '<span style="color:' + COLORS.mkt + '">MKT ' + pctMkt + '%</span>' +
+          '<span style="color:' + COLORS.sec + '">SEC ' + pctSec + '%</span>' +
+          '<span style="color:' + COLORS.sub + '">SUB ' + pctSub + '%</span>' +
+          '<span style="color:' + COLORS.resid + '">FUND ' + pctResid + '%</span>' +
+        '</div>' +
+        '<div class="stat-label" style="margin-top:4px">Factor Attribution</div>' +
+      '</div>';
+  }
+
+  // Draw stacked bar decomposition chart
+  function drawDecompChart(mfra, lookback) {
+    const canvas = document.getElementById('decomp-canvas');
+    const wrap = document.getElementById('decomp-chart-wrap');
+    const dpr = window.devicePixelRatio || 1;
+    const width = wrap.clientWidth - 16;
+    const height = 350;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    const s = mfra.series;
+    const maxDays = lookbackToDays(lookback);
+    const startIdx = Math.max(0, s.dates.length - maxDays);
+
+    // Slice to lookback range, only valid (non-NaN) bars
+    const dates = [], mktR = [], secR = [], subR = [], residR = [], totalR = [];
+    for (let i = startIdx; i < s.dates.length; i++) {
+      if (isNaN(s.mktRoll[i])) continue;
+      dates.push(s.dates[i]);
+      mktR.push(s.mktRoll[i]);
+      secR.push(s.secRoll[i]);
+      subR.push(s.subRoll[i]);
+      residR.push(s.residRoll[i]);
+      totalR.push(s.mktRoll[i] + s.secRoll[i] + s.subRoll[i] + s.residRoll[i]);
+    }
+
+    if (dates.length === 0) return;
+
+    // Chart margins
+    const ml = 55, mr = 15, mt = 15, mb = 40;
+    const cw = width - ml - mr;
+    const ch = height - mt - mb;
+
+    // Find y range
+    let yMin = 0, yMax = 0;
+    for (let i = 0; i < dates.length; i++) {
+      let posSum = 0, negSum = 0;
+      [mktR[i], secR[i], subR[i], residR[i]].forEach(v => {
+        if (v >= 0) posSum += v; else negSum += v;
+      });
+      yMax = Math.max(yMax, posSum, totalR[i]);
+      yMin = Math.min(yMin, negSum, totalR[i]);
+    }
+    // Add padding
+    const yPad = (yMax - yMin) * 0.1 || 1;
+    yMax += yPad; yMin -= yPad;
+
+    function toX(i) { return ml + (i + 0.5) * cw / dates.length; }
+    function toY(v) { return mt + ch * (1 - (v - yMin) / (yMax - yMin)); }
+
+    // Clear
+    ctx.clearRect(0, 0, width, height);
+
+    // Grid lines
+    ctx.strokeStyle = COLORS.grid;
+    ctx.lineWidth = 0.5;
+    const yTicks = niceYTicks(yMin, yMax, 6);
+    ctx.font = '10px monospace';
+    ctx.fillStyle = COLORS.axis;
+    ctx.textAlign = 'right';
+    for (const yv of yTicks) {
+      const py = toY(yv);
+      ctx.beginPath(); ctx.moveTo(ml, py); ctx.lineTo(width - mr, py); ctx.stroke();
+      ctx.fillText(yv.toFixed(1) + '%', ml - 6, py + 3);
+    }
+
+    // Zero line
+    const zeroY = toY(0);
+    ctx.strokeStyle = '#555';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(ml, zeroY); ctx.lineTo(width - mr, zeroY); ctx.stroke();
+
+    // Draw stacked bars
+    const barW = Math.max(1, cw / dates.length * 0.7);
+    const components = [
+      { data: mktR, color: COLORS.mkt },
+      { data: secR, color: COLORS.sec },
+      { data: subR, color: COLORS.sub },
+      { data: residR, color: COLORS.resid },
+    ];
+
+    for (let i = 0; i < dates.length; i++) {
+      let posY = 0, negY = 0;
+      const x = toX(i) - barW / 2;
+      for (const comp of components) {
+        const v = comp.data[i];
+        ctx.fillStyle = comp.color;
+        if (v >= 0) {
+          const y1 = toY(posY + v);
+          const y2 = toY(posY);
+          ctx.fillRect(x, y1, barW, y2 - y1);
+          posY += v;
+        } else {
+          const y1 = toY(negY);
+          const y2 = toY(negY + v);
+          ctx.fillRect(x, y1, barW, y2 - y1);
+          negY += v;
+        }
+      }
+    }
+
+    // Total return line (white)
+    ctx.strokeStyle = COLORS.total;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    for (let i = 0; i < dates.length; i++) {
+      const px = toX(i), py = toY(totalR[i]);
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    // X-axis date labels
+    ctx.fillStyle = COLORS.axis;
+    ctx.textAlign = 'center';
+    ctx.font = '9px monospace';
+    const labelInterval = Math.max(1, Math.floor(dates.length / 8));
+    for (let i = 0; i < dates.length; i += labelInterval) {
+      const d = new Date(dates[i] * 1000);
+      const label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      ctx.fillText(label, toX(i), height - mb + 16);
+    }
+
+    // Store chart data for tooltip
+    canvas._chartData = { dates, mktR, secR, subR, residR, totalR, ml, mr, mt, mb, cw, ch, yMin, yMax, toX, toY };
+  }
+
+  // Draw rolling betas chart
+  function drawBetasChart(mfra, lookback) {
+    const canvas = document.getElementById('betas-canvas');
+    const wrap = document.getElementById('betas-chart-wrap');
+    const dpr = window.devicePixelRatio || 1;
+    const width = wrap.clientWidth - 16;
+    const height = 220;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    const s = mfra.series;
+    const maxDays = lookbackToDays(lookback);
+    const startIdx = Math.max(0, s.dates.length - maxDays);
+
+    const dates = [], betaM = [], betaS = [];
+    for (let i = startIdx; i < s.dates.length; i++) {
+      if (isNaN(s.betasMkt[i])) continue;
+      dates.push(s.dates[i]);
+      betaM.push(s.betasMkt[i]);
+      betaS.push(s.betasSec[i]);
+    }
+    if (dates.length === 0) return;
+
+    const ml = 55, mr = 15, mt = 15, mb = 40;
+    const cw = width - ml - mr;
+    const ch = height - mt - mb;
+
+    let yMin = Infinity, yMax = -Infinity;
+    for (let i = 0; i < dates.length; i++) {
+      yMin = Math.min(yMin, betaM[i], betaS[i]);
+      yMax = Math.max(yMax, betaM[i], betaS[i]);
+    }
+    const yPad = (yMax - yMin) * 0.15 || 0.2;
+    yMin -= yPad; yMax += yPad;
+
+    function toX(i) { return ml + (i + 0.5) * cw / dates.length; }
+    function toY(v) { return mt + ch * (1 - (v - yMin) / (yMax - yMin)); }
+
+    ctx.clearRect(0, 0, width, height);
+
+    // Grid
+    ctx.strokeStyle = COLORS.grid;
+    ctx.lineWidth = 0.5;
+    const yTicks = niceYTicks(yMin, yMax, 5);
+    ctx.font = '10px monospace';
+    ctx.fillStyle = COLORS.axis;
+    ctx.textAlign = 'right';
+    for (const yv of yTicks) {
+      const py = toY(yv);
+      ctx.beginPath(); ctx.moveTo(ml, py); ctx.lineTo(width - mr, py); ctx.stroke();
+      ctx.fillText(yv.toFixed(2), ml - 6, py + 3);
+    }
+
+    // Reference line at 1.0
+    if (yMin <= 1.0 && yMax >= 1.0) {
+      ctx.setLineDash([4, 4]);
+      ctx.strokeStyle = '#666';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(ml, toY(1.0)); ctx.lineTo(width - mr, toY(1.0)); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // Market beta line (orange)
+    ctx.strokeStyle = COLORS.betaMkt;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    for (let i = 0; i < dates.length; i++) {
+      const px = toX(i), py = toY(betaM[i]);
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    // Sector beta line (blue/cyan)
+    ctx.strokeStyle = COLORS.betaSec;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    for (let i = 0; i < dates.length; i++) {
+      const px = toX(i), py = toY(betaS[i]);
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    // X-axis labels
+    ctx.fillStyle = COLORS.axis;
+    ctx.textAlign = 'center';
+    ctx.font = '9px monospace';
+    const labelInterval = Math.max(1, Math.floor(dates.length / 8));
+    for (let i = 0; i < dates.length; i += labelInterval) {
+      const d = new Date(dates[i] * 1000);
+      const label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      ctx.fillText(label, toX(i), height - mb + 16);
+    }
+
+    // Legend in top-right corner
+    ctx.font = '10px monospace';
+    const lx = width - mr - 160;
+    ctx.fillStyle = COLORS.betaMkt;
+    ctx.fillRect(lx, mt + 4, 12, 3);
+    ctx.fillText('Market Beta', lx + 18, mt + 10);
+    ctx.fillStyle = COLORS.betaSec;
+    ctx.fillRect(lx, mt + 18, 12, 3);
+    ctx.fillText('Sector Beta', lx + 18, mt + 24);
+
+    canvas._chartData = { dates, betaM, betaS, ml, mr, mt, mb, cw, ch, yMin, yMax, toX, toY };
+  }
+
+  // Draw relative performance chart (indexed to 100)
+  function drawRelativeChart(mfra, lookback) {
+    const canvas = document.getElementById('relative-canvas');
+    const wrap = document.getElementById('relative-chart-wrap');
+    if (wrap.style.display === 'none') return;
+    const dpr = window.devicePixelRatio || 1;
+    const width = wrap.clientWidth - 16;
+    const height = 380;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    // Get price data from cache
+    const { ticker, sectorEtf } = decompState;
+    const range = lookbackToRange(lookback);
+    const stockPrices = decompState.priceCache[cacheKey(ticker, range)] || decompState.priceCache[cacheKey(ticker, '6mo')];
+    const spyPrices = decompState.priceCache[cacheKey('SPY', range)] || decompState.priceCache[cacheKey('SPY', '6mo')];
+    const secPrices = decompState.priceCache[cacheKey(sectorEtf, range)] || decompState.priceCache[cacheKey(sectorEtf, '6mo')];
+    if (!stockPrices || !spyPrices || !secPrices) return;
+
+    // Align by date and limit to lookback
+    const maxDays = lookbackToDays(lookback);
+    const spyMap = new Map(); spyPrices.forEach(p => spyMap.set(p.date, p.close));
+    const secMap = new Map(); secPrices.forEach(p => secMap.set(p.date, p.close));
+    const aligned = [];
+    for (const p of stockPrices) {
+      if (spyMap.has(p.date) && secMap.has(p.date)) {
+        aligned.push({ date: p.date, stock: p.close, spy: spyMap.get(p.date), sec: secMap.get(p.date) });
+      }
+    }
+    const startIdx = Math.max(0, aligned.length - maxDays);
+    const data = aligned.slice(startIdx);
+    if (data.length < 2) return;
+
+    // Index to 100
+    const base = data[0];
+    const stockIdx = data.map(d => d.stock / base.stock * 100);
+    const spyIdx = data.map(d => d.spy / base.spy * 100);
+    const secIdx = data.map(d => d.sec / base.sec * 100);
+    const dates = data.map(d => d.date);
+
+    // Chart margins — leave room for factor bar on right
+    const ml = 55, mr = 140, mt = 20, mb = 40;
+    const cw = width - ml - mr;
+    const ch = height - mt - mb;
+
+    // Y range
+    const all = [...stockIdx, ...spyIdx, ...secIdx];
+    let yMin = Math.min(...all), yMax = Math.max(...all);
+    const yPad = (yMax - yMin) * 0.08 || 1;
+    yMin -= yPad; yMax += yPad;
+
+    function toX(i) { return ml + i * cw / (dates.length - 1); }
+    function toY(v) { return mt + ch * (1 - (v - yMin) / (yMax - yMin)); }
+
+    ctx.clearRect(0, 0, width, height);
+
+    // Grid
+    ctx.strokeStyle = COLORS.grid;
+    ctx.lineWidth = 0.5;
+    const yTicks = niceYTicks(yMin, yMax, 6);
+    ctx.font = '10px monospace';
+    ctx.fillStyle = COLORS.axis;
+    ctx.textAlign = 'right';
+    for (const yv of yTicks) {
+      const py = toY(yv);
+      ctx.beginPath(); ctx.moveTo(ml, py); ctx.lineTo(ml + cw, py); ctx.stroke();
+      ctx.fillText(yv.toFixed(0), ml - 6, py + 3);
+    }
+
+    // 100 baseline
+    if (yMin <= 100 && yMax >= 100) {
+      ctx.setLineDash([4, 4]);
+      ctx.strokeStyle = '#555';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(ml, toY(100)); ctx.lineTo(ml + cw, toY(100)); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // Draw lines: SPY (gray), Sector (cyan), Stock (orange)
+    function drawLine(arr, color, lineWidth) {
+      ctx.strokeStyle = color;
+      ctx.lineWidth = lineWidth;
+      ctx.beginPath();
+      for (let i = 0; i < arr.length; i++) {
+        const px = toX(i), py = toY(arr[i]);
+        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+    }
+    drawLine(spyIdx, '#666', 1.5);       // SPY gray
+    drawLine(secIdx, COLORS.mkt, 1.5);   // Sector cyan
+    drawLine(stockIdx, COLORS.sec, 2);   // Stock orange
+
+    // X-axis labels
+    ctx.fillStyle = COLORS.axis;
+    ctx.textAlign = 'center';
+    ctx.font = '9px monospace';
+    const labelInterval = Math.max(1, Math.floor(dates.length / 6));
+    for (let i = 0; i < dates.length; i += labelInterval) {
+      const d = new Date(dates[i] * 1000);
+      ctx.fillText(d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), toX(i), height - mb + 16);
+    }
+
+    // Legend top-left with background
+    ctx.font = '11px monospace';
+    const ly = mt + 6;
+    const legendH = 56;
+    ctx.fillStyle = 'rgba(13,18,16,0.85)';
+    ctx.fillRect(ml + 4, ly - 2, 130, legendH);
+    ctx.strokeStyle = COLORS.grid;
+    ctx.lineWidth = 1;
+    ctx.strokeRect(ml + 4, ly - 2, 130, legendH);
+    // SPY
+    ctx.fillStyle = '#666'; ctx.fillRect(ml + 10, ly + 6, 16, 3);
+    ctx.fillStyle = '#999'; ctx.textAlign = 'left'; ctx.fillText('SPY', ml + 32, ly + 11);
+    // Sector
+    ctx.fillStyle = COLORS.mkt; ctx.fillRect(ml + 10, ly + 22, 16, 3);
+    ctx.fillText(sectorEtf, ml + 32, ly + 27);
+    // Stock
+    ctx.fillStyle = COLORS.sec; ctx.fillRect(ml + 10, ly + 38, 16, 3);
+    ctx.fillText(ticker, ml + 32, ly + 43);
+
+    // 3-Factor decomposition bar — sum daily contributions over displayed lookback
+    const s = mfra.series;
+    const seriesStart = Math.max(0, s.dates.length - lookbackToDays(lookback));
+    let cumMkt = 0, cumSec = 0, cumFund = 0;
+    for (let i = seriesStart; i < s.dates.length; i++) {
+      if (!isNaN(s.mktContrib[i])) {
+        cumMkt += s.mktContrib[i];
+        cumSec += s.secContrib[i] + s.subContrib[i];
+        cumFund += s.residContrib[i];
+      }
+    }
+    const absMkt = Math.abs(cumMkt);
+    const absSec = Math.abs(cumSec);
+    const absFund = Math.abs(cumFund);
+    const absTotal = absMkt + absSec + absFund || 1;
+    const pMkt = absMkt / absTotal;
+    const pSec = absSec / absTotal;
+    const pFund = absFund / absTotal;
+
+    const barX = ml + cw + 30;
+    const barW = 45;
+    const barTop = mt + 10;
+    const barH = ch - 20;
+
+    // Vertical stacked bar
+    ctx.fillStyle = COLORS.mkt;
+    ctx.fillRect(barX, barTop, barW, barH * pMkt);
+    ctx.fillStyle = COLORS.sec;
+    ctx.fillRect(barX, barTop + barH * pMkt, barW, barH * pSec);
+    ctx.fillStyle = COLORS.resid;
+    ctx.fillRect(barX, barTop + barH * pMkt + barH * pSec, barW, barH * pFund);
+
+    // Labels
+    ctx.font = '10px monospace';
+    ctx.textAlign = 'left';
+    const lx = barX + barW + 6;
+    ctx.fillStyle = COLORS.mkt;
+    ctx.fillText('MARKET', lx, barTop + barH * pMkt / 2 + 3);
+    ctx.fillText((pMkt * 100).toFixed(0) + '%', lx, barTop + barH * pMkt / 2 + 15);
+    ctx.fillStyle = COLORS.sec;
+    ctx.fillText('SECTOR', lx, barTop + barH * pMkt + barH * pSec / 2 + 3);
+    ctx.fillText((pSec * 100).toFixed(0) + '%', lx, barTop + barH * pMkt + barH * pSec / 2 + 15);
+    ctx.fillStyle = COLORS.resid;
+    ctx.fillText('FUND', lx, barTop + barH * pMkt + barH * pSec + barH * pFund / 2 + 3);
+    ctx.fillText((pFund * 100).toFixed(0) + '%', lx, barTop + barH * pMkt + barH * pSec + barH * pFund / 2 + 15);
+
+    // Title
+    ctx.fillStyle = '#888';
+    ctx.font = '9px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('3-FACTOR', barX + barW / 2, barTop - 4);
+
+    // Bottom stats
+    const stockRet = (stockIdx[stockIdx.length - 1] - 100).toFixed(1);
+    const secRet = (secIdx[secIdx.length - 1] - 100).toFixed(1);
+    const spyRet = (spyIdx[spyIdx.length - 1] - 100).toFixed(1);
+    const excess = (parseFloat(stockRet) - parseFloat(secRet)).toFixed(1);
+    ctx.font = '10px monospace';
+    ctx.textAlign = 'center';
+    const by = height - 6;
+    ctx.fillStyle = COLORS.sec;
+    ctx.fillText(ticker + ' ' + (stockRet >= 0 ? '+' : '') + stockRet + '%', ml + cw * 0.15, by);
+    ctx.fillStyle = COLORS.mkt;
+    ctx.fillText(sectorEtf + ' ' + (secRet >= 0 ? '+' : '') + secRet + '%', ml + cw * 0.4, by);
+    ctx.fillStyle = '#666';
+    ctx.fillText('SPY ' + (spyRet >= 0 ? '+' : '') + spyRet + '%', ml + cw * 0.6, by);
+    ctx.fillStyle = parseFloat(excess) >= 0 ? '#4caf50' : '#e74c3c';
+    ctx.fillText('EXCESS vs SECTOR: ' + (excess >= 0 ? '+' : '') + excess + '%', ml + cw * 0.85, by);
+
+    // Store for tooltip
+    canvas._chartData = { dates, stockIdx, spyIdx, secIdx, ml, mr, mt, mb, cw, ch, yMin, yMax, toX, toY };
+  }
+
+  // Tooltip for relative chart
+  setupTooltip('relative-canvas', 'relative-tooltip', function(cd, i) {
+    if (i >= cd.dates.length) return '';
+    const d = new Date(cd.dates[i] * 1000);
+    const dateStr = d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    return '<div class="tt-date">' + dateStr + '</div>' +
+      '<div class="tt-row"><span style="color:' + COLORS.sec + '">' + decompState.ticker + ':</span><span>' + cd.stockIdx[i].toFixed(1) + '</span></div>' +
+      '<div class="tt-row"><span style="color:' + COLORS.mkt + '">' + decompState.sectorEtf + ':</span><span>' + cd.secIdx[i].toFixed(1) + '</span></div>' +
+      '<div class="tt-row"><span style="color:#666">SPY:</span><span>' + cd.spyIdx[i].toFixed(1) + '</span></div>';
+  });
+
+  function niceYTicks(min, max, targetCount) {
+    const range = max - min;
+    const rawStep = range / targetCount;
+    const mag = Math.pow(10, Math.floor(Math.log10(rawStep)));
+    let step = mag;
+    if (rawStep / mag > 5) step = mag * 10;
+    else if (rawStep / mag > 2) step = mag * 5;
+    else if (rawStep / mag > 1) step = mag * 2;
+    const ticks = [];
+    let v = Math.ceil(min / step) * step;
+    while (v <= max) { ticks.push(v); v += step; }
+    return ticks;
+  }
+
+  // Tooltip handlers
+  function setupTooltip(canvasId, tooltipId, formatFn) {
+    const canvas = document.getElementById(canvasId);
+    const tooltip = document.getElementById(tooltipId);
+
+    canvas.addEventListener('mousemove', function(e) {
+      const cd = canvas._chartData;
+      if (!cd) return;
+      const rect = canvas.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+
+      // Find nearest bar index
+      const barIdx = Math.round((mx - cd.ml) / cd.cw * cd.dates.length - 0.5);
+      if (barIdx < 0 || barIdx >= cd.dates.length) {
+        tooltip.style.display = 'none';
+        return;
+      }
+
+      tooltip.innerHTML = formatFn(cd, barIdx);
+      tooltip.style.display = 'block';
+
+      // Position tooltip
+      const tx = Math.min(mx + 12, canvas.clientWidth - tooltip.offsetWidth - 8);
+      const ty = Math.max(8, my - tooltip.offsetHeight - 8);
+      tooltip.style.left = tx + 'px';
+      tooltip.style.top = ty + 'px';
+    });
+
+    canvas.addEventListener('mouseleave', function() {
+      tooltip.style.display = 'none';
+    });
+  }
+
+  function formatDecompTooltip(cd, i) {
+    const d = new Date(cd.dates[i] * 1000);
+    const dateStr = d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    return '<div class="tt-date">' + dateStr + '</div>' +
+      '<div class="tt-row"><span style="color:' + COLORS.resid + '">Fundamental:</span><span>' + sign(cd.residR[i]) + '%</span></div>' +
+      '<div class="tt-row"><span style="color:' + COLORS.mkt + '">Market:</span><span>' + sign(cd.mktR[i]) + '%</span></div>' +
+      '<div class="tt-row"><span style="color:' + COLORS.sec + '">Sector:</span><span>' + sign(cd.secR[i]) + '%</span></div>' +
+      '<div class="tt-row"><span style="color:' + COLORS.sub + '">Sub-Sector:</span><span>' + sign(cd.subR[i]) + '%</span></div>' +
+      '<div class="tt-row" style="border-top:1px solid #444;padding-top:3px;margin-top:3px"><span style="color:#fff">Total:</span><span>' + sign(cd.totalR[i]) + '%</span></div>';
+  }
+
+  function formatBetasTooltip(cd, i) {
+    const d = new Date(cd.dates[i] * 1000);
+    const dateStr = d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    return '<div class="tt-date">' + dateStr + '</div>' +
+      '<div class="tt-row"><span style="color:' + COLORS.betaMkt + '">Mkt Beta:</span><span>' + cd.betaM[i].toFixed(3) + '</span></div>' +
+      '<div class="tt-row"><span style="color:' + COLORS.betaSec + '">Sec Beta:</span><span>' + cd.betaS[i].toFixed(3) + '</span></div>';
+  }
+
+  // Initialize tooltips
+  setupTooltip('decomp-canvas', 'decomp-tooltip', formatDecompTooltip);
+  setupTooltip('betas-canvas', 'betas-tooltip', formatBetasTooltip);
+
+  // View toggle (decomp / relative / betas)
+  document.querySelectorAll('#view-toggle button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#view-toggle button').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      decompState.view = this.dataset.view;
+      document.getElementById('decomp-chart-wrap').style.display = decompState.view === 'decomp' ? '' : 'none';
+      document.getElementById('relative-chart-wrap').style.display = decompState.view === 'relative' ? '' : 'none';
+      document.getElementById('betas-chart-wrap').style.display = decompState.view === 'betas' ? '' : 'none';
+      document.getElementById('decomp-legend').style.display = decompState.view === 'decomp' ? '' : 'none';
+      if (decompState.view === 'relative' && decompState.mfra) {
+        drawRelativeChart(decompState.mfra, decompState.lookback);
+      }
+    });
+  });
+
+  // Lookback toggle
+  document.querySelectorAll('#lookback-toggle button').forEach(btn => {
+    btn.addEventListener('click', async function() {
+      const lb = this.dataset.lookback;
+      document.querySelectorAll('#lookback-toggle button').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      decompState.lookback = lb;
+      await refreshDecomp();
+    });
+  });
+
+  // Refresh decomposition with current state (may re-fetch if longer range needed)
+  async function refreshDecomp() {
+    const { ticker, sectorEtf, subEtf, lookback } = decompState;
+    if (!ticker) return;
+
+    const neededRange = lookbackToRange(lookback);
+    const tickers = [ticker, 'SPY', sectorEtf, subEtf];
+    const uniqueTickers = [...new Set(tickers)];
+
+    // Check if we need to fetch longer data
+    let needsFetch = false;
+    for (const t of uniqueTickers) {
+      if (!decompState.priceCache[cacheKey(t, neededRange)]) {
+        needsFetch = true;
+        break;
+      }
+    }
+
+    if (needsFetch) {
+      const statusEl = document.getElementById('scan-status');
+      for (let i = 0; i < uniqueTickers.length; i++) {
+        const t = uniqueTickers[i];
+        const key = cacheKey(t, neededRange);
+        if (decompState.priceCache[key]) continue;
+        if (i > 0) await sleep(1000);
+        statusEl.innerHTML = '<span class="scan-spinner"></span>Fetching ' + t + ' (' + neededRange + ')...';
+        try {
+          const url = '/api/chart/' + encodeURIComponent(t) + '?range=' + neededRange + '&interval=1d';
+          const resp = await fetch(url);
+          if (!resp.ok) throw new Error('HTTP ' + resp.status);
+          const json = await resp.json();
+          const result = json.chart && json.chart.result && json.chart.result[0];
+          if (!result) throw new Error('No data');
+          const timestamps = result.timestamp;
+          const closes = result.indicators.adjclose ? result.indicators.adjclose[0].adjclose : result.indicators.quote[0].close;
+          const prices = [];
+          for (let j = 0; j < timestamps.length; j++) {
+            if (closes[j] != null) prices.push({ date: timestamps[j], close: closes[j] });
+          }
+          decompState.priceCache[key] = prices;
+        } catch (e) {
+          statusEl.textContent = 'Error fetching ' + t + ': ' + e.message;
+          return;
+        }
+      }
+      statusEl.textContent = 'Scan complete.';
+
+      // Re-run MFRA with longer data
+      const rollWin = selectedRollWindow;
+      const pm = decompState.priceCache;
+      const mfra = runMFRA(
+        pm[cacheKey(ticker, neededRange)],
+        pm[cacheKey('SPY', neededRange)],
+        pm[cacheKey(sectorEtf, neededRange)],
+        pm[cacheKey(subEtf, neededRange)],
+        rollWin
+      );
+      if (!mfra.success) return;
+      decompState.mfra = mfra;
+    }
+
+    // Redraw charts
+    if (decompState.mfra) {
+      drawDecompChart(decompState.mfra, decompState.lookback);
+      drawRelativeChart(decompState.mfra, decompState.lookback);
+      drawBetasChart(decompState.mfra, decompState.lookback);
+    }
+  }
+
+  // Show decomposition panel after scan
+  function showDecomp(ticker, sectorEtf, subEtf, mfra, priceMap, fetchedRange) {
+    decompState.ticker = ticker;
+    decompState.sectorEtf = sectorEtf;
+    decompState.subEtf = subEtf;
+    decompState.mfra = mfra;
+
+    // Store fetched prices in cache
+    const tickers = [ticker, 'SPY', sectorEtf, subEtf];
+    const uniqueTickers = [...new Set(tickers)];
+    for (const t of uniqueTickers) {
+      decompState.priceCache[cacheKey(t, fetchedRange)] = priceMap[t];
+    }
+
+    // Reset lookback to 6m (matches initial fetch)
+    decompState.lookback = '6m';
+    document.querySelectorAll('#lookback-toggle button').forEach(b => {
+      b.classList.toggle('active', b.dataset.lookback === '6m');
+    });
+    decompState.view = 'decomp';
+    document.querySelectorAll('#view-toggle button').forEach(b => {
+      b.classList.toggle('active', b.dataset.view === 'decomp');
+    });
+    document.getElementById('decomp-chart-wrap').style.display = '';
+    document.getElementById('relative-chart-wrap').style.display = 'none';
+    document.getElementById('betas-chart-wrap').style.display = 'none';
+    document.getElementById('decomp-legend').style.display = '';
+
+    renderDecompStats(mfra);
+    document.getElementById('decomp-panel').classList.add('visible');
+
+    // Draw with slight delay to ensure container is sized
+    requestAnimationFrame(() => {
+      drawDecompChart(mfra, '6m');
+      drawBetasChart(mfra, '6m');
+    });
+  }
+
+  // Resize handler
+  window.addEventListener('resize', function() {
+    if (decompState.mfra && document.getElementById('decomp-panel').classList.contains('visible')) {
+      drawDecompChart(decompState.mfra, decompState.lookback);
+      drawRelativeChart(decompState.mfra, decompState.lookback);
+      drawBetasChart(decompState.mfra, decompState.lookback);
+    }
+  });
+
+  // ============================================================
+  // SECTOR ANALYSIS TAB
+  // ============================================================
+
+  // Build sector -> stocks map from KNOWN_TICKERS (fallback)
+  const SECTOR_STOCKS = {};
+  for (const [ticker, [secEtf, subEtf]] of Object.entries(KNOWN_TICKERS)) {
+    if (!SECTOR_STOCKS[secEtf]) SECTOR_STOCKS[secEtf] = [];
+    SECTOR_STOCKS[secEtf].push({ ticker, sector_etf: secEtf, sub_sector_etf: subEtf });
+  }
+
+  // Load comprehensive sector constituents (overrides KNOWN_TICKERS for sector analysis)
+  let sectorConstituents = null;
+  fetch('data/sector_constituents.json?v=' + Date.now())
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (data && data.sectors) {
+        sectorConstituents = data;
+        // Merge into SECTOR_STOCKS, preferring constituents data
+        for (const [secEtf, sector] of Object.entries(data.sectors)) {
+          const existing = new Set((SECTOR_STOCKS[secEtf] || []).map(s => s.ticker));
+          if (!SECTOR_STOCKS[secEtf]) SECTOR_STOCKS[secEtf] = [];
+          for (const h of sector.holdings) {
+            if (!existing.has(h.ticker)) {
+              SECTOR_STOCKS[secEtf].push({
+                ticker: h.ticker,
+                sector_etf: secEtf,
+                sub_sector_etf: h.sub_sector_etf,
+                weight: h.weight,
+              });
+              existing.add(h.ticker);
+              // Also add to KNOWN_TICKERS so scan can auto-detect
+              if (!KNOWN_TICKERS[h.ticker]) {
+                KNOWN_TICKERS[h.ticker] = [secEtf, h.sub_sector_etf];
+              }
+            }
+          }
+        }
+      }
+    })
+    .catch(() => {});
+
+  let sectorState = {
+    selectedSector: 'XLE',
+    selectedRange: '6m',
+    results: [],    // array of {ticker, mfra, mktPct, secPct, fundPct, totalReturn}
+    col: null,      // sort column key (matches sortRows expected property name)
+    asc: true,      // sort direction
+    running: false,
+  };
+
+  // Sector lookback toggle
+  document.querySelectorAll('#sector-lookback-toggle button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      if (sectorState.running) return;
+      document.querySelectorAll('#sector-lookback-toggle button').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      sectorState.selectedRange = this.dataset.range;
+      sectorState.results = []; // force re-run
+      runSectorAnalysis(sectorState.selectedSector);
+    });
+  });
+
+  // Sector picker buttons
+  document.querySelectorAll('#sector-picker button').forEach(btn => {
+    btn.addEventListener('click', function() {
+      if (sectorState.running) return;
+      document.querySelectorAll('#sector-picker button').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      sectorState.selectedSector = this.dataset.sec;
+      runSectorAnalysis(this.dataset.sec);
+    });
+  });
+
+  async function runSectorAnalysis(secEtf) {
+    const stocks = SECTOR_STOCKS[secEtf];
+    if (!stocks || stocks.length === 0) {
+      document.getElementById('sector-status').textContent = 'No stocks mapped for ' + secEtf;
+      return;
+    }
+
+    sectorState.running = true;
+    const statusEl = document.getElementById('sector-status');
+    const results = [];
+
+    // Collect all unique tickers needed
+    const allTickers = new Set(['SPY', secEtf]);
+    for (const s of stocks) {
+      allTickers.add(s.ticker);
+      allTickers.add(s.sub_sector_etf);
+    }
+    const tickerList = [...allTickers];
+
+    // Determine Yahoo range from selected lookback
+    const rangeParam = lookbackToRange(sectorState.selectedRange);
+    const displayDays = lookbackToDays(sectorState.selectedRange);
+
+    // Fetch all prices
+    const priceMap = {};
+    for (let i = 0; i < tickerList.length; i++) {
+      const t = tickerList[i];
+      // Check decomp cache first
+      const ck = cacheKey(t, rangeParam);
+      if (decompState.priceCache[ck]) {
+        priceMap[t] = decompState.priceCache[ck];
+        continue;
+      }
+      if (i > 0) await sleep(800);
+      statusEl.innerHTML = '<span class="scan-spinner"></span>Fetching ' + t + ' (' + (i + 1) + '/' + tickerList.length + ')...';
+      try {
+        const url = '/api/chart/' + encodeURIComponent(t) + '?range=' + rangeParam + '&interval=1d';
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const json = await resp.json();
+        const result = json.chart && json.chart.result && json.chart.result[0];
+        if (!result) throw new Error('No data');
+        const timestamps = result.timestamp;
+        const closes = result.indicators.adjclose ? result.indicators.adjclose[0].adjclose : result.indicators.quote[0].close;
+        const prices = [];
+        for (let j = 0; j < timestamps.length; j++) {
+          if (closes[j] != null) prices.push({ date: timestamps[j], close: closes[j] });
+        }
+        priceMap[t] = prices;
+        decompState.priceCache[ck] = prices;
+      } catch (e) {
+        // Skip stocks we can't fetch
+        continue;
+      }
+    }
+
+    // Run MFRA on each stock
+    statusEl.innerHTML = '<span class="scan-spinner"></span>Running MFRA on ' + stocks.length + ' stocks...';
+
+    for (const s of stocks) {
+      if (!priceMap[s.ticker] || !priceMap['SPY'] || !priceMap[s.sector_etf] || !priceMap[s.sub_sector_etf]) continue;
+      const mfra = runMFRA(priceMap[s.ticker], priceMap['SPY'], priceMap[s.sector_etf], priceMap[s.sub_sector_etf], 10);
+      if (!mfra.success) continue;
+
+      const c = mfra.contributions_10d;
+      const absMkt = Math.abs(c.mkt);
+      const absSec = Math.abs(c.sec) + Math.abs(c.sub);
+      const absFund = Math.abs(c.resid);
+      const absTotal = absMkt + absSec + absFund || 1;
+
+      // Compute total return over the display lookback period
+      const prices = priceMap[s.ticker];
+      const startIdx = Math.max(0, prices.length - displayDays);
+      const totalReturn = prices.length > 1
+        ? ((prices[prices.length - 1].close / prices[startIdx].close - 1) * 100)
+        : 0;
+
+      results.push({
+        ticker: s.ticker,
+        sub_sector_etf: s.sub_sector_etf,
+        mfra,
+        mktPct: absMkt / absTotal * 100,
+        secPct: absSec / absTotal * 100,
+        fundPct: absFund / absTotal * 100,
+        totalReturn,
+        r_squared: mfra.r_squared,
+        betaMkt: mfra.betas.mkt,
+        betaSec: mfra.betas.sec,
+        purple10d: c.resid,
+      });
+    }
+
+    // Sort by absolute total return descending by default
+    results.sort((a, b) => Math.abs(b.totalReturn) - Math.abs(a.totalReturn));
+
+    sectorState.results = results;
+    sectorState.col = null;
+    sectorState.running = false;
+
+    statusEl.textContent = results.length + ' stocks analyzed in ' + secEtf + ' (' + sectorState.selectedRange.toUpperCase() + ' lookback)';
+
+    // Render
+    renderSectorCompositionBar(results);
+    drawSectorProfileChart(results);
+    renderSectorDetailTable(results);
+
+    // Show sections
+    document.getElementById('sector-attr-bar-wrap').style.display = '';
+    document.getElementById('sector-profile-title').style.display = '';
+    document.getElementById('sector-profile-wrap').style.display = '';
+    document.getElementById('sector-detail-wrap').style.display = '';
+
+    // Redraw chart after layout settles
+    requestAnimationFrame(() => {
+      drawSectorProfileChart(results);
+    });
+  }
+
+  function renderSectorCompositionBar(results) {
+    // Weight-averaged composition
+    let wMkt = 0, wSec = 0, wFund = 0;
+    for (const r of results) {
+      wMkt += r.mktPct;
+      wSec += r.secPct;
+      wFund += r.fundPct;
+    }
+    const n = results.length || 1;
+    wMkt /= n; wSec /= n; wFund /= n;
+
+    const bar = document.getElementById('sector-comp-bar');
+    bar.innerHTML =
+      '<div class="decomp-attr-segment" style="width:' + wMkt.toFixed(0) + '%;background:' + COLORS.mkt + '"></div>' +
+      '<div class="decomp-attr-segment" style="width:' + wSec.toFixed(0) + '%;background:' + COLORS.sec + '"></div>' +
+      '<div class="decomp-attr-segment" style="width:' + wFund.toFixed(0) + '%;background:' + COLORS.resid + '"></div>';
+
+    document.getElementById('sector-comp-legend').innerHTML =
+      '<span style="color:' + COLORS.mkt + '">MKT ' + wMkt.toFixed(0) + '%</span>' +
+      '<span style="color:' + COLORS.sec + '">SEC ' + wSec.toFixed(0) + '%</span>' +
+      '<span style="color:' + COLORS.resid + '">FUND ' + wFund.toFixed(0) + '%</span>';
+  }
+
+  function drawSectorProfileChart(results) {
+    const canvas = document.getElementById('sector-profile-canvas');
+    const wrap = document.getElementById('sector-profile-wrap');
+    const dpr = window.devicePixelRatio || 1;
+    const width = wrap.clientWidth - 16;
+    const rowH = 22;
+    const ml = 70, mr = 80, mt = 8, mb = 8;
+    const height = Math.max(200, mt + mb + results.length * rowH);
+
+    canvas.height = height * dpr;
+    canvas.width = width * dpr;
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    ctx.clearRect(0, 0, width, height);
+
+    const barArea = width - ml - mr;
+
+    for (let i = 0; i < results.length; i++) {
+      const r = results[i];
+      const y = mt + i * rowH;
+      const barY = y + 3;
+      const barH = rowH - 6;
+
+      // Ticker label
+      ctx.fillStyle = '#e0e0e0';
+      ctx.font = '10px monospace';
+      ctx.textAlign = 'right';
+      ctx.fillText(r.ticker, ml - 8, y + rowH / 2 + 3);
+
+      // Stacked horizontal bar
+      const mktW = r.mktPct / 100 * barArea;
+      const secW = r.secPct / 100 * barArea;
+      const fundW = r.fundPct / 100 * barArea;
+
+      ctx.fillStyle = COLORS.mkt;
+      ctx.fillRect(ml, barY, mktW, barH);
+      ctx.fillStyle = COLORS.sec;
+      ctx.fillRect(ml + mktW, barY, secW, barH);
+      ctx.fillStyle = COLORS.resid;
+      ctx.fillRect(ml + mktW + secW, barY, fundW, barH);
+
+      // Total return label on right
+      ctx.textAlign = 'left';
+      ctx.fillStyle = r.totalReturn >= 0 ? '#4caf50' : '#e74c3c';
+      ctx.fillText(sign(r.totalReturn) + '%', ml + barArea + 8, y + rowH / 2 + 3);
+    }
+
+    // Store for tooltip/click
+    canvas._sectorData = { results, mt, rowH, ml, barArea };
+  }
+
+  // Sector detail table
+  const sectorDetailCols = [
+    { key: 'ticker',    label: 'Stock',       get: r => r.ticker,     fmt: v => v, cls: 'v-white' },
+    { key: 'totalRet',  get label() { return 'Return (' + sectorState.selectedRange.toUpperCase() + ')'; }, get: r => r.totalReturn, fmt: v => sign(v) + '%', cls: r => r.totalReturn >= 0 ? 'v-green' : 'v-warn' },
+    { key: 'mktPct',    label: 'MKT %',       get: r => r.mktPct,     fmt: v => v.toFixed(0) + '%', cls: 'v-cyan' },
+    { key: 'secPct',    label: 'SEC %',       get: r => r.secPct,     fmt: v => v.toFixed(0) + '%', cls: 'v-orange' },
+    { key: 'fundPct',   label: 'FUND %',      get: r => r.fundPct,    fmt: v => v.toFixed(0) + '%', cls: 'v-purple' },
+    { key: 'purple10d', label: 'Purple 10d',  get: r => r.purple10d,  fmt: sign, cls: 'v-purple' },
+    { key: 'betaMkt',   label: 'Beta MKT',    get: r => r.betaMkt,    fmt: v => v.toFixed(2), cls: 'v-cyan' },
+    { key: 'betaSec',   label: 'Beta SEC',    get: r => r.betaSec,    fmt: v => v.toFixed(2), cls: 'v-orange' },
+    { key: 'r2',        label: 'R\u00B2',     get: r => r.r_squared,  fmt: v => v.toFixed(3), cls: 'v-r2' },
+  ];
+
+  function renderSectorDetailTable(results) {
+    const headTr = document.getElementById('sector-detail-head');
+    const tbody = document.getElementById('sector-detail-body');
+    headTr.innerHTML = '';
+
+    sectorDetailCols.forEach(col => {
+      const th = document.createElement('th');
+      const isSorted = sectorState.col === col.key;
+      th.className = isSorted ? 'sorted' : '';
+      th.innerHTML = col.label + ' <span class="sort-arrow">' + (isSorted ? (sectorState.asc ? '\u25B2' : '\u25BC') : '\u25B4') + '</span>';
+      th.onclick = () => {
+        if (sectorState.col === col.key) sectorState.asc = !sectorState.asc;
+        else { sectorState.col = col.key; sectorState.asc = true; }
+        renderSectorDetailTable(sectorState.results);
+      };
+      headTr.appendChild(th);
+    });
+
+    const sorted = sortRows(results, sectorDetailCols, sectorState);
+    renderSectorDetailRows(sorted);
+  }
+
+  function renderSectorDetailRows(results) {
+    const tbody = document.getElementById('sector-detail-body');
+    tbody.innerHTML = '';
+
+    results.forEach((r, i) => {
+      const tr = document.createElement('tr');
+      tr.className = i % 2 === 0 ? 'row-even' : 'row-odd';
+      tr.style.cursor = 'pointer';
+      tr.addEventListener('click', () => {
+        // Switch to scan tab and auto-scan this ticker
+        const tickerInput = document.getElementById('scan-ticker');
+        tickerInput.value = r.ticker;
+        setTab('scan');
+        liveScan();
+      });
+      sectorDetailCols.forEach(col => {
+        const td = document.createElement('td');
+        td.className = typeof col.cls === 'function' ? col.cls(r) : col.cls;
+        td.textContent = col.fmt(col.get(r));
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Setup sector profile canvas tooltip
+  setupTooltip('sector-profile-canvas', 'sector-profile-tooltip', function(cd, barIdx) {
+    // barIdx from mouse position is x-based, but we need row-based
+    return '';
+  });
+
+  // Override sector profile canvas mousemove for row-based tooltip
+  (function() {
+    const canvas = document.getElementById('sector-profile-canvas');
+    const tooltip = document.getElementById('sector-profile-tooltip');
+    canvas.removeEventListener('mousemove', canvas._ttHandler);
+
+    canvas.addEventListener('mousemove', function(e) {
+      const cd = canvas._sectorData;
+      if (!cd) return;
+      const rect = canvas.getBoundingClientRect();
+      const my = e.clientY - rect.top;
+      const mx = e.clientX - rect.left;
+      const rowIdx = Math.floor((my - cd.mt) / cd.rowH);
+      if (rowIdx < 0 || rowIdx >= cd.results.length) {
+        tooltip.style.display = 'none';
+        return;
+      }
+      const r = cd.results[rowIdx];
+      tooltip.innerHTML =
+        '<div style="color:#fff;font-weight:bold;margin-bottom:4px">' + r.ticker + '</div>' +
+        '<div class="tt-row"><span style="color:' + COLORS.mkt + '">Market:</span><span>' + r.mktPct.toFixed(1) + '%</span></div>' +
+        '<div class="tt-row"><span style="color:' + COLORS.sec + '">Sector:</span><span>' + r.secPct.toFixed(1) + '%</span></div>' +
+        '<div class="tt-row"><span style="color:' + COLORS.resid + '">Fundamental:</span><span>' + r.fundPct.toFixed(1) + '%</span></div>' +
+        '<div style="border-top:1px solid #444;padding-top:3px;margin-top:3px">' +
+        '<div class="tt-row"><span>Total Return:</span><span>' + sign(r.totalReturn) + '%</span></div>' +
+        '<div class="tt-row"><span>R\u00B2:</span><span>' + r.r_squared.toFixed(3) + '</span></div></div>';
+      tooltip.style.display = 'block';
+      const tx = Math.min(mx + 12, canvas.clientWidth - tooltip.offsetWidth - 8);
+      const ty = Math.max(8, my - tooltip.offsetHeight - 8);
+      tooltip.style.left = tx + 'px';
+      tooltip.style.top = ty + 'px';
+    });
+
+    canvas.addEventListener('mouseleave', function() {
+      tooltip.style.display = 'none';
+    });
+
+    // Click to open stock decomposition
+    canvas.addEventListener('click', function(e) {
+      const cd = canvas._sectorData;
+      if (!cd) return;
+      const rect = canvas.getBoundingClientRect();
+      const my = e.clientY - rect.top;
+      const rowIdx = Math.floor((my - cd.mt) / cd.rowH);
+      if (rowIdx < 0 || rowIdx >= cd.results.length) return;
+      const r = cd.results[rowIdx];
+      document.getElementById('scan-ticker').value = r.ticker;
+      setTab('scan');
+      liveScan();
+    });
+  })();
 
   // Fetch daily scan data
   fetch('data/scan_results.json?v=' + Date.now())
