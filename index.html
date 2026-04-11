@@ -288,7 +288,7 @@
     background: #0d1210; border: 1px solid var(--border); border-radius: 6px;
     padding: 8px;
   }
-  .decomp-chart-wrap canvas { display: block; width: 100%; }
+  .decomp-chart-wrap canvas { display: block; }
 
   .decomp-tooltip {
     position: absolute; display: none; pointer-events: none;
@@ -1996,15 +1996,19 @@
       ctx.fillText(label, toX(i), height - mb + 16);
     }
 
-    // Legend in top-right corner
+    // Legend in top-right corner with background
     ctx.font = '10px monospace';
-    const lx = width - mr - 160;
+    const lx = width - mr - 130;
+    const ly = mt + 2;
+    ctx.fillStyle = 'rgba(13,18,16,0.85)';
+    ctx.fillRect(lx - 6, ly - 2, 128, 32);
     ctx.fillStyle = COLORS.betaMkt;
-    ctx.fillRect(lx, mt + 4, 12, 3);
-    ctx.fillText('Market Beta', lx + 18, mt + 10);
+    ctx.fillRect(lx, ly + 4, 12, 3);
+    ctx.textAlign = 'left';
+    ctx.fillText('Market Beta', lx + 18, ly + 10);
     ctx.fillStyle = COLORS.betaSec;
-    ctx.fillRect(lx, mt + 18, 12, 3);
-    ctx.fillText('Sector Beta', lx + 18, mt + 24);
+    ctx.fillRect(lx, ly + 18, 12, 3);
+    ctx.fillText('Sector Beta', lx + 18, ly + 24);
 
     canvas._chartData = { dates, betaM, betaS, ml, mr, mt, mb, cw, ch, yMin, yMax, toX, toY };
   }
@@ -2300,8 +2304,9 @@
       document.getElementById('relative-chart-wrap').style.display = decompState.view === 'relative' ? '' : 'none';
       document.getElementById('betas-chart-wrap').style.display = decompState.view === 'betas' ? '' : 'none';
       document.getElementById('decomp-legend').style.display = decompState.view === 'decomp' ? '' : 'none';
-      if (decompState.view === 'relative' && decompState.mfra) {
-        drawRelativeChart(decompState.mfra, decompState.lookback);
+      if (decompState.mfra) {
+        if (decompState.view === 'relative') drawRelativeChart(decompState.mfra, decompState.lookback);
+        if (decompState.view === 'betas') drawBetasChart(decompState.mfra, decompState.lookback);
       }
     });
   });
