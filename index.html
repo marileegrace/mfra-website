@@ -479,6 +479,15 @@
               <button data-view="betas">ROLLING BETAS</button>
             </div>
           </div>
+          <div>
+            <span class="control-label">OLS Window:</span>
+            <div class="control-group" id="ols-toggle">
+              <button data-ols="5">5d</button>
+              <button data-ols="10">10d</button>
+              <button data-ols="30">30d</button>
+              <button data-ols="42" class="active">42d</button>
+            </div>
+          </div>
         </div>
 
         <div class="decomp-legend" id="decomp-legend">
@@ -837,7 +846,7 @@
   // MFRA CONSTANTS (from config.py)
   // ============================================================
 
-  const OLS_WINDOW = 42;
+  let OLS_WINDOW = 42;
   const ROLLING_SUM_WINDOW = 10;
   const R2_MIN = 0.4;
   const R2_MAX = 0.7;
@@ -2322,8 +2331,19 @@
     });
   });
 
+  // OLS window toggle
+  document.querySelectorAll('#ols-toggle button').forEach(btn => {
+    btn.addEventListener('click', async function() {
+      const win = parseInt(this.dataset.ols);
+      document.querySelectorAll('#ols-toggle button').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      OLS_WINDOW = win;
+      await refreshDecomp(true);
+    });
+  });
+
   // Refresh decomposition with current state (may re-fetch if longer range needed)
-  async function refreshDecomp() {
+  async function refreshDecomp(forceRerun) {
     const { ticker, sectorEtf, subEtf, lookback } = decompState;
     if (!ticker) return;
 
@@ -2368,8 +2388,11 @@
         }
       }
       statusEl.textContent = 'Scan complete.';
+      forceRerun = true;
+    }
 
-      // Re-run MFRA with longer data
+    if (forceRerun) {
+      // Re-run MFRA with current OLS window
       const rollWin = selectedRollWindow;
       const pm = decompState.priceCache;
       const mfra = runMFRA(
@@ -2379,8 +2402,12 @@
         pm[cacheKey(subEtf, neededRange)],
         rollWin
       );
-      if (!mfra.success) return;
+      if (!mfra.success) {
+        document.getElementById('scan-status').textContent = 'MFRA error: ' + mfra.error;
+        return;
+      }
       decompState.mfra = mfra;
+      renderDecompStats(mfra);
     }
 
     // Redraw charts
