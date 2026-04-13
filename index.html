@@ -2600,7 +2600,8 @@
 
     for (const s of stocks) {
       if (!priceMap[s.ticker] || !priceMap['SPY'] || !priceMap[s.sector_etf] || !priceMap[s.sub_sector_etf]) continue;
-      const mfra = runMFRA(priceMap[s.ticker], priceMap['SPY'], priceMap[s.sector_etf], priceMap[s.sub_sector_etf], 10);
+      const pArgs = [priceMap[s.ticker], priceMap['SPY'], priceMap[s.sector_etf], priceMap[s.sub_sector_etf]];
+      const mfra = runMFRA(...pArgs, 10);
       if (!mfra.success) continue;
 
       const c = mfra.contributions_10d;
@@ -2616,6 +2617,31 @@
         ? ((prices[prices.length - 1].close / prices[startIdx].close - 1) * 100)
         : 0;
 
+      // Fundamental acceleration: run MFRA at 5d, 10d, 30d OLS windows
+      let fundAccel = '';
+      let fund5 = NaN, fund10 = NaN, fund30 = NaN;
+      const olsWindows = [5, 10, 30];
+      const fundPcts = {};
+      for (const ow of olsWindows) {
+        const savedOLS = OLS_WINDOW;
+        OLS_WINDOW = ow;
+        const m = runMFRA(...pArgs, 10);
+        OLS_WINDOW = savedOLS;
+        if (m.success) {
+          const mc = m.contributions_10d;
+          const am = Math.abs(mc.mkt);
+          const as = Math.abs(mc.sec) + Math.abs(mc.sub);
+          const af = Math.abs(mc.resid);
+          const at = am + as + af || 1;
+          fundPcts[ow] = af / at * 100;
+        }
+      }
+      fund5 = fundPcts[5]; fund10 = fundPcts[10]; fund30 = fundPcts[30];
+      if (!isNaN(fund5) && !isNaN(fund10) && !isNaN(fund30)) {
+        if (fund5 > fund10 && fund10 > fund30) fundAccel = 'ACCEL';
+        else if (fund5 < fund10 && fund10 < fund30) fundAccel = 'DECAY';
+      }
+
       results.push({
         ticker: s.ticker,
         sub_sector_etf: s.sub_sector_etf,
@@ -2628,6 +2654,10 @@
         betaMkt: mfra.betas.mkt,
         betaSec: mfra.betas.sec,
         purple10d: c.resid,
+        fundAccel,
+        fund5: fund5 || 0,
+        fund10: fund10 || 0,
+        fund30: fund30 || 0,
       });
     }
 
@@ -2736,6 +2766,10 @@
   // Sector detail table
   const sectorDetailCols = [
     { key: 'ticker',    label: 'Stock',       get: r => r.ticker,     fmt: v => v, cls: 'v-white' },
+    { key: 'fundAccel', label: 'Signal',      get: r => r.fundAccel,  fmt: v => v || '\u2014', cls: r => r.fundAccel === 'ACCEL' ? 'v-green' : r.fundAccel === 'DECAY' ? 'v-warn' : '' },
+    { key: 'fund30',    label: 'F 30d',       get: r => r.fund30,     fmt: v => v.toFixed(0) + '%', cls: 'v-purple' },
+    { key: 'fund10',    label: 'F 10d',       get: r => r.fund10,     fmt: v => v.toFixed(0) + '%', cls: 'v-purple' },
+    { key: 'fund5',     label: 'F 5d',        get: r => r.fund5,      fmt: v => v.toFixed(0) + '%', cls: 'v-purple' },
     { key: 'totalRet',  get label() { return 'Return (' + sectorState.selectedRange.toUpperCase() + ')'; }, get: r => r.totalReturn, fmt: v => sign(v) + '%', cls: r => r.totalReturn >= 0 ? 'v-green' : 'v-warn' },
     { key: 'mktPct',    label: 'MKT %',       get: r => r.mktPct,     fmt: v => v.toFixed(0) + '%', cls: 'v-cyan' },
     { key: 'secPct',    label: 'SEC %',       get: r => r.secPct,     fmt: v => v.toFixed(0) + '%', cls: 'v-orange' },
