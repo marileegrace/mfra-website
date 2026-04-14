@@ -2,7 +2,7 @@
 import os
 
 # --- MFRA Model Parameters ---
-OLS_WINDOW = 42           # Rolling OLS regression window (bars)
+OLS_WINDOW = 30           # Rolling OLS regression window (bars)
 ROLLING_SUM_WINDOW = 10   # Rolling sum window for contribution bars
 
 # --- Entry Criteria Thresholds ---
