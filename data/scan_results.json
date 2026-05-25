@@ -1,12 +1,14 @@
 {
   "meta": {
-    "scan_date": "2026-05-22",
-    "generated_at": "2026-05-22 22:16 ET",
-    "total_scanned": 87,
+    "scan_date": "2026-05-25",
+    "generated_at": "2026-05-25 22:18 ET",
+    "total_scanned": 86,
     "opportunity_count": 20,
     "near_miss_count": 26,
-    "skipped_count": 0,
-    "skipped_tickers": []
+    "skipped_count": 1,
+    "skipped_tickers": [
+      "AMKR"
+    ]
   },
   "opportunities": [
     {
@@ -349,13 +351,13 @@
         "mkt": 0.375,
         "sec": 0.32,
         "sub": -4.916,
-        "resid": 1.709
+        "resid": 1.71
       },
       "criteria": {
         "purple_positive_count": 5,
         "purple_dominance": 0.5434,
         "has_tailwind": true,
-        "cyan_share": 0.1559
+        "cyan_share": 0.1558
       },
       "failed_rules": []
     },
@@ -741,14 +743,14 @@
       "contributions_10d": {
         "mkt": 3.512,
         "sec": 0.714,
-        "sub": -4.829,
+        "sub": -4.83,
         "resid": 3.897
       },
       "criteria": {
         "purple_positive_count": 5,
         "purple_dominance": 0.4733,
         "has_tailwind": true,
-        "cyan_share": 0.4324
+        "cyan_share": 0.4323
       },
       "failed_rules": [
         "r_squared"
@@ -1083,23 +1085,23 @@
       "sector_etf": "XLE",
       "sub_sector_etf": "TAN",
       "quality": "",
-      "r_squared": 0.2064,
+      "r_squared": 0.2042,
       "betas": {
-        "mkt": 0.266,
-        "sec": -0.801,
-        "sub": -0.323
+        "mkt": 0.276,
+        "sec": -0.794,
+        "sub": -0.32
       },
       "contributions_10d": {
-        "mkt": 0.672,
-        "sec": -4.46,
-        "sub": 0.872,
-        "resid": 1.444
+        "mkt": 0.676,
+        "sec": -4.458,
+        "sub": 0.875,
+        "resid": 1.822
       },
       "criteria": {
         "purple_positive_count": 6,
-        "purple_dominance": 0.3502,
+        "purple_dominance": 0.336,
         "has_tailwind": true,
-        "cyan_share": 0.2249
+        "cyan_share": 0.2003
       },
       "failed_rules": [
         "r_squared"
