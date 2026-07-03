@@ -1,7 +1,7 @@
 {
   "meta": {
-    "scan_date": "2026-07-02",
-    "generated_at": "2026-07-02 22:18 ET",
+    "scan_date": "2026-07-03",
+    "generated_at": "2026-07-03 22:16 ET",
     "total_scanned": 87,
     "opportunity_count": 12,
     "near_miss_count": 33,
@@ -676,8 +676,8 @@
       "contributions_10d": {
         "mkt": 1.601,
         "sec": 2.245,
-        "sub": 4.962,
-        "resid": 14.129
+        "sub": 4.963,
+        "resid": 14.128
       },
       "criteria": {
         "purple_positive_count": 7,
@@ -892,12 +892,12 @@
       "contributions_10d": {
         "mkt": 0.505,
         "sec": 2.121,
-        "sub": 5.537,
-        "resid": -0.173
+        "sub": 5.538,
+        "resid": -0.174
       },
       "criteria": {
         "purple_positive_count": 6,
-        "purple_dominance": 0.5016,
+        "purple_dominance": 0.5017,
         "has_tailwind": true,
         "cyan_share": 0.0619
       },
