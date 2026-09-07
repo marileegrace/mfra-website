@@ -1,7 +1,7 @@
 {
   "meta": {
-    "scan_date": "2026-09-04",
-    "generated_at": "2026-09-04 23:03 ET",
+    "scan_date": "2026-09-07",
+    "generated_at": "2026-09-07 23:30 ET",
     "total_scanned": 85,
     "opportunity_count": 9,
     "near_miss_count": 29,
@@ -946,23 +946,23 @@
       "sector_etf": "XLI",
       "sub_sector_etf": "ROBO",
       "quality": "",
-      "r_squared": 0.5645,
+      "r_squared": 0.5646,
       "betas": {
-        "mkt": 0.376,
-        "sec": 2.531,
-        "sub": 3.225
+        "mkt": 0.373,
+        "sec": 2.536,
+        "sub": 3.227
       },
       "contributions_10d": {
-        "mkt": 0.162,
-        "sec": -10.668,
-        "sub": 7.466,
-        "resid": -1.62
+        "mkt": 0.163,
+        "sec": -10.665,
+        "sub": 7.467,
+        "resid": -1.586
       },
       "criteria": {
         "purple_positive_count": 4,
-        "purple_dominance": 0.464,
+        "purple_dominance": 0.4617,
         "has_tailwind": true,
-        "cyan_share": 0.0213
+        "cyan_share": 0.0214
       },
       "failed_rules": [
         "purple_sustained"
