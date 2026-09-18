@@ -1,10 +1,10 @@
 {
   "meta": {
-    "scan_date": "2026-09-17",
-    "generated_at": "2026-09-17 23:33 ET",
+    "scan_date": "2026-09-18",
+    "generated_at": "2026-09-18 23:19 ET",
     "total_scanned": 85,
-    "opportunity_count": 18,
-    "near_miss_count": 21,
+    "opportunity_count": 19,
+    "near_miss_count": 23,
     "skipped_count": 2,
     "skipped_tickers": [
       "SKYT",
@@ -17,21 +17,46 @@
       "sector_etf": "XLK",
       "sub_sector_etf": "SOXX",
       "quality": "Best",
-      "r_squared": 0.6028,
+      "r_squared": 0.6043,
       "betas": {
-        "mkt": 0.617,
-        "sec": 0.566,
-        "sub": 1.496
+        "mkt": 0.629,
+        "sec": 0.573,
+        "sub": 1.452
       },
       "contributions_10d": {
-        "mkt": -0.109,
-        "sec": 2.491,
-        "sub": 2.365,
-        "resid": 13.606
+        "mkt": -1.232,
+        "sec": 2.801,
+        "sub": 6.835,
+        "resid": 12.847
       },
       "criteria": {
-        "purple_positive_count": 9,
-        "purple_dominance": 0.2335,
+        "purple_positive_count": 8,
+        "purple_dominance": 0.2382,
+        "has_tailwind": true,
+        "cyan_share": 0.0
+      },
+      "failed_rules": []
+    },
+    {
+      "ticker": "TER",
+      "sector_etf": "XLI",
+      "sub_sector_etf": "ROBO",
+      "quality": "Best",
+      "r_squared": 0.568,
+      "betas": {
+        "mkt": -0.326,
+        "sec": 4.278,
+        "sub": 3.225
+      },
+      "contributions_10d": {
+        "mkt": -0.043,
+        "sec": -5.063,
+        "sub": 3.478,
+        "resid": 12.509
+      },
+      "criteria": {
+        "purple_positive_count": 7,
+        "purple_dominance": 0.344,
         "has_tailwind": true,
         "cyan_share": 0.0
       },
@@ -42,48 +67,48 @@
       "sector_etf": "XLK",
       "sub_sector_etf": "SOXX",
       "quality": "Best",
-      "r_squared": 0.5253,
+      "r_squared": 0.5122,
       "betas": {
-        "mkt": 1.287,
-        "sec": 0.296,
-        "sub": 2.317
+        "mkt": 1.349,
+        "sec": 0.21,
+        "sub": 2.253
       },
       "contributions_10d": {
-        "mkt": -1.301,
-        "sec": 1.335,
-        "sub": 3.019,
-        "resid": 13.248
+        "mkt": -3.278,
+        "sec": 1.408,
+        "sub": 10.016,
+        "resid": 8.466
       },
       "criteria": {
-        "purple_positive_count": 9,
-        "purple_dominance": 0.2267,
+        "purple_positive_count": 8,
+        "purple_dominance": 0.2615,
         "has_tailwind": true,
         "cyan_share": 0.0
       },
       "failed_rules": []
     },
     {
-      "ticker": "DOCN",
-      "sector_etf": "XLK",
-      "sub_sector_etf": "IGV",
+      "ticker": "OKLO",
+      "sector_etf": "XLE",
+      "sub_sector_etf": "URA",
       "quality": "Acceptable",
-      "r_squared": 0.438,
+      "r_squared": 0.6349,
       "betas": {
-        "mkt": -0.751,
-        "sec": 3.725,
-        "sub": 0.088
+        "mkt": 0.567,
+        "sec": 0.857,
+        "sub": 1.582
       },
       "contributions_10d": {
-        "mkt": 0.846,
-        "sec": 8.554,
-        "sub": 0.97,
-        "resid": 14.991
+        "mkt": -0.176,
+        "sec": 0.658,
+        "sub": -13.111,
+        "resid": 9.445
       },
       "criteria": {
-        "purple_positive_count": 8,
-        "purple_dominance": 0.4107,
+        "purple_positive_count": 6,
+        "purple_dominance": 0.452,
         "has_tailwind": true,
-        "cyan_share": 0.0333
+        "cyan_share": 0.0
       },
       "failed_rules": []
     },
@@ -92,17 +117,17 @@
       "sector_etf": "XLI",
       "sub_sector_etf": "ROBO",
       "quality": "Acceptable",
-      "r_squared": 0.443,
+      "r_squared": 0.4855,
       "betas": {
-        "mkt": 1.888,
-        "sec": 3.914,
-        "sub": 1.491
+        "mkt": 1.791,
+        "sec": 4.097,
+        "sub": 1.745
       },
       "contributions_10d": {
-        "mkt": -2.417,
-        "sec": -7.352,
-        "sub": 3.088,
-        "resid": 7.487
+        "mkt": -6.389,
+        "sec": -5.005,
+        "sub": 1.743,
+        "resid": 7.873
       },
       "criteria": {
         "purple_positive_count": 6,
@@ -113,100 +138,25 @@
       "failed_rules": []
     },
     {
-      "ticker": "RDW",
-      "sector_etf": "XLI",
-      "sub_sector_etf": "UFO",
-      "quality": "Acceptable",
-      "r_squared": 0.6329,
-      "betas": {
-        "mkt": 0.232,
-        "sec": 1.763,
-        "sub": 3.265
-      },
-      "contributions_10d": {
-        "mkt": -1.031,
-        "sec": -4.25,
-        "sub": 10.507,
-        "resid": 6.591
-      },
-      "criteria": {
-        "purple_positive_count": 6,
-        "purple_dominance": 0.2634,
-        "has_tailwind": true,
-        "cyan_share": 0.0
-      },
-      "failed_rules": []
-    },
-    {
-      "ticker": "TER",
-      "sector_etf": "XLI",
-      "sub_sector_etf": "ROBO",
-      "quality": "Acceptable",
-      "r_squared": 0.5602,
-      "betas": {
-        "mkt": -0.382,
-        "sec": 3.856,
-        "sub": 3.188
-      },
-      "contributions_10d": {
-        "mkt": 0.407,
-        "sec": -7.483,
-        "sub": 5.827,
-        "resid": 6.05
-      },
-      "criteria": {
-        "purple_positive_count": 6,
-        "purple_dominance": 0.4456,
-        "has_tailwind": true,
-        "cyan_share": 0.0331
-      },
-      "failed_rules": []
-    },
-    {
-      "ticker": "ISRG",
-      "sector_etf": "XLV",
-      "sub_sector_etf": "ROBO",
-      "quality": "Acceptable",
-      "r_squared": 0.4026,
-      "betas": {
-        "mkt": 1.404,
-        "sec": 1.317,
-        "sub": 0.228
-      },
-      "contributions_10d": {
-        "mkt": -0.771,
-        "sec": -2.915,
-        "sub": 1.614,
-        "resid": 5.36
-      },
-      "criteria": {
-        "purple_positive_count": 6,
-        "purple_dominance": 0.337,
-        "has_tailwind": true,
-        "cyan_share": 0.0
-      },
-      "failed_rules": []
-    },
-    {
-      "ticker": "GOOG",
+      "ticker": "DOCN",
       "sector_etf": "XLK",
       "sub_sector_etf": "IGV",
       "quality": "Acceptable",
-      "r_squared": 0.4716,
+      "r_squared": 0.4042,
       "betas": {
-        "mkt": 1.234,
-        "sec": -0.66,
-        "sub": 0.137
+        "mkt": -0.638,
+        "sec": 3.56,
+        "sub": 0.131
       },
       "contributions_10d": {
-        "mkt": -0.303,
-        "sec": -2.12,
-        "sub": 0.169,
-        "resid": 5.358
+        "mkt": -0.683,
+        "sec": 11.33,
+        "sub": 0.793,
+        "resid": 7.465
       },
       "criteria": {
-        "purple_positive_count": 6,
-        "purple_dominance": 0.2724,
+        "purple_positive_count": 7,
+        "purple_dominance": 0.451,
         "has_tailwind": true,
         "cyan_share": 0.0
       },
@@ -217,21 +167,21 @@
       "sector_etf": "XLF",
       "sub_sector_etf": "WGMI",
       "quality": "Acceptable",
-      "r_squared": 0.5585,
+      "r_squared": 0.5903,
       "betas": {
-        "mkt": 0.874,
-        "sec": 1.408,
-        "sub": 1.004
+        "mkt": 0.702,
+        "sec": 1.734,
+        "sub": 1.085
       },
       "contributions_10d": {
-        "mkt": -0.1,
-        "sec": -4.128,
-        "sub": 12.266,
-        "resid": 3.703
+        "mkt": -0.402,
+        "sec": -4.405,
+        "sub": 13.791,
+        "resid": 5.709
       },
       "criteria": {
         "purple_positive_count": 6,
-        "purple_dominance": 0.3876,
+        "purple_dominance": 0.3609,
         "has_tailwind": true,
         "cyan_share": 0.0
       },
@@ -242,171 +192,21 @@
       "sector_etf": "XLK",
       "sub_sector_etf": "IGV",
       "quality": "Acceptable",
-      "r_squared": 0.685,
+      "r_squared": 0.6682,
       "betas": {
-        "mkt": 2.064,
-        "sec": 0.912,
-        "sub": 1.067
+        "mkt": 2.02,
+        "sec": 0.973,
+        "sub": 1.047
       },
       "contributions_10d": {
-        "mkt": -2.579,
-        "sec": 4.468,
-        "sub": -1.094,
-        "resid": 3.648
+        "mkt": -5.217,
+        "sec": 4.778,
+        "sub": -6.335,
+        "resid": 4.297
       },
       "criteria": {
         "purple_positive_count": 6,
-        "purple_dominance": 0.303,
-        "has_tailwind": true,
-        "cyan_share": 0.0
-      },
-      "failed_rules": []
-    },
-    {
-      "ticker": "IONQ",
-      "sector_etf": "XLK",
-      "sub_sector_etf": "XLK",
-      "quality": "Acceptable",
-      "r_squared": 0.4941,
-      "betas": {
-        "mkt": 3.833,
-        "sec": 2.083,
-        "sub": 0.0
-      },
-      "contributions_10d": {
-        "mkt": -0.148,
-        "sec": 5.74,
-        "sub": 0.0,
-        "resid": 2.124
-      },
-      "criteria": {
-        "purple_positive_count": 5,
-        "purple_dominance": 0.4898,
-        "has_tailwind": true,
-        "cyan_share": 0.0
-      },
-      "failed_rules": []
-    },
-    {
-      "ticker": "ZETA",
-      "sector_etf": "XLK",
-      "sub_sector_etf": "IGV",
-      "quality": "Acceptable",
-      "r_squared": 0.5083,
-      "betas": {
-        "mkt": 1.115,
-        "sec": 0.673,
-        "sub": 0.971
-      },
-      "contributions_10d": {
-        "mkt": -1.334,
-        "sec": 1.3,
-        "sub": -1.223,
-        "resid": 1.454
-      },
-      "criteria": {
-        "purple_positive_count": 6,
-        "purple_dominance": 0.4945,
-        "has_tailwind": true,
-        "cyan_share": 0.0
-      },
-      "failed_rules": []
-    },
-    {
-      "ticker": "MSFT",
-      "sector_etf": "XLK",
-      "sub_sector_etf": "IGV",
-      "quality": "Acceptable",
-      "r_squared": 0.5659,
-      "betas": {
-        "mkt": 1.29,
-        "sec": -0.42,
-        "sub": 0.283
-      },
-      "contributions_10d": {
-        "mkt": -1.849,
-        "sec": -0.038,
-        "sub": 0.945,
-        "resid": 1.25
-      },
-      "criteria": {
-        "purple_positive_count": 5,
-        "purple_dominance": 0.5273,
-        "has_tailwind": true,
-        "cyan_share": 0.0
-      },
-      "failed_rules": []
-    },
-    {
-      "ticker": "DIS",
-      "sector_etf": "XLY",
-      "sub_sector_etf": "XLY",
-      "quality": "Acceptable",
-      "r_squared": 0.402,
-      "betas": {
-        "mkt": -0.37,
-        "sec": 1.323,
-        "sub": 0.0
-      },
-      "contributions_10d": {
-        "mkt": -0.435,
-        "sec": -2.841,
-        "sub": 0.0,
-        "resid": 0.899
-      },
-      "criteria": {
-        "purple_positive_count": 5,
-        "purple_dominance": 0.3734,
-        "has_tailwind": true,
-        "cyan_share": 0.0
-      },
-      "failed_rules": []
-    },
-    {
-      "ticker": "NXT",
-      "sector_etf": "XLE",
-      "sub_sector_etf": "TAN",
-      "quality": "Acceptable",
-      "r_squared": 0.6858,
-      "betas": {
-        "mkt": 2.183,
-        "sec": 1.213,
-        "sub": 1.219
-      },
-      "contributions_10d": {
-        "mkt": -0.099,
-        "sec": -0.793,
-        "sub": 1.637,
-        "resid": 0.652
-      },
-      "criteria": {
-        "purple_positive_count": 6,
-        "purple_dominance": 0.3848,
-        "has_tailwind": true,
-        "cyan_share": 0.0
-      },
-      "failed_rules": []
-    },
-    {
-      "ticker": "FLY",
-      "sector_etf": "XLI",
-      "sub_sector_etf": "UFO",
-      "quality": "Acceptable",
-      "r_squared": 0.6486,
-      "betas": {
-        "mkt": 1.764,
-        "sec": 1.911,
-        "sub": 2.467
-      },
-      "contributions_10d": {
-        "mkt": -0.367,
-        "sec": -4.044,
-        "sub": 8.161,
-        "resid": 0.034
-      },
-      "criteria": {
-        "purple_positive_count": 5,
-        "purple_dominance": 0.3566,
+        "purple_dominance": 0.2828,
         "has_tailwind": true,
         "cyan_share": 0.0
       },
@@ -417,21 +217,246 @@
       "sector_etf": "XLY",
       "sub_sector_etf": "IBUY",
       "quality": "Acceptable",
-      "r_squared": 0.5844,
+      "r_squared": 0.5685,
       "betas": {
-        "mkt": 1.023,
+        "mkt": 1.013,
         "sec": 1.262,
-        "sub": -0.078
+        "sub": -0.059
       },
       "contributions_10d": {
-        "mkt": -0.288,
-        "sec": -4.303,
-        "sub": 3.47,
-        "resid": -0.271
+        "mkt": -2.572,
+        "sec": -5.213,
+        "sub": 2.158,
+        "resid": 3.7
+      },
+      "criteria": {
+        "purple_positive_count": 6,
+        "purple_dominance": 0.4552,
+        "has_tailwind": true,
+        "cyan_share": 0.0
+      },
+      "failed_rules": []
+    },
+    {
+      "ticker": "FLY",
+      "sector_etf": "XLI",
+      "sub_sector_etf": "UFO",
+      "quality": "Acceptable",
+      "r_squared": 0.6797,
+      "betas": {
+        "mkt": 1.93,
+        "sec": 2.015,
+        "sub": 2.381
+      },
+      "contributions_10d": {
+        "mkt": -3.723,
+        "sec": -2.89,
+        "sub": 4.882,
+        "resid": 2.111
       },
       "criteria": {
         "purple_positive_count": 5,
-        "purple_dominance": 0.5722,
+        "purple_dominance": 0.3566,
+        "has_tailwind": true,
+        "cyan_share": 0.0
+      },
+      "failed_rules": []
+    },
+    {
+      "ticker": "MSFT",
+      "sector_etf": "XLK",
+      "sub_sector_etf": "IGV",
+      "quality": "Acceptable",
+      "r_squared": 0.6948,
+      "betas": {
+        "mkt": 1.266,
+        "sec": -0.35,
+        "sub": 0.322
+      },
+      "contributions_10d": {
+        "mkt": -4.492,
+        "sec": -0.407,
+        "sub": 0.48,
+        "resid": 1.25
+      },
+      "criteria": {
+        "purple_positive_count": 5,
+        "purple_dominance": 0.5272,
+        "has_tailwind": true,
+        "cyan_share": 0.0
+      },
+      "failed_rules": []
+    },
+    {
+      "ticker": "FSLR",
+      "sector_etf": "XLE",
+      "sub_sector_etf": "TAN",
+      "quality": "Acceptable",
+      "r_squared": 0.535,
+      "betas": {
+        "mkt": 1.354,
+        "sec": 1.549,
+        "sub": 1.228
+      },
+      "contributions_10d": {
+        "mkt": -1.411,
+        "sec": 0.075,
+        "sub": -4.628,
+        "resid": 0.883
+      },
+      "criteria": {
+        "purple_positive_count": 6,
+        "purple_dominance": 0.45,
+        "has_tailwind": true,
+        "cyan_share": 0.0
+      },
+      "failed_rules": []
+    },
+    {
+      "ticker": "DIS",
+      "sector_etf": "XLY",
+      "sub_sector_etf": "XLY",
+      "quality": "Acceptable",
+      "r_squared": 0.4193,
+      "betas": {
+        "mkt": -0.304,
+        "sec": 1.341,
+        "sub": 0.0
+      },
+      "contributions_10d": {
+        "mkt": -0.41,
+        "sec": -3.416,
+        "sub": 0.0,
+        "resid": -0.337
+      },
+      "criteria": {
+        "purple_positive_count": 5,
+        "purple_dominance": 0.543,
+        "has_tailwind": true,
+        "cyan_share": 0.0
+      },
+      "failed_rules": []
+    },
+    {
+      "ticker": "SOFI",
+      "sector_etf": "XLF",
+      "sub_sector_etf": "IPAY",
+      "quality": "Acceptable",
+      "r_squared": 0.5871,
+      "betas": {
+        "mkt": 2.412,
+        "sec": -0.312,
+        "sub": 1.159
+      },
+      "contributions_10d": {
+        "mkt": -6.888,
+        "sec": 1.619,
+        "sub": -2.261,
+        "resid": -1.025
+      },
+      "criteria": {
+        "purple_positive_count": 5,
+        "purple_dominance": 0.555,
+        "has_tailwind": true,
+        "cyan_share": 0.0
+      },
+      "failed_rules": []
+    },
+    {
+      "ticker": "ZETA",
+      "sector_etf": "XLK",
+      "sub_sector_etf": "IGV",
+      "quality": "Acceptable",
+      "r_squared": 0.5067,
+      "betas": {
+        "mkt": 1.127,
+        "sec": 0.608,
+        "sub": 0.905
+      },
+      "contributions_10d": {
+        "mkt": -2.648,
+        "sec": 1.724,
+        "sub": -5.649,
+        "resid": -1.049
+      },
+      "criteria": {
+        "purple_positive_count": 6,
+        "purple_dominance": 0.4553,
+        "has_tailwind": true,
+        "cyan_share": 0.0
+      },
+      "failed_rules": []
+    },
+    {
+      "ticker": "NXT",
+      "sector_etf": "XLE",
+      "sub_sector_etf": "TAN",
+      "quality": "Acceptable",
+      "r_squared": 0.6922,
+      "betas": {
+        "mkt": 2.2,
+        "sec": 1.304,
+        "sub": 1.264
+      },
+      "contributions_10d": {
+        "mkt": -0.479,
+        "sec": 0.598,
+        "sub": -2.226,
+        "resid": -1.114
+      },
+      "criteria": {
+        "purple_positive_count": 5,
+        "purple_dominance": 0.4146,
+        "has_tailwind": true,
+        "cyan_share": 0.0
+      },
+      "failed_rules": []
+    },
+    {
+      "ticker": "IONQ",
+      "sector_etf": "XLK",
+      "sub_sector_etf": "XLK",
+      "quality": "Acceptable",
+      "r_squared": 0.4725,
+      "betas": {
+        "mkt": 3.984,
+        "sec": 1.922,
+        "sub": 0.0
+      },
+      "contributions_10d": {
+        "mkt": -4.108,
+        "sec": 7.123,
+        "sub": 0.0,
+        "resid": -1.965
+      },
+      "criteria": {
+        "purple_positive_count": 5,
+        "purple_dominance": 0.4898,
+        "has_tailwind": true,
+        "cyan_share": 0.0
+      },
+      "failed_rules": []
+    },
+    {
+      "ticker": "LMND",
+      "sector_etf": "XLF",
+      "sub_sector_etf": "IPAY",
+      "quality": "Acceptable",
+      "r_squared": 0.6488,
+      "betas": {
+        "mkt": 2.16,
+        "sec": 1.559,
+        "sub": 0.976
+      },
+      "contributions_10d": {
+        "mkt": -8.574,
+        "sec": -5.762,
+        "sub": 0.979,
+        "resid": -1.995
+      },
+      "criteria": {
+        "purple_positive_count": 5,
+        "purple_dominance": 0.5736,
         "has_tailwind": true,
         "cyan_share": 0.0
       },
@@ -442,21 +467,21 @@
       "sector_etf": "XLI",
       "sub_sector_etf": "UFO",
       "quality": "Acceptable",
-      "r_squared": 0.6638,
+      "r_squared": 0.6858,
       "betas": {
-        "mkt": 1.533,
-        "sec": 1.667,
-        "sub": 3.04
+        "mkt": 1.313,
+        "sec": 1.396,
+        "sub": 3.237
       },
       "contributions_10d": {
-        "mkt": -0.902,
-        "sec": -3.308,
-        "sub": 10.071,
-        "resid": -4.752
+        "mkt": -3.828,
+        "sec": -2.497,
+        "sub": 5.623,
+        "resid": -4.437
       },
       "criteria": {
         "purple_positive_count": 5,
-        "purple_dominance": 0.5354,
+        "purple_dominance": 0.5077,
         "has_tailwind": true,
         "cyan_share": 0.0
       },
@@ -465,25 +490,79 @@
   ],
   "near_misses": [
     {
+      "ticker": "BABA",
+      "sector_etf": "FXI",
+      "sub_sector_etf": "KWEB",
+      "quality": "",
+      "r_squared": 0.4009,
+      "betas": {
+        "mkt": -0.519,
+        "sec": 0.747,
+        "sub": 1.63
+      },
+      "contributions_10d": {
+        "mkt": 0.163,
+        "sec": -0.753,
+        "sub": -0.453,
+        "resid": 2.487
+      },
+      "criteria": {
+        "purple_positive_count": 6,
+        "purple_dominance": 0.3724,
+        "has_tailwind": false,
+        "cyan_share": 0.0616
+      },
+      "failed_rules": [
+        "sector_tailwind"
+      ]
+    },
+    {
       "ticker": "BE",
       "sector_etf": "XLE",
       "sub_sector_etf": "TAN",
       "quality": "",
-      "r_squared": 0.1971,
+      "r_squared": 0.1967,
       "betas": {
-        "mkt": 1.094,
-        "sec": 0.113,
-        "sub": 0.785
+        "mkt": 1.159,
+        "sec": 0.409,
+        "sub": 0.939
       },
       "contributions_10d": {
-        "mkt": -1.561,
-        "sec": 0.165,
-        "sub": 1.678,
-        "resid": 27.12
+        "mkt": -4.158,
+        "sec": 2.552,
+        "sub": -2.186,
+        "resid": 17.397
       },
       "criteria": {
-        "purple_positive_count": 8,
-        "purple_dominance": 0.1926,
+        "purple_positive_count": 7,
+        "purple_dominance": 0.2308,
+        "has_tailwind": true,
+        "cyan_share": 0.0
+      },
+      "failed_rules": [
+        "r_squared"
+      ]
+    },
+    {
+      "ticker": "BIDU",
+      "sector_etf": "FXI",
+      "sub_sector_etf": "KWEB",
+      "quality": "",
+      "r_squared": 0.3656,
+      "betas": {
+        "mkt": 3.329,
+        "sec": 1.096,
+        "sub": 0.113
+      },
+      "contributions_10d": {
+        "mkt": -3.846,
+        "sec": -2.416,
+        "sub": 0.065,
+        "resid": 0.507
+      },
+      "criteria": {
+        "purple_positive_count": 5,
+        "purple_dominance": 0.4484,
         "has_tailwind": true,
         "cyan_share": 0.0
       },
@@ -496,48 +575,21 @@
       "sector_etf": "XLF",
       "sub_sector_etf": "WGMI",
       "quality": "",
-      "r_squared": 0.8477,
+      "r_squared": 0.8572,
       "betas": {
-        "mkt": 1.065,
-        "sec": 1.993,
-        "sub": 1.145
+        "mkt": 1.055,
+        "sec": 1.911,
+        "sub": 1.127
       },
       "contributions_10d": {
-        "mkt": 0.148,
-        "sec": -5.579,
-        "sub": 13.743,
-        "resid": 9.421
+        "mkt": -0.541,
+        "sec": -6.301,
+        "sub": 14.675,
+        "resid": 7.256
       },
       "criteria": {
         "purple_positive_count": 7,
-        "purple_dominance": 0.2418,
-        "has_tailwind": true,
-        "cyan_share": 0.0063
-      },
-      "failed_rules": [
-        "r_squared"
-      ]
-    },
-    {
-      "ticker": "CRWD",
-      "sector_etf": "XLK",
-      "sub_sector_etf": "CIBR",
-      "quality": "",
-      "r_squared": 0.9253,
-      "betas": {
-        "mkt": 1.283,
-        "sec": 2.398,
-        "sub": 2.256
-      },
-      "contributions_10d": {
-        "mkt": -0.638,
-        "sec": 6.77,
-        "sub": 13.731,
-        "resid": 0.144
-      },
-      "criteria": {
-        "purple_positive_count": 5,
-        "purple_dominance": 0.5677,
+        "purple_dominance": 0.2865,
         "has_tailwind": true,
         "cyan_share": 0.0
       },
@@ -546,52 +598,52 @@
       ]
     },
     {
-      "ticker": "FSLR",
-      "sector_etf": "XLE",
-      "sub_sector_etf": "TAN",
+      "ticker": "GILD",
+      "sector_etf": "XLV",
+      "sub_sector_etf": "XBI",
       "quality": "",
-      "r_squared": 0.519,
+      "r_squared": 0.5882,
       "betas": {
-        "mkt": 1.356,
-        "sec": 1.644,
-        "sub": 1.265
+        "mkt": 1.008,
+        "sec": 0.936,
+        "sub": 0.244
       },
       "contributions_10d": {
-        "mkt": 0.277,
-        "sec": -0.807,
-        "sub": -1.803,
-        "resid": 2.216
+        "mkt": -1.891,
+        "sec": -1.298,
+        "sub": -0.757,
+        "resid": 3.868
       },
       "criteria": {
         "purple_positive_count": 7,
-        "purple_dominance": 0.4179,
+        "purple_dominance": 0.2408,
         "has_tailwind": false,
-        "cyan_share": 0.111
+        "cyan_share": 0.0
       },
       "failed_rules": [
         "sector_tailwind"
       ]
     },
     {
-      "ticker": "GILD",
-      "sector_etf": "XLV",
-      "sub_sector_etf": "XBI",
+      "ticker": "GOOG",
+      "sector_etf": "XLK",
+      "sub_sector_etf": "IGV",
       "quality": "",
-      "r_squared": 0.5647,
+      "r_squared": 0.4412,
       "betas": {
-        "mkt": 1.046,
-        "sec": 0.928,
-        "sub": 0.212
+        "mkt": 1.213,
+        "sec": -0.639,
+        "sub": 0.114
       },
       "contributions_10d": {
-        "mkt": -0.532,
-        "sec": -1.879,
-        "sub": -0.767,
-        "resid": 4.692
+        "mkt": -2.474,
+        "sec": -2.514,
+        "sub": -0.462,
+        "resid": 7.179
       },
       "criteria": {
-        "purple_positive_count": 8,
-        "purple_dominance": 0.2133,
+        "purple_positive_count": 7,
+        "purple_dominance": 0.2332,
         "has_tailwind": false,
         "cyan_share": 0.0
       },
@@ -604,21 +656,21 @@
       "sector_etf": "XLK",
       "sub_sector_etf": "IGV",
       "quality": "",
-      "r_squared": 0.3682,
+      "r_squared": 0.3726,
       "betas": {
-        "mkt": 2.279,
-        "sec": 0.029,
-        "sub": 0.796
+        "mkt": 2.308,
+        "sec": -0.02,
+        "sub": 0.798
       },
       "contributions_10d": {
-        "mkt": -0.202,
-        "sec": 0.91,
-        "sub": -0.202,
-        "resid": 1.213
+        "mkt": -1.456,
+        "sec": 0.809,
+        "sub": -3.933,
+        "resid": 4.796
       },
       "criteria": {
         "purple_positive_count": 5,
-        "purple_dominance": 0.3859,
+        "purple_dominance": 0.3719,
         "has_tailwind": true,
         "cyan_share": 0.0
       },
@@ -631,23 +683,50 @@
       "sector_etf": "XLK",
       "sub_sector_etf": "SOXX",
       "quality": "",
-      "r_squared": 0.7429,
+      "r_squared": 0.7102,
       "betas": {
-        "mkt": 1.288,
-        "sec": 2.006,
-        "sub": 0.983
+        "mkt": 1.349,
+        "sec": 1.944,
+        "sub": 0.891
       },
       "contributions_10d": {
-        "mkt": 0.573,
-        "sec": 5.583,
-        "sub": 0.675,
-        "resid": 13.314
+        "mkt": -0.976,
+        "sec": 6.926,
+        "sub": 3.029,
+        "resid": 9.184
       },
       "criteria": {
-        "purple_positive_count": 8,
-        "purple_dominance": 0.4209,
+        "purple_positive_count": 7,
+        "purple_dominance": 0.4378,
         "has_tailwind": true,
-        "cyan_share": 0.0284
+        "cyan_share": 0.0
+      },
+      "failed_rules": [
+        "r_squared"
+      ]
+    },
+    {
+      "ticker": "ISRG",
+      "sector_etf": "XLV",
+      "sub_sector_etf": "ROBO",
+      "quality": "",
+      "r_squared": 0.3665,
+      "betas": {
+        "mkt": 1.363,
+        "sec": 1.287,
+        "sub": 0.222
+      },
+      "contributions_10d": {
+        "mkt": -2.784,
+        "sec": -1.846,
+        "sub": 1.29,
+        "resid": 9.732
+      },
+      "criteria": {
+        "purple_positive_count": 7,
+        "purple_dominance": 0.2567,
+        "has_tailwind": true,
+        "cyan_share": 0.0
       },
       "failed_rules": [
         "r_squared"
@@ -658,17 +737,17 @@
       "sector_etf": "XLI",
       "sub_sector_etf": "ITA",
       "quality": "",
-      "r_squared": 0.4066,
+      "r_squared": 0.4599,
       "betas": {
-        "mkt": 2.076,
-        "sec": 1.12,
-        "sub": 1.808
+        "mkt": 2.176,
+        "sec": 1.285,
+        "sub": 1.77
       },
       "contributions_10d": {
-        "mkt": -1.041,
-        "sec": -2.345,
-        "sub": -3.674,
-        "resid": 6.885
+        "mkt": -4.542,
+        "sec": -1.603,
+        "sub": -4.721,
+        "resid": 9.6
       },
       "criteria": {
         "purple_positive_count": 7,
@@ -681,25 +760,25 @@
       ]
     },
     {
-      "ticker": "LLY",
-      "sector_etf": "XLV",
-      "sub_sector_etf": "XBI",
+      "ticker": "LEU",
+      "sector_etf": "XLE",
+      "sub_sector_etf": "URA",
       "quality": "",
-      "r_squared": 0.7481,
+      "r_squared": 0.7809,
       "betas": {
-        "mkt": 0.991,
-        "sec": 1.438,
-        "sub": -0.085
+        "mkt": 1.843,
+        "sec": 1.652,
+        "sub": 1.54
       },
       "contributions_10d": {
-        "mkt": -0.014,
-        "sec": -3.143,
-        "sub": 0.406,
-        "resid": 2.15
+        "mkt": -2.063,
+        "sec": 1.496,
+        "sub": -13.046,
+        "resid": -0.917
       },
       "criteria": {
-        "purple_positive_count": 7,
-        "purple_dominance": 0.3729,
+        "purple_positive_count": 5,
+        "purple_dominance": 0.4232,
         "has_tailwind": true,
         "cyan_share": 0.0
       },
@@ -708,30 +787,30 @@
       ]
     },
     {
-      "ticker": "LMND",
-      "sector_etf": "XLF",
-      "sub_sector_etf": "IPAY",
+      "ticker": "LLY",
+      "sector_etf": "XLV",
+      "sub_sector_etf": "XBI",
       "quality": "",
-      "r_squared": 0.6662,
+      "r_squared": 0.7719,
       "betas": {
-        "mkt": 2.163,
-        "sec": 1.587,
-        "sub": 0.944
+        "mkt": 1.04,
+        "sec": 1.429,
+        "sub": -0.124
       },
       "contributions_10d": {
-        "mkt": -2.173,
-        "sec": -4.675,
-        "sub": 1.686,
-        "resid": -3.472
+        "mkt": -1.355,
+        "sec": -1.92,
+        "sub": 0.403,
+        "resid": 2.355
       },
       "criteria": {
-        "purple_positive_count": 5,
-        "purple_dominance": 0.7287,
+        "purple_positive_count": 7,
+        "purple_dominance": 0.3524,
         "has_tailwind": true,
         "cyan_share": 0.0
       },
       "failed_rules": [
-        "purple_spike"
+        "r_squared"
       ]
     },
     {
@@ -739,17 +818,17 @@
       "sector_etf": "XLI",
       "sub_sector_etf": "UFO",
       "quality": "",
-      "r_squared": 0.5774,
+      "r_squared": 0.6004,
       "betas": {
-        "mkt": 0.793,
-        "sec": 2.639,
-        "sub": 2.881
+        "mkt": 0.899,
+        "sec": 2.603,
+        "sub": 2.889
       },
       "contributions_10d": {
-        "mkt": -0.362,
-        "sec": -5.241,
-        "sub": 9.244,
-        "resid": -3.517
+        "mkt": -1.702,
+        "sec": -3.733,
+        "sub": 5.284,
+        "resid": -4.531
       },
       "criteria": {
         "purple_positive_count": 3,
@@ -762,30 +841,30 @@
       ]
     },
     {
-      "ticker": "OKLO",
-      "sector_etf": "XLE",
-      "sub_sector_etf": "URA",
+      "ticker": "M",
+      "sector_etf": "XLY",
+      "sub_sector_etf": "XLY",
       "quality": "",
-      "r_squared": 0.6262,
+      "r_squared": 0.1834,
       "betas": {
-        "mkt": 0.55,
-        "sec": 0.771,
-        "sub": 1.553
+        "mkt": 1.587,
+        "sec": 0.596,
+        "sub": 0.0
       },
       "contributions_10d": {
-        "mkt": 0.615,
-        "sec": -0.749,
-        "sub": -3.694,
-        "resid": 5.615
+        "mkt": -1.844,
+        "sec": -1.641,
+        "sub": 0.0,
+        "resid": 2.561
       },
       "criteria": {
-        "purple_positive_count": 6,
-        "purple_dominance": 0.452,
-        "has_tailwind": false,
-        "cyan_share": 0.0988
+        "purple_positive_count": 5,
+        "purple_dominance": 0.4134,
+        "has_tailwind": true,
+        "cyan_share": 0.0
       },
       "failed_rules": [
-        "sector_tailwind"
+        "r_squared"
       ]
     },
     {
@@ -793,23 +872,23 @@
       "sector_etf": "XLV",
       "sub_sector_etf": "XLV",
       "quality": "",
-      "r_squared": 0.0813,
+      "r_squared": 0.1095,
       "betas": {
-        "mkt": 2.021,
-        "sec": 0.227,
+        "mkt": 1.864,
+        "sec": 0.276,
         "sub": 0.0
       },
       "contributions_10d": {
-        "mkt": 0.037,
-        "sec": -2.504,
+        "mkt": -2.848,
+        "sec": -1.621,
         "sub": 0.0,
-        "resid": 8.231
+        "resid": 4.404
       },
       "criteria": {
         "purple_positive_count": 6,
-        "purple_dominance": 0.2673,
+        "purple_dominance": 0.3385,
         "has_tailwind": true,
-        "cyan_share": 0.0045
+        "cyan_share": 0.0
       },
       "failed_rules": [
         "r_squared"
@@ -820,21 +899,48 @@
       "sector_etf": "XLK",
       "sub_sector_etf": "SOXX",
       "quality": "",
-      "r_squared": 0.2468,
+      "r_squared": 0.1257,
       "betas": {
-        "mkt": 0.976,
-        "sec": 0.265,
-        "sub": 0.409
+        "mkt": 1.056,
+        "sec": 0.315,
+        "sub": 0.112
       },
       "contributions_10d": {
-        "mkt": -0.364,
-        "sec": 0.601,
-        "sub": 0.554,
-        "resid": 10.443
+        "mkt": -1.608,
+        "sec": 0.85,
+        "sub": 1.285,
+        "resid": 5.161
       },
       "criteria": {
         "purple_positive_count": 7,
-        "purple_dominance": 0.3309,
+        "purple_dominance": 0.4605,
+        "has_tailwind": true,
+        "cyan_share": 0.0
+      },
+      "failed_rules": [
+        "r_squared"
+      ]
+    },
+    {
+      "ticker": "RDW",
+      "sector_etf": "XLI",
+      "sub_sector_etf": "UFO",
+      "quality": "",
+      "r_squared": 0.7031,
+      "betas": {
+        "mkt": 0.466,
+        "sec": 1.834,
+        "sub": 3.19
+      },
+      "contributions_10d": {
+        "mkt": -4.041,
+        "sec": -3.184,
+        "sub": 6.106,
+        "resid": 5.536
+      },
+      "criteria": {
+        "purple_positive_count": 6,
+        "purple_dominance": 0.2634,
         "has_tailwind": true,
         "cyan_share": 0.0
       },
@@ -847,17 +953,17 @@
       "sector_etf": "XLI",
       "sub_sector_etf": "UFO",
       "quality": "",
-      "r_squared": 0.8137,
+      "r_squared": 0.8135,
       "betas": {
-        "mkt": 1.315,
-        "sec": 1.485,
-        "sub": 2.313
+        "mkt": 1.265,
+        "sec": 1.381,
+        "sub": 2.384
       },
       "contributions_10d": {
-        "mkt": -1.141,
-        "sec": -2.909,
-        "sub": 7.137,
-        "resid": 4.503
+        "mkt": -3.705,
+        "sec": -2.104,
+        "sub": 3.885,
+        "resid": 3.597
       },
       "criteria": {
         "purple_positive_count": 6,
@@ -874,80 +980,26 @@
       "sector_etf": "XLI",
       "sub_sector_etf": "ROBO",
       "quality": "",
-      "r_squared": 0.596,
+      "r_squared": 0.5875,
       "betas": {
-        "mkt": 0.707,
-        "sec": 1.359,
-        "sub": 0.488
+        "mkt": 0.736,
+        "sec": 1.386,
+        "sub": 0.44
       },
       "contributions_10d": {
-        "mkt": 0.928,
-        "sec": -2.271,
-        "sub": 0.718,
-        "resid": -2.968
+        "mkt": 0.869,
+        "sec": -1.482,
+        "sub": 0.441,
+        "resid": -2.748
       },
       "criteria": {
         "purple_positive_count": 4,
-        "purple_dominance": 0.581,
+        "purple_dominance": 0.5407,
         "has_tailwind": true,
-        "cyan_share": 0.5638
+        "cyan_share": 0.6635
       },
       "failed_rules": [
         "purple_sustained"
-      ]
-    },
-    {
-      "ticker": "SPOT",
-      "sector_etf": "XLK",
-      "sub_sector_etf": "IGV",
-      "quality": "",
-      "r_squared": 0.6488,
-      "betas": {
-        "mkt": 0.979,
-        "sec": -2.05,
-        "sub": 0.297
-      },
-      "contributions_10d": {
-        "mkt": -1.033,
-        "sec": -3.964,
-        "sub": 0.574,
-        "resid": -0.854
-      },
-      "criteria": {
-        "purple_positive_count": 4,
-        "purple_dominance": 0.3895,
-        "has_tailwind": true,
-        "cyan_share": 0.0
-      },
-      "failed_rules": [
-        "purple_sustained"
-      ]
-    },
-    {
-      "ticker": "TEL",
-      "sector_etf": "XLE",
-      "sub_sector_etf": "TAN",
-      "quality": "",
-      "r_squared": 0.1965,
-      "betas": {
-        "mkt": 1.635,
-        "sec": -0.075,
-        "sub": -0.053
-      },
-      "contributions_10d": {
-        "mkt": -0.509,
-        "sec": 0.673,
-        "sub": -0.426,
-        "resid": 2.663
-      },
-      "criteria": {
-        "purple_positive_count": 7,
-        "purple_dominance": 0.5375,
-        "has_tailwind": true,
-        "cyan_share": 0.0
-      },
-      "failed_rules": [
-        "r_squared"
       ]
     },
     {
@@ -955,21 +1007,21 @@
       "sector_etf": "XLY",
       "sub_sector_etf": "BOTZ",
       "quality": "",
-      "r_squared": 0.3737,
+      "r_squared": 0.3694,
       "betas": {
-        "mkt": 1.961,
-        "sec": 1.762,
-        "sub": 0.68
+        "mkt": 1.989,
+        "sec": 1.724,
+        "sub": 0.654
       },
       "contributions_10d": {
-        "mkt": -1.148,
-        "sec": -2.848,
-        "sub": 0.806,
-        "resid": 6.186
+        "mkt": -3.469,
+        "sec": -3.48,
+        "sub": 0.837,
+        "resid": 3.157
       },
       "criteria": {
-        "purple_positive_count": 7,
-        "purple_dominance": 0.4164,
+        "purple_positive_count": 6,
+        "purple_dominance": 0.5361,
         "has_tailwind": true,
         "cyan_share": 0.0
       },
@@ -978,27 +1030,54 @@
       ]
     },
     {
+      "ticker": "UBER",
+      "sector_etf": "XLY",
+      "sub_sector_etf": "XLY",
+      "quality": "",
+      "r_squared": 0.4113,
+      "betas": {
+        "mkt": 0.244,
+        "sec": 1.935,
+        "sub": 0.0
+      },
+      "contributions_10d": {
+        "mkt": -1.374,
+        "sec": -4.297,
+        "sub": 0.0,
+        "resid": -1.631
+      },
+      "criteria": {
+        "purple_positive_count": 4,
+        "purple_dominance": 0.5595,
+        "has_tailwind": true,
+        "cyan_share": 0.0
+      },
+      "failed_rules": [
+        "purple_sustained"
+      ]
+    },
+    {
       "ticker": "XPEV",
       "sector_etf": "FXI",
       "sub_sector_etf": "KWEB",
       "quality": "",
-      "r_squared": 0.2614,
+      "r_squared": 0.2618,
       "betas": {
-        "mkt": 2.447,
+        "mkt": 2.441,
         "sec": 0.974,
-        "sub": -0.045
+        "sub": -0.027
       },
       "contributions_10d": {
-        "mkt": 0.677,
-        "sec": -3.48,
-        "sub": 0.325,
-        "resid": -1.683
+        "mkt": -1.053,
+        "sec": -0.421,
+        "sub": 0.271,
+        "resid": -3.312
       },
       "criteria": {
         "purple_positive_count": 6,
-        "purple_dominance": 0.4647,
+        "purple_dominance": 0.5791,
         "has_tailwind": true,
-        "cyan_share": 0.6757
+        "cyan_share": 0.0
       },
       "failed_rules": [
         "r_squared"
@@ -1009,21 +1088,21 @@
       "sector_etf": "XLK",
       "sub_sector_etf": "CIBR",
       "quality": "",
-      "r_squared": 0.8475,
+      "r_squared": 0.8312,
       "betas": {
-        "mkt": 2.398,
-        "sec": 0.38,
-        "sub": 1.822
+        "mkt": 2.309,
+        "sec": 0.514,
+        "sub": 1.776
       },
       "contributions_10d": {
-        "mkt": -0.528,
-        "sec": 1.48,
-        "sub": 11.581,
-        "resid": 2.448
+        "mkt": -1.986,
+        "sec": 1.767,
+        "sub": 6.036,
+        "resid": 6.148
       },
       "criteria": {
         "purple_positive_count": 6,
-        "purple_dominance": 0.4115,
+        "purple_dominance": 0.3291,
         "has_tailwind": true,
         "cyan_share": 0.0
       },
