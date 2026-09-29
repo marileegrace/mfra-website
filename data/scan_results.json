@@ -1,7 +1,7 @@
 {
   "meta": {
-    "scan_date": "2026-09-25",
-    "generated_at": "2026-09-25 23:57 ET",
+    "scan_date": "2026-09-29",
+    "generated_at": "2026-09-29 01:00 ET",
     "total_scanned": 85,
     "opportunity_count": 15,
     "near_miss_count": 27,
@@ -327,7 +327,7 @@
         "mkt": 0.027,
         "sec": 1.198,
         "sub": 8.146,
-        "resid": 1.658
+        "resid": 1.66
       },
       "criteria": {
         "purple_positive_count": 5,
@@ -880,23 +880,23 @@
       "sector_etf": "XLY",
       "sub_sector_etf": "IBUY",
       "quality": "",
-      "r_squared": 0.6086,
+      "r_squared": 0.5208,
       "betas": {
-        "mkt": 3.53,
-        "sec": 0.592,
-        "sub": 1.925
+        "mkt": 3.086,
+        "sec": 0.694,
+        "sub": 1.688
       },
       "contributions_10d": {
-        "mkt": 4.224,
-        "sec": -2.628,
-        "sub": -3.143,
-        "resid": 15.957
+        "mkt": 4.137,
+        "sec": -2.873,
+        "sub": -2.295,
+        "resid": 11.705
       },
       "criteria": {
         "purple_positive_count": 6,
         "purple_dominance": 0.3332,
         "has_tailwind": false,
-        "cyan_share": 0.2093
+        "cyan_share": 0.2612
       },
       "failed_rules": [
         "sector_tailwind"
