@@ -1,7 +1,7 @@
 {
   "meta": {
-    "scan_date": "2026-10-16",
-    "generated_at": "2026-10-16 23:36 ET",
+    "scan_date": "2026-10-20",
+    "generated_at": "2026-10-20 00:21 ET",
     "total_scanned": 85,
     "opportunity_count": 8,
     "near_miss_count": 28,
@@ -651,7 +651,7 @@
       "sector_etf": "XLK",
       "sub_sector_etf": "IGV",
       "quality": "",
-      "r_squared": 0.2337,
+      "r_squared": 0.2336,
       "betas": {
         "mkt": 1.596,
         "sec": 0.901,
