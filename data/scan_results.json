@@ -1,7 +1,7 @@
 {
   "meta": {
-    "scan_date": "2026-10-23",
-    "generated_at": "2026-10-23 23:51 ET",
+    "scan_date": "2026-10-27",
+    "generated_at": "2026-10-27 00:26 ET",
     "total_scanned": 85,
     "opportunity_count": 7,
     "near_miss_count": 29,
@@ -194,21 +194,21 @@
       "sector_etf": "XLK",
       "sub_sector_etf": "IGV",
       "quality": "",
-      "r_squared": 0.0853,
+      "r_squared": 0.0852,
       "betas": {
-        "mkt": 0.389,
+        "mkt": 0.388,
         "sec": -0.313,
         "sub": -0.111
       },
       "contributions_10d": {
         "mkt": -1.824,
-        "sec": 4.644,
+        "sec": 4.645,
         "sub": -0.911,
-        "resid": 1.362
+        "resid": 1.364
       },
       "criteria": {
         "purple_positive_count": 6,
-        "purple_dominance": 0.3945,
+        "purple_dominance": 0.3944,
         "has_tailwind": true,
         "cyan_share": 0.0
       },
