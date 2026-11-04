@@ -1,13 +1,14 @@
 {
   "meta": {
-    "scan_date": "2026-11-03",
-    "generated_at": "2026-11-03 02:55 ET",
-    "total_scanned": 85,
+    "scan_date": "2026-11-04",
+    "generated_at": "2026-11-04 01:22 ET",
+    "total_scanned": 84,
     "opportunity_count": 18,
     "near_miss_count": 33,
-    "skipped_count": 2,
+    "skipped_count": 3,
     "skipped_tickers": [
       "SKYT",
+      "BRZE",
       "SATS"
     ]
   },
